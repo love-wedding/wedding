@@ -1,0 +1,886 @@
+@font-face {
+  font-family: "Tinos";
+  src: url(../../font/tinos/Tinos-Regular.ttf);
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Tinos";
+  src: url(../../font/tinos/Tinos-Italic.ttf);
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Tinos";
+  src: url(../../font/tinos/Tinos-Bold.ttf);
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Tinos";
+  src: url(../../font/tinos/Tinos-BoldItalic.ttf);
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: "ImperialScript";
+  src: url(../../font/imperialscript-regular.ttf);
+}
+@font-face {
+  font-family: "Utm Wedding";
+  src: url(../../font/utm-wedding-kt.ttf);
+}
+@font-face {
+  font-family: "vip-jonathan-hetegral";
+  src: url(../../font/vip-jonathan-hetegral.otf);
+}
+@font-face {
+  font-family: "vip-beauty-rachela";
+  src: url(../../font/vip-beauty-rachela.otf);
+}
+@font-face {
+  font-family: "vip-dusty-peach";
+  src: url(../../font/vip-dusty-peach.otf);
+}
+@font-face {
+  font-family: "ntn-v2";
+  src: url(../../font/ntn-v2.ttf);
+}
+@font-face {
+  font-family: "Prata";
+  src: url(../../font/Prata-Regular.ttf);
+}
+@font-face {
+  font-family: "Mulish";
+  src: url(../../font/mulish/Mulish-Regular.ttf);
+}
+body {
+  background-color: #333;
+  font-family: "Tinos";
+  font-size: 16px;
+  --color-primary: rgb(173, 105, 1);
+  --color-text: rgb(61, 61, 61);
+}
+body a {
+  text-decoration: none;
+  color: inherit;
+}
+body .btn-link {
+  text-decoration: none;
+  color: inherit;
+  color: #3f51b5;
+}
+body img {
+  max-width: 100%;
+}
+
+.card-wrapper {
+  max-width: 575px;
+  margin: auto;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.card-section {
+  padding: 50px 16px;
+}
+.card-section:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.card-section .card-section-title {
+  font-family: vip-beauty-rachela;
+  text-align: center;
+}
+.card-section .card-section-subtitle {
+  margin-bottom: 34px;
+}
+.card-section .view-more {
+  text-align: center;
+}
+.card-section .view-more .btn-link {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.card-section .btn-main {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 24px;
+  border-radius: 32px;
+}
+.card-section .btn-main.shadow {
+  box-shadow: rgb(0, 0, 0) 0px 15px 20px -15px;
+}
+
+.photo-grid {
+  -moz-column-count: 2;
+       column-count: 2;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+.photo-grid .photo {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+.photo-grid .photo img {
+  width: 100%;
+  display: block;
+}
+.photo-grid + .view-more {
+  margin-top: 50px;
+}
+
+.photo-grid[data-masonry] {
+    -moz-column-gap: unset;
+    column-gap: unset;
+    -moz-column-count: unset;
+    column-count: unset;
+    margin: 0 -3px;
+}
+
+.photo-grid[data-masonry] .photo {
+    padding: 3px;
+    width: 50%;
+    margin-bottom: 0;
+}
+
+.photo-grid[data-masonry] .photo img {
+    height: auto;
+}
+
+#card-banner {
+  background: #fefdf7;
+  overflow: hidden;
+  position: relative;
+}
+#card-banner .card-banner-decor-img {
+  background-image: url(../images/banner-decor.png);
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  /* background-attachment: scroll; */
+  /* background-origin: content-box; */
+  margin: 0 auto;
+  pointer-events: none;
+  position: absolute;
+  width: 110%;
+  height: 100%;
+  overflow: hidden;
+  left: -5%;
+  top: 15%;
+  opacity: 0.39;
+  background-position: center;
+}
+#card-banner .card-banner-inner {
+  position: relative;
+}
+#card-banner h3 {
+  font-family: "vip-beauty-rachela";
+  font-size: 28px;
+  color: rgb(0, 0, 0);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 24px;
+}
+#card-banner h2 {
+  font-family: "Utm Wedding";
+  font-size: 36px;
+  color: var(--color-primary);
+  text-align: center;
+  text-shadow: rgb(255, 255, 255) 1px 2px 3px;
+  margin-bottom: 40px;
+}
+#card-banner .card-banner-img {
+  text-align: center;
+  position: relative;
+  width: 65%;
+  margin: auto;
+}
+#card-banner .card-banner-img::before {
+  position: absolute;
+  z-index: 0;
+  left: -12px;
+  top: -12px;
+  width: 100%;
+  height: 100%;
+  content: "";
+  display: block;
+  background-color: rgb(255, 251, 238);
+  padding: 12px;
+  box-sizing: content-box;
+  animation-name: rotateInDownRight;
+  transform-origin: right bottom;
+  animation-duration: 3s;
+  animation-fill-mode: both;
+  animation-delay: 1s;
+}
+#card-banner .card-banner-img img {
+  position: relative;
+  width: 100%;
+}
+#card-banner .card-banner-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+#card-banner .time {
+  font-family: Prata, serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-banner .date {
+  font-family: Prata, serif;
+  font-size: 22.97px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: left;
+}
+#card-banner .v-divider {
+  height: 48px;
+  margin: 0px 8px;
+  border-left: 1px solid var(--color-primary);
+}
+#card-banner .lunar-date {
+  font-family: Tinos, serif;
+  font-size: 11.17px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text);
+  text-align: center;
+}
+#card-banner .cloud {
+  position: absolute;
+  width: 800px;
+  height: 100%;
+  top: 0;
+  animation-fill-mode: forwards;
+  --animate-duration: 4s;
+}
+#card-banner .cloud.right {
+  right: -110%;
+  animation-name: cloudslideInLeft;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+#card-banner .cloud.right::before {
+  transform: perspective(1000px) rotateY(180deg);
+}
+#card-banner .cloud.left {
+  left: -110%;
+  animation-name: cloudslideInRight;
+  animation-duration: 4s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+#card-banner .cloud::before {
+  filter: contrast(76%) brightness(115%) saturate(90%);
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-image: url(../images/cloud.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: cover;
+  background-attachment: scroll;
+  background-origin: content-box;
+}
+
+@keyframes cloudslideInRight {
+  from {
+    transform: translateX(50%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes cloudslideInLeft {
+  from {
+    transform: translateX(-50%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+#card-people {
+  background-color: rgb(255, 251, 238);
+}
+#card-people h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  color: var(--color-text);
+  text-align: center;
+  margin-bottom: 32px;
+}
+#card-people .fingerprints {
+  text-align: center;
+  margin-bottom: -16px;
+}
+#card-people .fingerprints img {
+  width: 100px;
+}
+#card-people .parents {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  line-height: 1.6;
+  color: var(--color-text);
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 13px;
+}
+#card-people .parents .label {
+  font-size: 110%;
+  margin-bottom: 5px;
+}
+#card-people .gb {
+  text-align: center;
+}
+#card-people .gb .fullname {
+  font-family: "Utm Wedding";
+  white-space: nowrap;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+  font-size: 32px;
+}
+#card-people .gb .label {
+  font-size: 90%;
+}
+#card-people .gb .img {
+  margin-top: 24px;
+}
+#card-people .gb .img img {
+  max-width: 100%;
+}
+
+#card-events {
+  background-color: rgb(255, 251, 238);
+  padding-top: 0;
+  position: relative;
+}
+#card-events .card-section-title {
+  font-family: "vip-dusty-peach";
+  font-size: 36px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-events .card-section-subtitle {
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.6;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+}
+#card-events .event-box {
+  padding: 24px 0;
+}
+#card-events .event-box .event-box-title {
+  font-family: Roboto, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+#card-events .event-box .event-box-time {
+  font-family: Mulish, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text);
+  text-transform: uppercase;
+  text-align: center;
+}
+#card-events .event-box .event-box-date {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+#card-events .event-box .event-box-date .month {
+  font-family: Tinos, serif;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.6;
+  color: var(--color-primary);
+  letter-spacing: 0px;
+  text-align: center;
+}
+#card-events .event-box .event-box-date .day {
+  font-family: Tinos, serif;
+  font-size: 30.05px;
+  font-weight: bold;
+  line-height: 1.6;
+  color: var(--color-primary);
+  letter-spacing: 2px;
+  text-align: center;
+}
+#card-events .event-box .event-box-date .year {
+  font-family: Tinos, serif;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.6;
+  color: var(--color-primary);
+  letter-spacing: 2px;
+  text-align: center;
+}
+#card-events .event-box .lunar-date {
+  font-family: Mulish, sans-serif;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-text);
+  text-align: center;
+}
+#card-events .event-box .v-divider {
+  height: 48px;
+  margin: 0px 8px;
+  border-left: 1px solid var(--color-primary);
+}
+#card-events .event-box-img-divider {
+  text-align: center;
+}
+#card-events .event-box-img-divider img {
+  width: 100px;
+}
+#card-events .slide-center-images {
+  display: flex;
+  align-items: center;
+  margin: 0 -16px;
+  margin-bottom: 10px;
+}
+#card-events .slide-center-images .img {
+  width: 36%;
+  text-align: center;
+}
+#card-events .slide-center-images .img .img-inner {
+  box-shadow: rgb(0, 0, 0) 0px 15px 20px -15px;
+}
+#card-events .slide-center-images .img img {
+  max-width: 100%;
+}
+#card-events .slide-center-images .img:first-child {
+  width: 32%;
+  padding-right: 10px;
+}
+#card-events .slide-center-images .img:last-child {
+  width: 32%;
+  padding-left: 10px;
+}
+#card-events::before {
+  content: "";
+  background-image: url(../images/flower.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  right: -110px;
+  top: 34%;
+  opacity: 0.47;
+}
+#card-events::after {
+  content: "";
+  background-image: url(../images/flower.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  left: -110px;
+  top: 53%;
+  opacity: 0.47;
+  position: absolute;
+}
+
+#card-gallery {
+  padding-top: 24px;
+  background-color: rgb(255, 251, 238);
+}
+#card-gallery .card-section-title-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+#card-gallery .card-section-title-wrapper .v-line {
+  border-top: 2px solid var(--color-primary);
+  margin-left: 12px;
+  flex: 1;
+}
+#card-gallery .card-section-title {
+  font-size: 30px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  margin-bottom: 0;
+}
+
+#card-gift {
+  border-top: 1px solid rgba(173, 105, 1, 0.3);
+  background-color: rgb(255, 251, 238);
+}
+#card-gift .card-section-title {
+  font-size: 30px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-gift .card-section-subtitle {
+  font-family: ntn-v2;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-gift .present-box {
+  text-align: center;
+}
+#card-gift .present-box .present-box-inner {
+  color: var(--color-primary);
+  border: 2px solid currentColor;
+  padding: 16px;
+  border-radius: 8px;
+  display: inline-block;
+  margin: auto;
+}
+#card-gift .present-box .present-box-inner img {
+  width: 200px;
+}
+
+#card-comments {
+  background-color: rgb(255, 251, 238);
+  border-top: 1px solid rgba(173, 105, 1, 0.3);
+}
+#card-comments .card-section-title {
+  font-size: 30px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-comments .card-section-subtitle {
+  font-family: ntn-v2;
+  font-size: 20px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-comments .comment-form {
+  border-bottom: 0;
+  background-color: transparent;
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 32px 24px;
+}
+#card-comments .comment-form input.form-control,
+#card-comments .comment-form textarea.form-control {
+  font-size: 16px;
+  background: rgb(255, 251, 238);
+  border: 1px solid var(--color-primary);
+}
+#card-comments .comment-form button.btn {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px;
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+#card-comments .comment-list {
+  border: 0;
+}
+#card-comments .comment-list .comment-box {
+  border-color: var(--color-primary);
+}
+#card-comments .comment-list .comment-box .fullname {
+  color: var(--color-primary);
+}
+
+#countdown {
+  margin-top: 50px;
+}
+#countdown .countdown-title {
+  margin-bottom: 10px;
+  font-family: vip-beauty-rachela;
+  font-size: 21px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#countdown .countdown-inner {
+  border: 1px solid currentColor;
+  color: var(--color-primary);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  max-width: 420px;
+  margin: auto;
+}
+#countdown .box {
+  text-align: center;
+  flex: 1;
+  padding: 12px 0;
+}
+#countdown .box .value {
+  line-height: 1;
+  font-weight: 700;
+  font-size: 30px;
+}
+#countdown .box .label {
+  line-height: 1;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.calendar-wrapper-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: -10px;
+}
+.calendar-wrapper-header .t {
+  font-family: "vip-beauty-rachela";
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 16px;
+}
+.calendar-wrapper-header .month {
+  line-height: 1.6;
+  font-size: 24px;
+}
+.calendar-wrapper-header .year {
+  line-height: 1.6;
+  font-size: 28px;
+}
+.calendar-wrapper-header .img {
+  position: relative;
+}
+.calendar-wrapper-header .img img {
+  width: 100px;
+}
+.calendar-wrapper-header .img .gif-hearts {
+  background-image: url(../images/hearts.gif);
+  width: 144px;
+  height: 144px;
+  position: absolute;
+  left: 0;
+  bottom: 80px;
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: cover;
+}
+
+.calendar-wrapper {
+  margin-top: 100px;
+}
+
+.mini_calendar {
+  margin-left: auto;
+  margin-right: auto;
+  --tb-border-color: var(--color-primary);
+  --tb-header-color: #484747;
+  --tb-day-color: #000;
+}
+.mini_calendar table {
+  border-right: 1px solid var(--tb-border-color);
+  border-left: 1px solid var(--tb-border-color);
+  background: #fff;
+}
+.mini_calendar table tr th {
+  color: var(--color-primary);
+  font-weight: 600;
+  padding: 12px 0;
+}
+.mini_calendar table tr td {
+  color: #000;
+  font-weight: 600;
+}
+
+#card-location {
+  text-align: center;
+}
+#card-location .info-wrapper {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  padding: 50px 16px;
+  padding-top: 16px;
+  background-color: rgb(255, 251, 238);
+}
+#card-location .map-icon img {
+  width: 100px;
+}
+#card-location .card-section-title {
+  font-size: 27px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+  font-family: vip-beauty-rachela;
+}
+#card-location .address {
+  font-family: Mulish, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-primary);
+  text-align: center;
+}
+#card-location .address.hl {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+#card-location .map-wrapper {
+  padding: 50px 12px;
+  padding-top: 0;
+  background-color: rgb(255, 251, 238);
+}
+#card-location .map-wrapper iframe {
+  display: block;
+  margin-bottom: 24px;
+  aspect-ratio: 16/10;
+}
+#card-thankyou {
+  aspect-ratio: 10/12;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+#card-thankyou::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+#card-thankyou .card-thankyou-inner {
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+  color: var(--color-primary);
+  width: 100%;
+  bottom: 0;
+  /* transform: translateY(-50%); */
+  left: 0;
+  background-color: rgba(255, 251, 238, 0.8);
+  padding: 24px 0;
+}
+#card-thankyou .thankyou-title {
+  font-family: "Utm Wedding";
+  font-size: 60px;
+}
+#card-thankyou .thankyou-name {
+  font-size: 24px;
+}
+
+.bank-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.bank-list .bank-box {
+  flex: 1;
+  padding: 16px;
+  border: 2px solid var(--color-primary);
+  border-radius: 12px;
+  text-align: center;
+}
+.bank-list .bank-box .title {
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.bank-list .bank-box .qr-code img {
+  width: 100%;
+  max-width: 150px;
+  display: block;
+  cursor: zoom-in;
+  margin: auto;
+  border: 1px solid #333;
+}
+.bank-list .bank-box .info > div {
+  margin: 10px 0;
+}
+.bank-list .bank-box .info > div:last-child {
+  margin-bottom: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .bank-list {
+    flex-direction: row;
+  }
+  .card-section .card-section-subtitle {
+    margin-bottom: 34px;
+  }
+  #card-banner h2 {
+    font-size: 45px;
+  }
+  #card-people .parents {
+    font-size: inherit;
+  }
+  #card-people .gb .fullname {
+    font-size: 44px;
+  }
+  #card-people .fingerprints img {
+    width: 140px;
+  }
+  #card-events .slide-center-images .img:first-child {
+    padding-right: 16px;
+  }
+  #card-events .slide-center-images .img:last-child {
+    padding-left: 16px;
+  }
+  .calendar-wrapper-header {
+    gap: 24px;
+  }
+  .calendar-wrapper-header .month {
+    font-size: 30px;
+  }
+  .calendar-wrapper-header .year {
+    font-size: 34px;
+  }
+  .calendar-wrapper-header .img img {
+    width: 120px;
+  }
+  #countdown .box .value {
+    font-size: 44px;
+  }
+  #countdown .box .label {
+    font-size: 18px;
+  }
+  #card-location .info-wrapper {
+    padding-top: 50px;
+  }
+  #card-location .map-wrapper {
+    padding: 50px 24px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 800px) {
+  .card-wrapper {
+    max-width: 100%;
+  }
+  .card-section {
+    padding: 50px;
+  }
+}/*# sourceMappingURL=style.css.map */
