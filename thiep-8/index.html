@@ -10236,7 +10236,7 @@
                             <!-- <h1 class="text-block-css full-width">Quý khách vui lòng lựa chọn trang phục theo dress
                                 code<br>để cùng hòa hợp với không khí và sắc màu của buổi tiệc<br></h1> -->
                                 <!-- <h1 class="text-block-css full-width" style="font-family: 'PinyonScript-Regular.ttf', sans-serif; ">Bạn Minh<br></h1> -->
-                                <h2 class="text-block-css full-width">Bạn Minh<br></h2>
+                                <h2  id="guestName" class="text-block-css full-width">Bạn Và Gia Đình<br></h2>
                         </div>
                     </div>
                     
@@ -10673,6 +10673,25 @@
         }
         document.addEventListener('click', handleInteraction)
     </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Lấy param từ URL
+    const params = new URLSearchParams(window.location.search);
+    const guest = params.get("guest");
+
+    if (guest) {
+        // Decode tiếng Việt + thay dấu +
+        const decodedName = decodeURIComponent(guest.replace(/\+/g, " "));
+
+        // Gán vào h2
+        const h2 = document.getElementById("guestName");
+        if (h2) {
+            h2.innerHTML = decodedName + "<br>";
+        }
+    }
+});
+</script>
 
     <script>
             // Ignore animate on url params
