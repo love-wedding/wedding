@@ -13,7 +13,7 @@
     <link rel="icon" href="./image/png.webp" sizes="16x16" />
     <link rel="stylesheet" href="./css/index.css">
 
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body ontouchstart>
@@ -818,7 +818,7 @@
         windowHeight()
     </script>
 
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("hl53suyf");
             const scriptURL = "https://script.google.com/macros/s/AKfycbzdVpxyKJQ8_vpytwHBnfOI20YxqqmlkHX4hhA3ELa1Xwkn6udG7M1uDbLZzyv9ckBxTQ/exec";
@@ -873,7 +873,87 @@
                     });
             }, true);
         });
+    </script> -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("hl53suyf");
+            const scriptURL = "https://script.google.com/macros/s/AKfycbyh9woWoaKOycCZUyg8zrzzmmNQMPgl_WyypRlKidQRXz3XCQlpZSwQ4x8OHYjKzx58/exec";
+
+            // Chặn submit mặc định của Pancake
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }, true);
+
+            // Nút GỬI NGAY
+            const submitBtn = document.querySelector("#w-klql4ysp .button-text");
+
+            submitBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Lấy dữ liệu an toàn
+                const fullNameValue = form.full_name?.value || "";
+                const relationValue = form.text_input_1?.value || "";
+                const messageValue = form.text_input_2?.value || "";
+                const attendValue = form.select_1?.value || "";
+
+                // Validate đơn giản
+                if (!fullNameValue) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Thiếu thông tin",
+                        text: "Vui lòng nhập tên của bạn 💌",
+                        confirmButtonText: "OK"
+                    });
+                    return;
+                }
+
+                // Loading
+                Swal.fire({
+                    title: "Đang gửi...",
+                    text: "Vui lòng chờ trong giây lát 💕",
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                const formData = new FormData();
+                formData.append("full_name", fullNameValue);
+                formData.append("relation", relationValue);
+                formData.append("message", messageValue);
+                formData.append("attend", attendValue);
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(r => r.json())
+                    .then(res => {
+                        Swal.fire({
+                            icon: "success",
+                            title: "🎉 Gửi thành công!",
+                            text: "Cảm ơn bạn đã gửi lời chúc 💖",
+                            confirmButtonText: "Đóng"
+                        });
+                        form.reset();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "❌ Gửi thất bại",
+                            text: "Vui lòng thử lại sau!",
+                            confirmButtonText: "Đóng"
+                        });
+                    });
+            }, true);
+        });
     </script>
+
 
 
 
