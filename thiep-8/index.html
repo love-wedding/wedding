@@ -23,14 +23,8 @@
     <link rel="icon"
         href="https://content.pancake.vn/1/s50x50/fwebp/ee/6c/3a/72/9481e598f3d47ce0b44803ae62f288beb18b6541894b5648fe6de748-w:1365-h:2048-l:316643-t:image/jpeg.jpg"
         sizes="16x16" />
-    <link rel="dns-prefetch" href="https://statics.pancake.vn">
-    <link rel="dns-prefetch" href="https://content.pancake.vn">
-    <link rel="dns-prefetch" href="https://www.youtube.com">
-    <link rel="dns-prefetch" href="https://a.pancake.vn">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin>
-    <link rel="preconnect" href="https://analytics.tiktok.com/i18n/pixel">
-    <link rel="preconnect" href="https://analytics.tiktok.com/api/v2/pixel">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
     <style type="text/css">
@@ -1329,11 +1323,13 @@
             font-weight: 600;
             cursor: pointer
         }
+
         #wi-qjbp8h2i {
             border-bottom: 1px dotted #000;
             padding-bottom: 2px;
             background: none;
         }
+
         #wi-qjbp8h2i:focus {
             outline: none;
             border-bottom: 1px dotted #000;
@@ -3209,7 +3205,7 @@
             font-size: 22px;
             text-align: center;
             --type: 0; */
-             -webkit-text-stroke: 0px rgba(0, 0, 0, 1.000);
+            -webkit-text-stroke: 0px rgba(0, 0, 0, 1.000);
             border-color: rgba(229, 231, 235, 1);
             border-style: solid;
             color: rgba(255, 255, 255, 1);
@@ -3598,7 +3594,7 @@
             left: 0px;
             position: relative;
             width: 420px;
-            height: 1200px;
+            height: 705px;
         }
 
         #w-bt7npfto .section-wrapper {
@@ -7776,7 +7772,7 @@
             left: 0px;
             position: relative;
             width: 420px;
-            height: 684px;
+            height: 705px;
         }
 
         #w-bt7npfto .section-wrapper {
@@ -9699,15 +9695,27 @@
         }
 
         .invite-name {
-    font-family: 'PinyonScript-Regular.ttf', sans-serif;
-    font-size: 32px;     /* tuỳ chỉnh */
-    color: #7a1e24;      /* màu chữ giống mẫu */
-    margin: 0;
-    padding-bottom: 5px; /* khoảng cách với đường gạch */
-    display: inline-block;
+            font-family: 'PinyonScript-Regular.ttf', sans-serif;
+            font-size: 32px;
+            /* tuỳ chỉnh */
+            color: #7a1e24;
+            /* màu chữ giống mẫu */
+            margin: 0;
+            padding-bottom: 5px;
+            /* khoảng cách với đường gạch */
+            display: inline-block;
 
-    border-bottom: 2px dotted #7a1e24;  /* đường chấm */
-}
+            border-bottom: 2px dotted #7a1e24;
+            /* đường chấm */
+        }
+    </style>
+
+    <style>
+        /* CHẶN DISABLE NÚT GỬI CỦA WEBCAKE */
+        #w-gwfybvg1 {
+            pointer-events: auto !important;
+            opacity: 1 !important;
+        }
     </style>
 
     <script type="text/javascript">
@@ -9741,19 +9749,19 @@
 
 
 
-<style>
-#w-dotted-line-guest-name {
-    top: 776px;
-    left: 92px;
-    width: 236px;
-    height: auto;
-    position: absolute;
-}
+    <style>
+        #w-dotted-line-guest-name {
+            top: 776px;
+            left: 92px;
+            width: 236px;
+            height: auto;
+            position: absolute;
+        }
 
-#w-dotted-line-guest-name .line-container {
-    border-top: 1px dotted rgb(0, 0, 0);
-}
-</style>
+        #w-dotted-line-guest-name .line-container {
+            border-top: 1px dotted rgb(0, 0, 0);
+        }
+    </style>
 </head>
 
 <body ontouchstart>
@@ -10235,11 +10243,11 @@
                         <div class="text-block">
                             <!-- <h1 class="text-block-css full-width">Quý khách vui lòng lựa chọn trang phục theo dress
                                 code<br>để cùng hòa hợp với không khí và sắc màu của buổi tiệc<br></h1> -->
-                                <!-- <h1 class="text-block-css full-width" style="font-family: 'PinyonScript-Regular.ttf', sans-serif; ">Bạn Minh<br></h1> -->
-                                <h2  id="guestName" class="text-block-css full-width">Bạn Và Gia Đình<br></h2>
+                            <!-- <h1 class="text-block-css full-width" style="font-family: 'PinyonScript-Regular.ttf', sans-serif; ">Bạn Minh<br></h1> -->
+                            <h2 id="guestName" class="text-block-css full-width">Bạn Và Gia Đình<br></h2>
                         </div>
                     </div>
-                    
+
                     <div id="w-miu3bg0a" class="com-text-block p-absolute is-animation">
                         <div class="text-block">
                             <h1 class="text-block-css full-width">bữa cơm thân mật<br></h1>
@@ -10336,12 +10344,12 @@
                             <div class="image-gradient-border"></div>
                         </div>
                     </div>
-                    <div id="w-11vmadhl" style="top: 680px !important;" class="com-image-block p-absolute is-animation">
+                    <!-- <div id="w-11vmadhl" style="top: 680px !important;" class="com-image-block p-absolute is-animation">
                         <div class="image-block-css p-relative full-width full-height full-mask-size mask-position">
                             <div class="image-background p-absolute lazy" role="img" aria-label=""></div>
                             <div class="image-gradient-border"></div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -10352,9 +10360,9 @@
                     <div id="w-9ppmw9gy" class="p-absolute">
                         <form id="9ppmw9gy" class="full-width full-height">
                             <div id="w-gwfybvg1" class="com-button p-absolute">
-                                <div class="button-css full-height full-width lazy"><span class="button-loader"></span>
-                                    <div class="button-text full-width u-select-none">GỬI LỜI chúc &amp; XÁC NHẬN</div>
-                                    <button type="submit" formnovalidate style="display: none;"></button>
+                                <div class="button-css full-height full-width"><span></span>
+                                    <div class="button-text full-width ">GỬI LỜI chúc &amp; XÁC NHẬN</div>
+                                    <button type="submit" formnovalidate></button>
                                 </div>
                             </div>
                             <div id="w-lgs3c5vv" class="p-absolute">
@@ -10509,7 +10517,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="w-__popup_default__" class="d-none popup-center">
             <div class="popup-wrapper p-absolute full-width full-height">
                 <div class="popup-background p-absolute full-width full-height"></div>
@@ -10636,7 +10644,119 @@
     </script>
 
 
+    <script>
+        (function () {
+            const open = XMLHttpRequest.prototype.open;
+            const send = XMLHttpRequest.prototype.send;
 
+            XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+                this._url = url;
+                return open.call(this, method, url, ...rest);
+            };
+
+            XMLHttpRequest.prototype.send = function (body) {
+                if (this._url && this._url.includes("create_form_data")) {
+                    console.warn("🚫 BLOCK Webcake API:", this._url);
+                    return; // ❌ KHÔNG GỬI
+                }
+                return send.call(this, body);
+            };
+        })();
+    </script>
+    <script>
+        /* ======================================================
+           1. CHẶN SUBMIT MẶC ĐỊNH CỦA WEBCAKE
+        ====================================================== */
+        document.addEventListener("submit", function (e) {
+            if (e.target.id !== "9ppmw9gy") {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return false;
+            }
+        }, true);
+
+        /* ======================================================
+           2. CLICK NÚT WEBCAKE → TRIGGER SUBMIT
+        ====================================================== */
+        document.addEventListener("click", function (e) {
+            if (e.target.closest("#w-gwfybvg1")) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                const form = document.getElementById("9ppmw9gy");
+                if (!form) return;
+
+                const ev = new Event("submit", { bubbles: true, cancelable: true });
+                form.dispatchEvent(ev);
+            }
+        }, true);
+
+        /* ======================================================
+           3. SUBMIT → GOOGLE APPS SCRIPT
+        ====================================================== */
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("9ppmw9gy");
+            const scriptURL = "https://script.google.com/macros/s/AKfycbyIAl6uSFucqSjFpP3oNBgj7xbAsag3NOYlfu2wamVZLa-ihSU9K339K7ZXP6qyNeR9/exec";
+
+            if (!form) return;
+
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                // Disable button để tránh spam click
+                const btn = document.querySelector("#w-gwfybvg1");
+                if (btn) {
+                    btn.style.pointerEvents = "none";
+                    btn.style.opacity = "0.7";
+                }
+
+                // Lấy dữ liệu
+                const formData = new FormData();
+                formData.append("full_name", document.getElementById("wi-qjbp8h2i")?.value || "");
+                formData.append("relation", document.getElementById("wi-lgs3c5vv")?.value || "");
+                formData.append("message", document.getElementById("wi-95o7z0z6")?.value || "");
+                formData.append("attend", document.querySelector("select[name='Bancothamdukhong']")?.value || "");
+
+                // Loading
+                Swal.fire({
+                    title: "Đang gửi lời chúc...",
+                    text: "Vui lòng chờ trong giây lát 💌",
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(r => r.json())
+                    .then(res => {
+                        if (res && (res.result === "success" || res.status === "success")) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "🎉 Gửi thành công!",
+                                text: "Cảm ơn bạn đã gửi lời chúc 💖",
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                        } else {
+                            throw new Error("Exec error");
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "❌ Gửi thất bại",
+                            text: "Vui lòng thử lại sau!"
+                        });
+
+                    });
+            });
+        });
+    </script>
 
 
 
@@ -10675,37 +10795,37 @@
     </script>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Lấy param từ URL
-    const params = new URLSearchParams(window.location.search);
-    const guest = params.get("guest");
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy param từ URL
+            const params = new URLSearchParams(window.location.search);
+            const guest = params.get("guest");
 
-    if (guest) {
-        // Decode tiếng Việt + thay dấu +
-        const decodedName = decodeURIComponent(guest.replace(/\+/g, " "));
+            if (guest) {
+                // Decode tiếng Việt + thay dấu +
+                const decodedName = decodeURIComponent(guest.replace(/\+/g, " "));
 
-        // Gán vào h2
-        const h2 = document.getElementById("guestName");
-        if (h2) {
-            h2.innerHTML = decodedName + "<br>";
-        }
-    }
-});
-</script>
+                // Gán vào h2
+                const h2 = document.getElementById("guestName");
+                if (h2) {
+                    h2.innerHTML = decodedName + "<br>";
+                }
+            }
+        });
+    </script>
 
     <script>
-            // Ignore animate on url params
-            ; (function () {
-                const params = new URLSearchParams(window.location.search)
-                const urlParams = new URLSearchParams(window.location.search);
-                const animate = urlParams.get("animate");
-                if (animate === 'false') {
-                    const style = document.createElement('style')
-                    style.textContent = '.no-animate * { transition: none!important; animation: none!important; }'
-                    document.head.appendChild(style)
-                    document.querySelector('.pageview')?.classList.add('no-animate')
-                }
-            })()
+        // Ignore animate on url params
+        ; (function () {
+            const params = new URLSearchParams(window.location.search)
+            const urlParams = new URLSearchParams(window.location.search);
+            const animate = urlParams.get("animate");
+            if (animate === 'false') {
+                const style = document.createElement('style')
+                style.textContent = '.no-animate * { transition: none!important; animation: none!important; }'
+                document.head.appendChild(style)
+                document.querySelector('.pageview')?.classList.add('no-animate')
+            }
+        })()
     </script>
 
     <script>
