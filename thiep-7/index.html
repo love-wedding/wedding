@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>THƯ MỜI CƯỚI MẪU ĐỎ VÀNG </title>
+    <title>THƯ MỜI CƯỚI ANH TÚ 💗 DIỆU NHI </title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,10 +11,7 @@
         !function (e, t, i) { var a, n = e.innerWidth; if (e[i] = (true || n < 768) ? "mobile" : "desktop", "desktop" == e[i]) a = "width=" + 960 + ", user-scalable=no, initial-scale=1.0"; else { var o = 1; w = 420; w != n && (o = n / w), a = "width=" + w + ", user-scalable=no, initial-scale=" + o + ", minimum-scale=" + o + ", maximum-scale=" + o } var l = t.createElement("meta"); l.name = "viewport", l.setAttribute("content", a), t.head.appendChild(l) }(window, document, "DISPLAY");
     </script>
 
-    <link rel="canonical" href="https://www.ewedinvite.site/TuvaNhi">
-    <meta property="og:url" content="https://www.ewedinvite.site/TuvaNhi">
-
-    <meta property="og:title" content="THƯ MỜI CƯỚI MẪU ĐỎ VÀNG ">
+    <meta property="og:title" content="THƯ MỜI CƯỚI ANH TÚ 💗 DIỆU NHI  ">
     <meta property="og:type" content="website">
     <meta property="og:image"
         content="https://content.pancake.vn/1/fwebp0/06/92/cf/37/91602f3e90b650de349806f37b724ef20cbf59562bb96d335e1b9221-w:1200-h:630-l:898453-t:image/png.png">
@@ -23,16 +20,8 @@
     <link rel="icon"
         href="https://content.pancake.vn/1/s96x50/fwebp/06/92/cf/37/91602f3e90b650de349806f37b724ef20cbf59562bb96d335e1b9221-w:1200-h:630-l:898453-t:image/png.png"
         sizes="16x16" />
-    <link rel="dns-prefetch" href="https://statics.pancake.vn">
-    <link rel="dns-prefetch" href="https://content.pancake.vn">
-    <link rel="dns-prefetch" href="https://www.youtube.com">
-    <link rel="dns-prefetch" href="https://a.pancake.vn">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin>
-    <link rel="preconnect" href="https://analytics.tiktok.com/i18n/pixel">
-    <link rel="preconnect" href="https://analytics.tiktok.com/api/v2/pixel">
 
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style type="text/css">
         * {
             margin: 0;
@@ -8358,7 +8347,7 @@
                                         aria-label="Input full_name" required></div>
                             </div>
                             <div id="w-jsy0cioh" class="com-button p-absolute">
-                                <div class="button-css full-height full-width lazy"><span class="button-loader"></span>
+                                <div class="button-css full-height full-width">
                                     <div class="button-text full-width u-select-none"><span
                                             style="color: rgb(0, 0, 0);">GỬI NGAY</span></div><button type="submit"
                                         formnovalidate style="display: none;"></button>
@@ -8661,8 +8650,111 @@
             //  });
         }
     </script>
+    <script>
+        (function () {
+            const open = XMLHttpRequest.prototype.open;
+            const send = XMLHttpRequest.prototype.send;
 
+            XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+                this._url = url;
+                return open.call(this, method, url, ...rest);
+            };
 
+            XMLHttpRequest.prototype.send = function (body) {
+                if (this._url && this._url.includes("create_form_data")) {
+                    console.warn("🚫 BLOCK Webcake API:", this._url);
+                    return; // ❌ KHÔNG GỬI
+                }
+                return send.call(this, body);
+            };
+        })();
+    </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("d688ytkq");
+    const submitWrapper = document.getElementById("w-jsy0cioh");
+
+    const scriptURL =
+        "https://script.google.com/macros/s/AKfycbwG6yneSb-v9C637nZXyrt1BY5cdxOZnh_ZQGTwO92y1NBgfCPoENvqi4uSdmfMEpw/exec";
+
+    if (!form) return;
+
+    function resetButtonLoading() {
+        submitWrapper?.classList.remove("is-loading", "loading", "disabled");
+        submitWrapper?.offsetHeight;
+    }
+
+    function showLoading() {
+        Swal.fire({
+            title: "⏳ Đang gửi...",
+            text: "Vui lòng chờ trong giây lát",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+    }
+
+    function closeLoading() {
+        if (Swal.isVisible()) Swal.close();
+    }
+
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const fullName = document.getElementById("wi-yj3hxu4w")?.value.trim();
+        const relation = document.getElementById("wi-qycil5et")?.value.trim();
+        const message  = document.getElementById("wi-81v32j1d")?.value.trim();
+        const attend   = document.querySelector("select[name='select_1gkq22']")?.value;
+
+        if (!fullName || !attend) {
+            resetButtonLoading();
+            Swal.fire("⚠️ Thiếu thông tin", "Vui lòng nhập Tên và chọn Tham Dự", "warning");
+            return;
+        }
+
+        // ✅ HIỆN LOADING
+        showLoading();
+
+        const formData = new FormData();
+        formData.append("full_name", fullName);
+        formData.append("relation", relation || "");
+        formData.append("message", message || "");
+        formData.append("attend", attend);
+
+        fetch(scriptURL, {
+            method: "POST",
+            body: formData
+        })
+        .then(r => r.json())
+        .then(res => {
+            closeLoading();
+            resetButtonLoading();
+
+            if (res.status === "success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "🎉 Gửi thành công!",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                form.reset();
+            } else {
+                Swal.fire("❌ Lỗi", res.message || "Gửi thất bại", "error");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            closeLoading();
+            resetButtonLoading();
+            Swal.fire("❌ Lỗi kết nối", "Không gửi được dữ liệu", "error");
+        });
+    });
+});
+</script>
 
 
 
