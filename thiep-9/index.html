@@ -11505,7 +11505,7 @@ https://maps.app.goo.gl/EC9QH4W9mt5z3FpL6
                 </div>
             </div>
         </div>
-        <div id="w-pet7zq4u" class="com-section" data-section>
+        <!-- <div id="w-pet7zq4u" class="com-section" data-section>
             <div class="section-wrapper full-width full-height p-relative">
                 <div class="section-background p-absolute full-width full-height lazy"></div>
                 <div class="section-container full-height p-relative">
@@ -11576,7 +11576,7 @@ https://maps.app.goo.gl/EC9QH4W9mt5z3FpL6
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div id="w-1kyvmtv5" class="com-section" data-section>
             <div class="section-wrapper full-width full-height p-relative">
                 <div class="section-background p-absolute full-width full-height lazy"></div>
@@ -11870,7 +11870,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script> -->
 
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -11881,18 +11880,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!form || !submitWrapper) return;
 
-    function resetButtonLoading() {
-        // ✅ CHỈ gỡ class loading – KHÔNG đụng style
-        submitWrapper.classList.remove(
-            "is-loading",
-            "loading",
-            "disabled"
-        );
-
-        // Cho Webcake render lại
-        submitWrapper.offsetHeight;
+    /* ======================
+       HÀM LOADING SWEETALERT
+    ====================== */
+    function showSwalLoading() {
+        Swal.fire({
+            title: "Đang gửi lời chúc 💌",
+            text: "Vui lòng đợi trong giây lát...",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => Swal.showLoading()
+        });
     }
 
+    function closeSwalLoading() {
+        Swal.close();
+    }
+
+    /* ======================
+       SUBMIT FORM
+    ====================== */
     form.addEventListener("submit", function (e) {
         e.preventDefault();
 
@@ -11901,42 +11908,68 @@ document.addEventListener("DOMContentLoaded", function () {
         const message  = document.getElementById("wi-h8pm5oom")?.value.trim();
         const attend   = document.querySelector("select[name='select_1']")?.value;
 
+        /* ======================
+           VALIDATE
+        ====================== */
         if (!fullName || !attend) {
-            resetButtonLoading();
-            Swal.fire("⚠️ Thiếu thông tin", "Vui lòng nhập Tên và chọn Tham Dự", "warning");
+            Swal.fire(
+                "⚠️ Thiếu thông tin",
+                "Vui lòng nhập Tên và chọn Tham Dự",
+                "warning"
+            );
             return;
         }
 
+        /* ======================
+           FORMDATA
+        ====================== */
         const formData = new FormData();
         formData.append("full_name", fullName);
         formData.append("relation", relation || "");
         formData.append("message", message || "");
         formData.append("attend", attend);
 
+        /* ======================
+           HIỆN LOADING
+        ====================== */
+        showSwalLoading();
+
+        /* ======================
+           FETCH GAS
+        ====================== */
         fetch(scriptURL, {
             method: "POST",
             body: formData
         })
         .then(r => r.json())
         .then(res => {
-            resetButtonLoading();
+            closeSwalLoading();
 
             if (res.status === "success") {
                 Swal.fire({
                     icon: "success",
                     title: "🎉 Gửi thành công!",
+                    text: "Cảm ơn bạn đã gửi lời chúc 💖",
                     timer: 2000,
                     showConfirmButton: false
                 });
                 form.reset();
             } else {
-                Swal.fire("❌ Lỗi", res.message || "Gửi thất bại", "error");
+                Swal.fire(
+                    "❌ Thất bại",
+                    res.message || "Vui lòng thử lại",
+                    "error"
+                );
             }
         })
         .catch(err => {
             console.error(err);
-            resetButtonLoading();
-            Swal.fire("❌ Lỗi kết nối", "Không gửi được dữ liệu", "error");
+            closeSwalLoading();
+            Swal.fire(
+                "❌ Lỗi kết nối",
+                "Không gửi được dữ liệu",
+                "error"
+            );
         });
     });
 });
