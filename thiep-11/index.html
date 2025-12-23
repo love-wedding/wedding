@@ -12,7 +12,6 @@
     <meta name='viewport' content='width=device-width, initial-scale=1' />
     <script
         type='text/javascript'>window.ladi_viewport = function (b) { var a = document; b = b ? b : 'innerWidth'; var c = window[b]; var d = true; if (typeof window.ladi_is_desktop == "undefined" || window.ladi_is_desktop == undefined) { window.ladi_is_desktop = !d; } var e = 960; var f = 420; var g = ''; if (!d) { g = "width=" + e + ",user-scalable=no,initial-scale=1.0"; } else { var h = 1; var i = f; if (i != c) { h = c / i; } g = "width=" + i + ",user-scalable=no,initial-scale=" + h + ",minimum-scale=" + h + ",maximum-scale=" + h; } var j = a.getElementById("viewport"); if (!j) { j = a.createElement("meta"); j.id = "viewport"; j.name = "viewport"; a.head.appendChild(j); } j.setAttribute("content", g); }; window.ladi_viewport(); window.ladi_fbq_data = []; window.ladi_fbq = function () { window.ladi_fbq_data.push(arguments); }; window.ladi_ttq_data = []; window.ladi_ttq = function () { window.ladi_ttq_data.push(arguments); };</script>
-    <link rel="canonical" href="https://www.methiep.site/thiep09" />
     <meta property="og:url" content="https://www.methiep.site/thiep09" />
     <meta property="og:title" content="THIỆP MỜI CƯỚI ANH TÚ - PHƯƠNG LY" />
     <meta property="og:type" content="website" />
@@ -22,6 +21,7 @@
 
     <!-- <link rel="preload" href="https://w.ladicdn.com/v5/source/ladipagev3.min.js?v=1765939897587" as="script"> -->
     <script src="./js/ladipagev3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style id="style_ladi" type="text/css">
         a,
         abbr,
@@ -3692,7 +3692,7 @@
                         </div>
                         <div id="FORM2" is_auto_funnel="" data-config-id="683817e491a64b001218ef0d"
                             class='ladi-element'>
-                            <form autocomplete="off" method="post" class='ladi-form'>
+                            <form id="form_submit" autocomplete="off" method="post" class='ladi-form'>
                                 <div id="BUTTON3" class='ladi-element'>
                                     <div class='ladi-button'>
                                         <div class="ladi-button-background"></div>
@@ -4284,11 +4284,139 @@
             }
         }
     </style>
+
+    <script>
+    (function () {
+        const open = XMLHttpRequest.prototype.open;
+        const send = XMLHttpRequest.prototype.send;
+
+        XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+            this._url = url;
+            return open.call(this, method, url, ...rest);
+        };
+
+        XMLHttpRequest.prototype.send = function (body) {
+            if (this._url && this._url.includes("sendform")) {
+                console.warn("🚫 BLOCK SENDFORM:", this._url);
+                return; // ❌ không gửi
+            }
+            return send.call(this, body);
+        };
+    })();
+    </script>
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.querySelector("#FORM2 form");
+    const btnText = document.querySelector("#BUTTON_TEXT3 .ladi-headline");
+
+    const FIX_TEXT = "GỬI NGAY";
+    const scriptURL =
+        "https://script.google.com/macros/s/AKfycbyIAl6uSFucqSjFpP3oNBgj7xbAsag3NOYlfu2wamVZLa-ihSU9K339K7ZXP6qyNeR9/exec";
+
+    if (!form) return;
+
+    /* =========================
+       1️⃣ GIỮ NGUYÊN TEXT BUTTON
+    ========================= */
+    if (btnText) {
+        btnText.textContent = FIX_TEXT;
+
+        const observer = new MutationObserver(() => {
+            if (btnText.textContent.trim() !== FIX_TEXT) {
+                btnText.textContent = FIX_TEXT;
+            }
+        });
+
+        observer.observe(btnText, {
+            childList: true,
+            characterData: true,
+            subtree: true
+        });
+    }
+
+    /* =========================
+       2️⃣ LOADING
+    ========================= */
+    function showLoading() {
+        Swal.fire({
+            title: "⏳ Đang gửi...",
+            text: "Vui lòng chờ trong giây lát",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => Swal.showLoading()
+        });
+    }
+
+    function closeLoading() {
+        if (Swal.isVisible()) Swal.close();
+    }
+
+    /* =========================
+       3️⃣ SUBMIT FORM (CHẶN LADIPAGE)
+    ========================= */
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const fullName = form.querySelector("input[name='name']")?.value.trim();
+        const message  = form.querySelector("textarea[name='message']")?.value.trim();
+        const attendEl = form.querySelector("input[name='form_item6']:checked");
+        const attend   = attendEl ? attendEl.value : "";
+
+        if (!fullName || !attend) {
+            Swal.fire(
+                "⚠️ Thiếu thông tin",
+                "Vui lòng nhập Họ tên và chọn Tham dự",
+                "warning"
+            );
+            return;
+        }
+
+        showLoading();
+
+        const formData = new FormData();
+        formData.append("full_name", fullName);
+        formData.append("message", message || "");
+        formData.append("attend", attend);
+
+        fetch(scriptURL, {
+            method: "POST",
+            body: formData
+        })
+        .then(r => r.json())
+        .then(res => {
+            closeLoading();
+
+            if (res.status === "success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "🎉 Gửi thành công!",
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                form.reset();
+            } else {
+                Swal.fire("❌ Lỗi", res.message || "Gửi thất bại", "error");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            closeLoading();
+            Swal.fire("❌ Lỗi kết nối", "Không gửi được dữ liệu", "error");
+        });
+    }, true);
+});
+</script>
+
+
+
     <script src="./js/ladipagev3_2.min.js" type="text/javascript"></script>
     <script id="script_event_data"
         type="application/json">{"HEADLINE4":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH1":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"HEADLINE5":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInLeft","A":"0s"},"HEADLINE6":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInRight","A":"0s"},"IMAGE7":{"a":"image","cs":[{"dr":"action","dE":["HEADLINE4","IMAGE7"],"dD":["BOX3","GROUP11","IMAGE88","IMAGE87","HEADLINE5","HEADLINE6"],"a":"hidden_show"}],"D":"pulse","A":"0s"},"HEADLINE18":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH6":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"GROUP3":{"a":"group","D":"fadeInRight","A":"0s"},"HEADLINE19":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH7":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"GROUP4":{"a":"group","D":"fadeInLeft","A":"0s"},"IMAGE35":{"a":"image","D":"fadeInLeft","A":"0s"},"IMAGE36":{"a":"image","D":"fadeInRight","A":"0s"},"HEADLINE20":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH8":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"GROUP5":{"a":"group","D":"fadeInDown","A":"0s"},"HEADLINE21":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH9":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"GROUP6":{"a":"group","D":"fadeInDown","A":"0s"},"HEADLINE23":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInDown","A":"1s"},"PARAGRAPH10":{"option.is_product_mapping_name_custom":true,"a":"paragraph","D":"fadeInUp","A":"1s"},"IMAGE43":{"a":"image","D":"fadeInUp","A":"0s"},"IMAGE44":{"a":"image","D":"fadeInLeft","A":"0s"},"IMAGE45":{"a":"image","D":"fadeInRight","A":"0s"},"HEADLINE24":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInRight","A":"0s"},"HEADLINE25":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInLeft","A":"0s"},"PARAGRAPH12":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"HEADLINE26":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH14":{"option.is_product_mapping_name_custom":true,"a":"paragraph","D":"fadeInLeft","A":"0s"},"HEADLINE27":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInLeft","A":"0s"},"HEADLINE28":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeIn","A":"0s"},"HEADLINE29":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInRight","A":"0s"},"PARAGRAPH15":{"option.is_product_mapping_name_custom":true,"a":"paragraph","D":"fadeInRight","A":"0s"},"HEADLINE30":{"option.is_product_mapping_name_custom":true,"a":"headline"},"HEADLINE31":{"option.is_product_mapping_name_custom":true,"a":"headline"},"HEADLINE32":{"option.is_product_mapping_name_custom":true,"a":"headline"},"HEADLINE33":{"option.is_product_mapping_name_custom":true,"a":"headline"},"HEADLINE34":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH16":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"BUTTON_TEXT2":{"option.is_product_mapping_name_custom":true,"a":"headline"},"BUTTON2":{"a":"button","cs":[{"dr":"action","dv":"_blank","dw":"https://maps.app.goo.gl/K7BmaZiertCtx9Yu6","a":"link"}],"D":"pulse","A":"0s"},"BUTTON_TEXT3":{"option.is_product_mapping_name_custom":true,"a":"headline"},"FORM_ITEM2":{"a":"form_item","bS":"text","bQ":1},"FORM_ITEM3":{"a":"form_item","bS":"textarea","bQ":4},"FORM2":{"option.use_data_leads":true,"option.dynamic_form_config":"&#123;&#34;configs&#34;:[],&#34;default_actions&#34;:[&#123;&#34;text_thankyou_value&#34;:&#34;Cảm ơn bạn đã xác nhân và  gửi lời chúng đến vợ chồng mình!&#34;,&#34;type&#34;:&#34;form_show_popup_default&#34;,&#34;no_delete&#34;:true&#125;]&#125;","a":"form","bP":"683817e491a64b001218ef0d","bM":true,"by":true},"HEADLINE35":{"option.is_product_mapping_name_custom":true,"a":"headline"},"GROUP9":{"a":"group","D":"fadeInUp","A":"1s"},"BUTTON_TEXT4":{"option.is_product_mapping_name_custom":true,"a":"headline"},"BUTTON4":{"a":"button","cs":[{"dr":"action","dw":"POPUP1","a":"popup"}]},"IMAGE53":{"a":"image","F":"fadeInUp","C":"1s"},"IMAGE54":{"a":"image","F":"fadeIn","C":"1s"},"IMAGE55":{"a":"image","F":"fadeIn","C":"1s"},"IMAGE56":{"a":"image","F":"fadeInRight","C":"1s"},"IMAGE57":{"a":"image","F":"fadeInRight","C":"1s"},"IMAGE58":{"a":"image","F":"fadeInLeft","C":"1s"},"PARAGRAPH18":{"option.is_product_mapping_name_custom":true,"a":"paragraph","F":"pulse","C":"0s"},"IMAGE60":{"a":"image","F":"fadeInUp","C":"1s"},"IMAGE69":{"a":"image","D":"fadeInUp","A":"1s"},"PARAGRAPH20":{"option.is_product_mapping_name_custom":true,"a":"paragraph","D":"fadeInDown","A":"1s"},"POPUP1":{"a":"popup","X":"default","U":"background-color: rgba(0, 0, 0, 0.5);"},"HEADLINE36":{"option.is_product_mapping_name_custom":true,"a":"headline"},"HEADLINE37":{"option.is_product_mapping_name_custom":true,"a":"headline"},"PARAGRAPH21":{"option.is_product_mapping_name_custom":true,"a":"paragraph","D":"fadeInRight","A":"0s"},"FORM_ITEM6":{"a":"form_item","bS":"radio","bQ":3},"HEADLINE38":{"option.is_product_mapping_name_custom":true,"a":"headline","D":"fadeInUp","A":"1s"},"IMAGE92":{"a":"image","D":"fadeInUp","A":"1s"},"IMAGE93":{"a":"image","D":"fadeInLeft","A":"1s"},"PARAGRAPH22":{"option.is_product_mapping_name_custom":true,"a":"paragraph"},"GROUP12":{"a":"group","D":"fadeInDown","A":"0s"},"GROUP13":{"a":"group","D":"fadeInLeft","A":"1s"},"GROUP14":{"a":"group","D":"fadeInRight","A":"1s"},"IMAGE126":{"a":"image","D":"flash","A":"0s"},"GROUP16":{"a":"group","D":"fadeInUp","A":"1s"},"GROUP17":{"a":"group","D":"fadeInUp","A":"1s"}}</script>
     <script id="script_ladipage_run"
-        type="text/javascript">(function () { var run = function () { if (typeof window.LadiPageScript == "undefined" || typeof window.ladi == "undefined" || window.ladi == undefined) { setTimeout(run, 100); return; } window.LadiPageApp = window.LadiPageApp || new window.LadiPageAppV2(); window.LadiPageScript.runtime.ladipage_id = '6864dce94248050013e60aef'; window.LadiPageScript.runtime.publish_platform = 'LADIPAGEDNS'; window.LadiPageScript.runtime.is_mobile_only = true; window.LadiPageScript.runtime.version = '1765939897587'; window.LadiPageScript.runtime.cdn_url = 'https://w.ladicdn.com/v5/source/'; window.LadiPageScript.runtime.DOMAIN_SET_COOKIE = ["methiep.site"]; window.LadiPageScript.runtime.DOMAIN_FREE = ["preview.ldpdemo.com", "ldp.page"]; window.LadiPageScript.runtime.bodyFontSize = 12; window.LadiPageScript.runtime.store_id = "59510f6f3386ee0afbcd138e"; window.LadiPageScript.runtime.store_ladiuid = "59510f6f3386ee0afbcd138e"; window.LadiPageScript.runtime.time_zone = 7; window.LadiPageScript.runtime.currency = "VND"; window.LadiPageScript.runtime.convert_replace_str = true; window.LadiPageScript.runtime.desktop_width = 960; window.LadiPageScript.runtime.mobile_width = 420; window.LadiPageScript.runtime.formdata = true; window.LadiPageScript.runtime.tracking_button_click = true; window.LadiPageScript.runtime.publish_time = 1765953700820; window.LadiPageScript.runtime.lang = "vi"; window.LadiPageScript.run(true); window.LadiPageScript.runEventScroll(); }; run(); })();</script>
+        type="text/javascript">(function () { var run = function () { if (typeof window.LadiPageScript == "undefined" || typeof window.ladi == "undefined" || window.ladi == undefined) { setTimeout(run, 100); return; } window.LadiPageApp = window.LadiPageApp || new window.LadiPageAppV2(); window.LadiPageScript.runtime.ladipage_id = '6864dce94248050013e60aef'; window.LadiPageScript.runtime.publish_platform = 'LADIPAGEDNS'; window.LadiPageScript.runtime.is_mobile_only = true; window.LadiPageScript.runtime.version = '1765939897587'; window.LadiPageScript.runtime.cdn_url = ''; window.LadiPageScript.runtime.DOMAIN_SET_COOKIE = ["methiep.site"]; window.LadiPageScript.runtime.DOMAIN_FREE = ["preview.ldpdemo.com", "ldp.page"]; window.LadiPageScript.runtime.bodyFontSize = 12; window.LadiPageScript.runtime.store_id = "59510f6f3386ee0afbcd138e"; window.LadiPageScript.runtime.store_ladiuid = "59510f6f3386ee0afbcd138e"; window.LadiPageScript.runtime.time_zone = 7; window.LadiPageScript.runtime.currency = "VND"; window.LadiPageScript.runtime.convert_replace_str = true; window.LadiPageScript.runtime.desktop_width = 960; window.LadiPageScript.runtime.mobile_width = 420; window.LadiPageScript.runtime.formdata = true; window.LadiPageScript.runtime.tracking_button_click = true; window.LadiPageScript.runtime.publish_time = 1765953700820; window.LadiPageScript.runtime.lang = "vi"; window.LadiPageScript.run(true); window.LadiPageScript.runEventScroll(); }; run(); })();</script>
 </body>
 
 </html><!--Publish time: Wed, 17 Dec 2025 06:41:40 GMT--><!--LadiPage build time: Wed, 17 Dec 2025 02:51:37 GMT-->
