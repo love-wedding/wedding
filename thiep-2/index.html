@@ -31,6 +31,8 @@
     <script src="./asstes/js/countdown.js"></script>
     <script src="./asstes/js/imagesloaded.pkgd.min.js"></script>
     <script src="./asstes/js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -343,7 +345,7 @@
                     <img src="./asstes/images/img-4.jpg">
                 </a>
 
-                <a href="./asstes/images/img-9.jpg"
+                <!-- <a href="./asstes/images/img-9.jpg"
                    class="photo wow animate__animated animate__fadeInRightSlow animate__slow">
                     <img src="./asstes/images/img-9.jpg">
                 </a>
@@ -354,7 +356,7 @@
                 <a href="./asstes/images/img-11.jpg"
                    class="photo wow animate__animated animate__fadeInRightSlow animate__slow">
                     <img src="./asstes/images/img-11.jpg">
-                </a>
+                </a> -->
 
 
 
@@ -378,7 +380,7 @@
 
 
          
-                <a href="./asstes/images/img-12.jpg"
+                <!-- <a href="./asstes/images/img-12.jpg"
                    class="photo wow animate__animated animate__fadeInRightSlow animate__slow">
                     <img src="./asstes/images/img-12.jpg">
                 </a>
@@ -389,7 +391,7 @@
                 <a href="./asstes/images/img-14.jpg"
                    class="photo wow animate__animated animate__fadeInRightSlow animate__slow">
                     <img src="./asstes/images/img-14.jpg">
-                </a>
+                </a> -->
             </div>
             <!-- <div class="view-more wow animate__animated animate__fadeInUp">
                 <button class="btn btn-link">Xem tất cả hình ảnh <i class="bi bi-arrow-right-short"></i></button>
@@ -418,9 +420,23 @@
                 <div class="form-group wow animate__animated animate__fadeInDownSlow animate__slow">
                     <input type="text" class="form-control" id="fullname" placeholder="Nhập tên của bạn*" />
                 </div>
+
                 <div class="form-group wow animate__animated animate__fadeInDownSlow animate__slow">
-                    <textarea type="text" class="form-control" id="text"
-                        placeholder="Nhập lời chúc của bạn*"></textarea>
+                    <input type="text" class="form-control" id="relation"
+                        placeholder="Bạn là gì của dâu rể? (Bạn bè, người thân...)" />
+                </div>
+
+                <div class="form-group wow animate__animated animate__fadeInDownSlow animate__slow">
+                    <select style="background: rgb(255 248 230 / 80%);" class="form-control" id="attendance">
+                        <option value="">Bạn có tham dự không?</option>
+                        <option value="yes">Có, tôi sẽ tham dự</option>
+                        <option value="no">Xin phép không tham dự</option>
+                        <option value="maybe">Chưa chắc chắn</option>
+                    </select>
+                </div>
+
+                <div class="form-group wow animate__animated animate__fadeInDownSlow animate__slow">
+                    <textarea class="form-control" id="text" placeholder="Nhập lời chúc của bạn*"></textarea>
                 </div>
 
                 <div class="text-center">
@@ -429,7 +445,7 @@
                 </div>
             </form>
 
-            <div class="comment-list">
+            <!-- <div class="comment-list">
                 <div class="comment-box wow animate__animated animate__fadeInUp">
                     <div class="fullname">
                         Nguyễn Minh Khang
@@ -470,10 +486,7 @@
                         Chúc cho hôm nay là khởi đầu tuyệt vời cho hành trình yêu thương mãi mãi.
                     </div>
                 </div>
-                <!-- <div class="comment-box view-more wow animate__animated animate__fadeInUp">
-                    <button class="btn btn-link">Xem tất cả lời chúc <i class="bi bi-arrow-right-short"></i></button>
-                </div> -->
-            </div>
+            </div> -->
         </div>
         <div id="card-thankyou" class="card-section" style="background-image: url(./asstes/images/footer.jpg);">
             <div class="card-thankyou-inner">
@@ -507,6 +520,152 @@
         </div>
     </div>
     <script src="./asstes/js/common.js" type="module"></script>
+
+      <script>
+        document.querySelector('.comment-form').addEventListener('submit', function (e) {
+            e.preventDefault(); // chặn reload trang
+
+            const fullname = document.getElementById('fullname').value.trim();
+            const text = document.getElementById('text').value.trim();
+
+            if (!fullname || !text) {
+                alert('Vui lòng nhập đầy đủ thông tin!');
+                return;
+            }
+
+            // Xử lý dữ liệu ở đây (ví dụ: gửi AJAX, hiển thị ra giao diện, v.v.)
+            console.log('Tên:', fullname);
+            console.log('Lời chúc:', text);
+
+            // reset form nếu muốn
+            this.reset();
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector(".comment-form");
+            const scriptURL = "https://script.google.com/macros/s/AKfycby49Uo__3xVXm8j5U7OvzU0tDlI-ksS9cvBB7xSRwrZ3_kprbW9uF3NInsXrrN9QZGL/exec";
+
+            // Chặn submit mặc định
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }, true);
+
+            const submitBtn = form.querySelector("button[type='submit']");
+
+            submitBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Lấy dữ liệu từ form của bạn
+                const fullNameValue = document.getElementById("fullname").value.trim();
+                const relationValue = document.getElementById("relation").value.trim();
+                const attendValue = document.getElementById("attendance").value;
+                const messageValue = document.getElementById("text").value.trim();
+
+                // Validate
+                if (!fullNameValue) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Thiếu thông tin",
+                        text: "Vui lòng nhập tên của bạn 💌",
+                        confirmButtonText: "OK"
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: "Đang gửi...",
+                    text: "Vui lòng chờ trong giây lát 💕",
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                const formData = new FormData();
+                formData.append("full_name", fullNameValue);
+                formData.append("relation", relationValue);
+                formData.append("attend", attendValue);
+                formData.append("message", messageValue);
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(r => r.json())
+                    .then(res => {
+                        Swal.fire({
+                            icon: "success",
+                            title: "🎉 Gửi thành công!",
+                            text: "Cảm ơn bạn đã gửi lời chúc 💖",
+                            confirmButtonText: "Đóng"
+                        });
+                        form.reset();
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "❌ Gửi thất bại",
+                            text: "Vui lòng thử lại sau!",
+                            confirmButtonText: "Đóng"
+                        });
+                    });
+            }, true);
+        });
+    </script>
+
+
+
+<script>
+function changeMultipleBlock(data) {
+  const textStyleKeys = [
+    "color", "fontSize", "fontWeight", "fontFamily",
+    "lineHeight", "letterSpacing", "textAlign",
+    "textTransform", "textDecoration"
+  ];
+
+  Object.entries(data).forEach(([id, cfg]) => {
+    const wrapper = document.getElementById(id);
+    if (!wrapper) return;
+
+    // ===== TEXT =====
+    const textEl =
+      wrapper.querySelector("h1,h2,h3,h4,h5,h6,p,span") ||
+      (wrapper.matches("h1,h2,h3,h4,h5,h6,p,span") ? wrapper : null);
+
+    if (textEl && cfg.text) {
+      textEl.textContent = cfg.text;
+    }
+
+    // ===== IMAGE =====
+    const imgBg = wrapper.querySelector(".image-background, img") ||
+      (wrapper.matches(".image-background, img") ? wrapper : null);
+
+    if (imgBg && cfg.image) {
+      if (imgBg.tagName === "IMG") imgBg.src = cfg.image;
+      else imgBg.style.backgroundImage = `url("${cfg.image}")`;
+    }
+
+    // ===== STYLE =====
+    if (cfg.style) {
+      Object.entries(cfg.style).forEach(([key, value]) => {
+        if (textEl && textStyleKeys.includes(key)) {
+          textEl.style[key] = value;
+        } else {
+          wrapper.style[key] = value;
+        }
+      });
+    }
+  });
+}
+
+fetch("data.json?t=" + Date.now())
+  .then(r => r.json())
+  .then(data => changeMultipleBlock(data))
+  .catch(err => console.error(err));
+</script>
 </body>
 
 </html>

@@ -11,8 +11,6 @@
         !function (e, t, i) { var a, n = e.innerWidth; if (e[i] = (true || n < 768) ? "mobile" : "desktop", "desktop" == e[i]) a = "width=" + 960 + ", user-scalable=no, initial-scale=1.0"; else { var o = 1; w = 420; w != n && (o = n / w), a = "width=" + w + ", user-scalable=no, initial-scale=" + o + ", minimum-scale=" + o + ", maximum-scale=" + o } var l = t.createElement("meta"); l.name = "viewport", l.setAttribute("content", a), t.head.appendChild(l) }(window, document, "DISPLAY");
     </script>
 
-    <link rel="canonical" href="https://www.wedinviteonline.asia/template22yu22">
-    <meta property="og:url" content="https://www.wedinviteonline.asia/template22yu22">
 
     <meta property="og:title" content="THƯ MỜI THIỆP CƯỚI HỮU QUỐC &amp; THANH TÂM">
     <meta property="og:type" content="website">
@@ -10874,6 +10872,56 @@
                 }
             })()
     </script>
+
+    
+<script>
+function changeMultipleBlock(data) {
+  const textStyleKeys = [
+    "color", "fontSize", "fontWeight", "fontFamily",
+    "lineHeight", "letterSpacing", "textAlign",
+    "textTransform", "textDecoration"
+  ];
+
+  Object.entries(data).forEach(([id, cfg]) => {
+    const wrapper = document.getElementById(id);
+    if (!wrapper) return;
+
+    // ===== TEXT =====
+    const textEl =
+      wrapper.querySelector("h1,h2,h3,h4,h5,h6,p,span") ||
+      (wrapper.matches("h1,h2,h3,h4,h5,h6,p,span") ? wrapper : null);
+
+    if (textEl && cfg.text) {
+      textEl.textContent = cfg.text;
+    }
+
+    // ===== IMAGE =====
+    const imgBg = wrapper.querySelector(".image-background, img") ||
+      (wrapper.matches(".image-background, img") ? wrapper : null);
+
+    if (imgBg && cfg.image) {
+      if (imgBg.tagName === "IMG") imgBg.src = cfg.image;
+      else imgBg.style.backgroundImage = `url("${cfg.image}")`;
+    }
+
+    // ===== STYLE =====
+    if (cfg.style) {
+      Object.entries(cfg.style).forEach(([key, value]) => {
+        if (textEl && textStyleKeys.includes(key)) {
+          textEl.style[key] = value;
+        } else {
+          wrapper.style[key] = value;
+        }
+      });
+    }
+  });
+}
+
+fetch("data.json?t=" + Date.now())
+  .then(r => r.json())
+  .then(data => changeMultipleBlock(data))
+  .catch(err => console.error(err));
+</script>
 </body>
 
 </html>

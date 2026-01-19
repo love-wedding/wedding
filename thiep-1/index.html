@@ -11,9 +11,6 @@
         !function (e, t, i) { var a, n = e.innerWidth; if (e[i] = (true || n < 768) ? "mobile" : "desktop", "desktop" == e[i]) a = "width=" + 960 + ", user-scalable=no, initial-scale=1.0"; else { var o = 1; w = 420; w != n && (o = n / w), a = "width=" + w + ", user-scalable=no, initial-scale=" + o + ", minimum-scale=" + o + ", maximum-scale=" + o } var l = t.createElement("meta"); l.name = "viewport", l.setAttribute("content", a), t.head.appendChild(l) }(window, document, "DISPLAY");
     </script>
 
-    <link rel="canonical" href="https://www.ewedinvite.site/MAU6">
-    <meta property="og:url" content="https://www.ewedinvite.site/MAU6">
-
     <meta property="og:title" content="THƯ MỜI CƯỚI ANH TÚ &amp; DIỆU NHI">
     <meta property="og:type" content="website">
     <meta property="og:image"
@@ -31,7 +28,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com/" crossorigin>
     <link rel="preconnect" href="https://analytics.tiktok.com/i18n/pixel">
     <link rel="preconnect" href="https://analytics.tiktok.com/api/v2/pixel">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style type="text/css">
         * {
@@ -5540,7 +5537,7 @@
             border-style: solid;
             color: rgba(0, 50, 99, 1);
             font-family: 'Ephesis-Regular.ttf', sans-serif;
-            font-size: 32pxkho;
+            font-size: 32px;
             text-align: center;
         }
 
@@ -9310,6 +9307,10 @@
             type="audio/mp3">
     </audio> -->
 
+    <audio id="123" autoplay
+    src="https://statics.pancake.vn/web-media/5e/ee/bf/4a/afa10d3bdf98ca17ec3191ebbfd3c829d135d06939ee1f1b712d731d-w:0-h:0-l:2938934-t:audio/mpeg.mp3"
+    preload="none" loop></audio>
+
 
 
 
@@ -10065,6 +10066,241 @@
     <script>window.gtracks = []; window.gga = ""; window.ggt = ""; window.ggads = "";</script>
     <script>window.pageViewConverID = "webcake.exhfnyxhe4"; window.viewContentConverID = "webcake.69ukzvvfb0"</script>
 
+
+    
+    <script>
+        (function () {
+            const open = XMLHttpRequest.prototype.open;
+            const send = XMLHttpRequest.prototype.send;
+
+            XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+                this._url = url;
+                return open.call(this, method, url, ...rest);
+            };
+
+            XMLHttpRequest.prototype.send = function (body) {
+                if (this._url && this._url.includes("create_form_data")) {
+                    console.warn("🚫 BLOCK Webcake API:", this._url);
+                    return; // ❌ KHÔNG GỬI
+                }
+                return send.call(this, body);
+            };
+        })();
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("f2z9fwg4");
+            const btn = document.querySelector("#w-laanz7ny");
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwG6yneSb-v9C637nZXyrt1BY5cdxOZnh_ZQGTwO92y1NBgfCPoENvqi4uSdmfMEpw/exec";
+
+            if (!form || !btn) return;
+
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const fullName = document.getElementById("wi-qtfgn46f")?.value || "";
+                const relation = document.getElementById("wi-hqtvq8oh")?.value || "";
+                const message = document.getElementById("wi-08in2xez")?.value || "";
+
+                if (!fullName.trim()) {
+                    Swal.fire("⚠️ Thiếu thông tin", "Vui lòng nhập tên của bạn", "warning");
+                    return;
+                }
+
+                btn.style.pointerEvents = "none";
+                btn.style.opacity = "0.7";
+
+                const formData = new FormData();
+                formData.append("full_name", fullName);
+                formData.append("relation", relation);
+                formData.append("message", message);
+
+                Swal.fire({
+                    title: "Đang gửi...",
+                    text: "Vui lòng chờ trong giây lát 💌",
+                    allowOutsideClick: false,
+                    customClass: {
+                        container: 'swal-on-top'
+                    },
+                    didOpen: () => Swal.showLoading()
+                });
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(r => r.json())
+                    .then(res => {
+                        if (res?.result === "success" || res?.status === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "🎉 Gửi thành công!",
+                                timer: 2000,
+                                customClass: {
+                                    container: 'swal-on-top'
+                                },
+                                showConfirmButton: false
+                            });
+                            form.reset();
+                        } else throw new Error();
+                    })
+                    .catch(() => Swal.fire("❌ Lỗi", "Vui lòng thử lại", "error"))
+                    .finally(() => {
+                        btn.style.pointerEvents = "auto";
+                        btn.style.opacity = "1";
+                    });
+            });
+
+        });
+    </script>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("tdidxoc8");
+            const btn = document.querySelector("#w-0g83ne3w");
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwG6yneSb-v9C637nZXyrt1BY5cdxOZnh_ZQGTwO92y1NBgfCPoENvqi4uSdmfMEpw/exec";
+
+            if (!form || !btn) return;
+
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const fullName = document.getElementById("wi-oiv62cw6")?.value || "";
+                const relation = document.getElementById("wi-iz5s3j31")?.value || "";
+                const message = document.getElementById("wi-00pnd81x")?.value || "";
+
+                if (!fullName.trim()) {
+                    Swal.fire("⚠️ Thiếu thông tin", "Vui lòng nhập tên của bạn", "warning");
+                    return;
+                }
+
+                btn.style.pointerEvents = "none";
+                btn.style.opacity = "0.7";
+
+                const formData = new FormData();
+                formData.append("full_name", fullName);
+                formData.append("relation", relation);
+                formData.append("message", message);
+
+                Swal.fire({
+                    title: "Đang gửi...",
+                    text: "Vui lòng chờ trong giây lát 💌",
+                                                    customClass: {
+                                    container: 'swal-on-top'
+                                },
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(r => r.json())
+                    .then(res => {
+                        if (res?.result === "success" || res?.status === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "🎉 Gửi thành công!",
+                                timer: 2000,
+                                                                customClass: {
+                                    container: 'swal-on-top'
+                                },
+                                showConfirmButton: false
+                            });
+                            form.reset();
+                        } else throw new Error();
+                    })
+                    .catch(() => Swal.fire("❌ Lỗi", "Vui lòng thử lại", "error"))
+                    .finally(() => {
+                        btn.style.pointerEvents = "auto";
+                        btn.style.opacity = "1";
+                    });
+            });
+
+        });
+    </script>
+
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const form = document.getElementById("cewgewaj");
+            const btn = document.querySelector("#w-shnq13kq");
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwG6yneSb-v9C637nZXyrt1BY5cdxOZnh_ZQGTwO92y1NBgfCPoENvqi4uSdmfMEpw/exec";
+
+            if (!form || !btn) return;
+
+            btn.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const fullName = document.getElementById("wi-g2ymj8sk")?.value || "";
+                const relation = document.getElementById("wi-fae58rcr")?.value || "";
+                const message = document.getElementById("wi-eb09cnjm")?.value || "";
+
+                if (!fullName.trim()) {
+                    Swal.fire("⚠️ Thiếu thông tin", "Vui lòng nhập tên của bạn", "warning");
+                    return;
+                }
+
+                btn.style.pointerEvents = "none";
+                btn.style.opacity = "0.7";
+
+                const formData = new FormData();
+                formData.append("full_name", fullName);
+                formData.append("relation", relation);
+                formData.append("message", message);
+
+                Swal.fire({
+                    title: "Đang gửi...",
+                    text: "Vui lòng chờ trong giây lát 💌",
+                                                    customClass: {
+                                    container: 'swal-on-top'
+                                },
+                    allowOutsideClick: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                fetch(scriptURL, {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(r => r.json())
+                    .then(res => {
+                        if (res?.result === "success" || res?.status === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "🎉 Gửi thành công!",
+                                                                customClass: {
+                                    container: 'swal-on-top'
+                                },
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                            form.reset();
+                        } else throw new Error();
+                    })
+                    .catch(() => Swal.fire("❌ Lỗi", "Vui lòng thử lại", "error"))
+                    .finally(() => {
+                        btn.style.pointerEvents = "auto";
+                        btn.style.opacity = "1";
+                    });
+            });
+
+        });
+    </script>
+
+
+
     <script type="text/javascript">
         window.page_language = ""
         window.page_currency = "VND"
@@ -10177,6 +10413,56 @@
                 }
             })()
     </script>
+
+    
+<script>
+function changeMultipleBlock(data) {
+  const textStyleKeys = [
+    "color", "fontSize", "fontWeight", "fontFamily",
+    "lineHeight", "letterSpacing", "textAlign",
+    "textTransform", "textDecoration"
+  ];
+
+  Object.entries(data).forEach(([id, cfg]) => {
+    const wrapper = document.getElementById(id);
+    if (!wrapper) return;
+
+    // ===== TEXT =====
+    const textEl =
+      wrapper.querySelector("h1,h2,h3,h4,h5,h6,p,span") ||
+      (wrapper.matches("h1,h2,h3,h4,h5,h6,p,span") ? wrapper : null);
+
+    if (textEl && cfg.text) {
+      textEl.textContent = cfg.text;
+    }
+
+    // ===== IMAGE =====
+    const imgBg = wrapper.querySelector(".image-background, img") ||
+      (wrapper.matches(".image-background, img") ? wrapper : null);
+
+    if (imgBg && cfg.image) {
+      if (imgBg.tagName === "IMG") imgBg.src = cfg.image;
+      else imgBg.style.backgroundImage = `url("${cfg.image}")`;
+    }
+
+    // ===== STYLE =====
+    if (cfg.style) {
+      Object.entries(cfg.style).forEach(([key, value]) => {
+        if (textEl && textStyleKeys.includes(key)) {
+          textEl.style[key] = value;
+        } else {
+          wrapper.style[key] = value;
+        }
+      });
+    }
+  });
+}
+
+fetch("data.json?t=" + Date.now())
+  .then(r => r.json())
+  .then(data => changeMultipleBlock(data))
+  .catch(err => console.error(err));
+</script>
 </body>
 
 </html>

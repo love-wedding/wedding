@@ -8848,6 +8848,56 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             })()
     </script>
+
+    
+<script>
+function changeMultipleBlock(data) {
+  const textStyleKeys = [
+    "color", "fontSize", "fontWeight", "fontFamily",
+    "lineHeight", "letterSpacing", "textAlign",
+    "textTransform", "textDecoration"
+  ];
+
+  Object.entries(data).forEach(([id, cfg]) => {
+    const wrapper = document.getElementById(id);
+    if (!wrapper) return;
+
+    // ===== TEXT =====
+    const textEl =
+      wrapper.querySelector("h1,h2,h3,h4,h5,h6,p,span") ||
+      (wrapper.matches("h1,h2,h3,h4,h5,h6,p,span") ? wrapper : null);
+
+    if (textEl && cfg.text) {
+      textEl.textContent = cfg.text;
+    }
+
+    // ===== IMAGE =====
+    const imgBg = wrapper.querySelector(".image-background, img") ||
+      (wrapper.matches(".image-background, img") ? wrapper : null);
+
+    if (imgBg && cfg.image) {
+      if (imgBg.tagName === "IMG") imgBg.src = cfg.image;
+      else imgBg.style.backgroundImage = `url("${cfg.image}")`;
+    }
+
+    // ===== STYLE =====
+    if (cfg.style) {
+      Object.entries(cfg.style).forEach(([key, value]) => {
+        if (textEl && textStyleKeys.includes(key)) {
+          textEl.style[key] = value;
+        } else {
+          wrapper.style[key] = value;
+        }
+      });
+    }
+  });
+}
+
+fetch("data.json?t=" + Date.now())
+  .then(r => r.json())
+  .then(data => changeMultipleBlock(data))
+  .catch(err => console.error(err));
+</script>
 </body>
 
 </html>

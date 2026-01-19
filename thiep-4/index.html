@@ -956,6 +956,41 @@
 
 
 
+<script>
+  function changeMultipleBlock(data) {
+    const textStyleKeys = [
+      "color", "fontSize", "fontWeight", "fontFamily",
+      "lineHeight", "letterSpacing", "textAlign",
+      "textTransform", "textDecoration"
+    ];
+
+    Object.entries(data).forEach(([id, cfg]) => {
+      const wrapper = document.getElementById(id);
+      if (!wrapper) return;
+
+      const h2 = wrapper.querySelector("h2");
+      if (h2 && cfg.text) h2.textContent = cfg.text;
+
+      const imgBg = wrapper.querySelector(".image-background");
+      if (imgBg && cfg.image) {
+        imgBg.style.backgroundImage = `url("${cfg.image}")`;
+      }
+
+      if (cfg.style) {
+        Object.entries(cfg.style).forEach(([key, value]) => {
+          if (h2 && textStyleKeys.includes(key)) h2.style[key] = value;
+          else wrapper.style[key] = value;
+        });
+      }
+    });
+  }
+
+  // Đọc data.json
+  fetch("data.json?t=" + Date.now())
+    .then(r => r.ok ? r.json() : {})
+    .then(data => changeMultipleBlock(data))
+    .catch(() => {});
+</script>
 
 </body>
 
