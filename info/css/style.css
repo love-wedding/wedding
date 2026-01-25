@@ -1,0 +1,223 @@
+  * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f6f6;
+            margin: 0;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* ===== TABS ===== */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 12px 28px;
+            border-radius: 30px;
+            background: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+        }
+
+        .tab.active {
+            background: #e91e63;
+            color: #fff;
+        }
+
+        /* ===== LIST ===== */
+        .card-list {
+            display: none;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card-list.active {
+            display: grid;
+        }
+
+        /* 👉 VIDEO: 3 CARD / HÀNG */
+        #weddingVideos.card-list.active {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, .1);
+            transition: .3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* ===== THUMB THIỆP (DỌC) ===== */
+        .thumb {
+            height: 430px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== THUMB VIDEO (NGANG) ===== */
+        .video-card .thumb {
+            height: auto;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        /* ===== BADGE ===== */
+        .badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
+        }
+
+        .badge.best {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+        }
+
+        .badge.new {
+            background: linear-gradient(45deg, #4caf50, #2e7d32);
+        }
+
+        .info {
+            padding: 15px;
+            flex: 1;
+        }
+
+        .info h3 {
+            margin: 0 0 8px;
+            font-size: 17px;
+        }
+
+        .price {
+            display: inline-block;
+            background: #e91e63;
+            color: #fff;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn {
+            text-align: center;
+            padding: 12px;
+            background: #e91e63;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* ===== VIDEO MODAL ===== */
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-box {
+            position: relative;
+            width: 90%;
+            max-width: 900px;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .video-box video,
+        .video-box iframe {
+            width: 100%;
+            height: 500px;
+            display: none;
+        }
+
+        .video-box .close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 22px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .card-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #weddingVideos.card-list.active {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .card-list,
+            #weddingVideos.card-list.active {
+                grid-template-columns: 1fr;
+            }
+
+            .video-box video,
+            .video-box iframe {
+                height: 280px;
+            }
+        }
+
+        /* ===== THIỆP MỜI BÁO CƯỚI: 2 CARD / HÀNG ===== */
+        #invitationCards.card-list.active {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Ảnh ngang như video */
+        #invitationCards .thumb {
+            height: auto;
+            aspect-ratio: 16 / 9;
+            background: #000;
+        }
+
+        /* Mobile: 1 card / hàng */
+        @media (max-width: 600px) {
+            #invitationCards.card-list.active {
+                grid-template-columns: 1fr;
+            }
+        }
