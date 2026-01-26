@@ -18,17 +18,18 @@
         .tabs {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 30px;
             margin-bottom: 30px;
         }
 
         .tab {
-            padding: 12px 28px;
+            padding: 22px 28px;
             border-radius: 30px;
             background: #fff;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+            font-size: 30px;
         }
 
         .tab.active {
@@ -221,3 +222,114 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        @media (max-width: 600px) {
+    .tabs {
+        gap: 8px;
+    }
+
+    .tab {
+        flex: 1;
+        text-align: center;
+        padding: 14px 10px;
+        font-size: 20px;
+        border-radius: 16px;
+        white-space: nowrap;
+    }
+}
+
+
+
+.hero {
+    padding: 40px 20px;
+    background: #fffaf3;
+    text-align: center;
+}
+
+.hero-header .logo {
+    width: 90px;
+    margin-bottom: 10px;
+}
+
+.hero-header h2 {
+    color: #caa24d;
+    letter-spacing: 3px;
+}
+
+.hero-body {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 20px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 40px auto 0;
+}
+
+.hero-img img {
+    width: 100%;
+    max-width: 260px;
+}
+
+.hero-img.left img {
+    transform: rotate(-6deg);
+}
+
+.hero-img.right img {
+    transform: rotate(6deg);
+}
+
+.hero-text {
+    text-align: left;
+}
+
+.hero-text h1 {
+    color: #b28a2e;
+}
+
+.hero-text ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+.hero-text li {
+    margin-bottom: 8px;
+}
+
+.hero-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+.btn-main {
+    background: #d4a73c;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.btn-outline {
+    border: 2px solid #d4a73c;
+    color: #d4a73c;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .hero-body {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .hero-text {
+        text-align: center;
+    }
+
+    .hero-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
