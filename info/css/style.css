@@ -223,18 +223,24 @@
             }
         }
 
-        @media (max-width: 600px) {
+@media (max-width: 600px) {
     .tabs {
-        gap: 8px;
+        gap: 6px;
+        padding: 0 6px;
     }
 
     .tab {
         flex: 1;
+        min-width: 0;
+        padding: 8px 6px;
+        font-size: clamp(12px, 3.5vw, 16px);
+
         text-align: center;
-        padding: 14px 10px;
-        font-size: 20px;
-        border-radius: 16px;
-        white-space: nowrap;
+
+        /* Cho phép xuống dòng */
+        white-space: normal;
+        overflow: visible;
+        line-height: 1.2;
     }
 }
 
@@ -332,4 +338,113 @@
         justify-content: center;
         flex-wrap: wrap;
     }
+}
+
+
+
+.pricing {
+    padding: 30px 12px;
+}
+
+.pricing-box {
+    max-width: 700px;
+    margin: auto;
+    background: #fffdf6;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.pricing-header,
+.pricing-row {
+    display: grid;
+    grid-template-columns: 1.6fr 2fr;
+    border-bottom: 1px solid #eee;
+}
+
+.pricing-header {
+    background: #fdecdc;
+    font-weight: bold;
+}
+
+.pricing-header .fast {
+    color: #c62828;
+}
+
+.pricing-row:last-child {
+    border-bottom: none;
+}
+
+.pricing-box .col {
+    padding: 12px 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.pricing-box .name {
+    text-align: left;
+}
+
+.pricing-box small {
+    color: #777;
+    font-size: 12px;
+}
+
+.pricing-box .fast {
+    color: #c62828;
+    font-weight: bold;
+}
+
+.pricing-note {
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+    color: #c62828;
+    background: #fff4f4;
+}
+
+
+.pricing-note-box {
+    max-width: 700px;
+    margin: 16px auto 0;
+    background: #fffaf0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0,0,0,.12);
+}
+
+.note-header {
+    padding: 12px 14px;
+    font-weight: bold;
+    font-size: 16px;
+    background: #fff3e0;
+}
+
+.note-row {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 10px;
+    padding: 12px 14px;
+    border-top: 1px solid #eee;
+    align-items: center;
+}
+
+.note-text {
+    font-size: 14px;
+}
+
+.note-text small {
+    color: #777;
+    font-size: 12px;
+}
+
+.note-price {
+    text-align: right;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.pricing-row .price-template {
+    font-weight: 700;
 }
