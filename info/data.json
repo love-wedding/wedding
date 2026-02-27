@@ -1,21 +1,6 @@
 {
   "weddingCards": [
-    {
-      "id": "thiep-1",
-      "name": "Thiệp 01",
-      "price": "139.000đ",
-      "tag": "best",
-      "image": "./images/thiep-1.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-1/"
-    },
-    {
-      "id": "thiep-1_v2",
-      "name": "Thiệp 01 v2",
-      "price": "139.000đ",
-      "tag": "new",
-      "image": "./images/thiep-1_v2.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-1_v2/"
-    },
+  
     {
       "id": "thiep-2",
       "name": "Thiệp 02",
@@ -58,7 +43,7 @@
     },
     {
       "id": "thiep-8",
-      "name": "Thiệp 01 v2",
+      "name": "Thiệp 08",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-8.png",
@@ -79,6 +64,22 @@
       "tag": "new",
       "image": "./images/thiep-10.png",
       "url": "https://love-wedding.github.io/wedding/thiep-10/"
+    },
+    {
+      "id": "thiep-1",
+      "name": "Thiệp 01",
+      "price": "139.000đ",
+      "tag": "best",
+      "image": "./images/thiep-1.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-1/"
+    },
+    {
+      "id": "thiep-1_v2",
+      "name": "Thiệp 01 v2",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-1_v2.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-1_v2/"
     },
     {
       "id": "thiep-11",
@@ -119,6 +120,22 @@
       "tag": "new",
       "image": "./images/thiep-17.png",
       "url": "https://love-wedding.github.io/wedding/thiep-17/"
+    },
+    {
+      "id": "thiep-18",
+      "name": "Thiệp 18",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-18.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-18/"
+    },
+    {
+      "id": "thiep-21",
+      "name": "Thiệp 21",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-21.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-21/"
     }
   ],
 
@@ -156,6 +173,14 @@
       "tag": "best",
       "image": "./images/video-2.png",
       "video": "https://hilo.id.vn/web/videos/slide-2.mp4",
+      "type": "mp4"
+    },
+    {
+      "name": "Slide trình chiếu màn led 3",
+      "price": "189.000đ",
+      "tag": "new",
+      "image": "./images/video-3.png",
+      "video": "https://res.cloudinary.com/dkjc7xwox/video/upload/v1769703913/video-3_v3uepb.mp4",
       "type": "mp4"
     },
     {
