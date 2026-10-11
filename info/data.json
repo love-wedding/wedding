@@ -1,6 +1,29 @@
 {
   "weddingCards": [
-  
+  {
+      "id": "thiep-20",
+      "name": "Thiệp 20",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-20.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-20/"
+    },
+    {
+      "id": "thiep-22",
+      "name": "Thiệp 22",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-22.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-22/"
+    },
+    {
+      "id": "thiep-23",
+      "name": "Thiệp 23",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-23.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-23/"
+    },
     {
       "id": "thiep-2",
       "name": "Thiệp 02",
