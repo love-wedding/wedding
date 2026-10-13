@@ -3,236 +3,638 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dịch vụ cưới online</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dịch vụ thiệp cưới online, video cưới, slide trình chiếu màn hình LED.">
-    <meta property="og:title" content="Dịch vụ cưới online">
-    <meta property="og:description" content="Thiệp cưới điện tử & video cưới hiện đại.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Wedding | Dịch Vụ Thiệp Cưới Online & Video Cưới Hiện Đại</title>
+    <meta name="description" content="Dịch vụ thiệp cưới online cao cấp, thiệp mời báo cưới, video cưới và slide trình chiếu màn hình LED. Tinh tế, hiện đại, tích hợp bản đồ và QR mừng cưới.">
+    <meta property="og:title" content="Love Wedding | Thiệp Cưới Online Đẳng Cấp & Tinh Tế">
+    <meta property="og:description" content="Trải nghiệm lời mời cưới kỹ nguyên số. Tích hợp nhạc nền, Google Maps, album ảnh và mã QR mừng cưới thông minh.">
     <meta property="og:type" content="website">
+    <meta property="og:image" content="./images/thiep-20.png">
+    <link rel="icon" href="https://hilo.id.vn/images/logo.png" sizes="32x32" type="image/png">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="icon" href="https://hilo.id.vn/images/logo.png" sizes="16x16" />
-    <meta property="og:image" content="https://hilo.id.vn/images/logo.png">
 </head>
 
 <body>
 
-    <h1>💍 Dịch vụ cưới online</h1>
-    <section class="hero">
-        <div class="hero-header">
-            <img src="https://hilo.id.vn/images/logo.png" class="logo">
-            <h2>THIỆP CƯỚI ONLINE<br>HẠNH PHÚC</h2>
-        </div>
+    <!-- Canvas Hiệu Ứng Hoa Rơi Lãng Mạn -->
+    <canvas id="petalsCanvas"></canvas>
 
-        <div class="hero-body">
-            <div class="hero-img left">
-                <img src="https://w.ladicdn.com/s400x400/63edf0c0ef1e900012159053/image-removebg-preview-9-20250114081139-mhres.png">
-            </div>
+    <!-- Banner Chào Mừng Cá Nhân Hóa (Nếu có URL param ?u= hoặc ?to=) -->
+    <div id="guestGreetingBar" class="guest-greeting-bar">
+        <i class="fa-solid fa-heart"></i>
+        <span>Kính mời <span id="guestGreetingName" class="guest-name-highlight">Quý Khách</span> cùng khám phá trọn bộ mẫu thiệp cưới lãng mạn & đẳng cấp nhất!</span>
+        <i class="fa-solid fa-heart"></i>
+    </div>
 
-            <div class="hero-text">
-                <h1>THIẾT KẾ ĐÁM CƯỚI<br>MỚI CƯỚI ONLINE</h1>
+    <!-- Header & Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand">
+                <img src="https://hilo.id.vn/images/logo.png" alt="Love Wedding Logo" class="nav-logo" onerror="this.src='./images/thiep-20.png'">
+                <div class="nav-brand-text">
+                    <span class="nav-title">LOVE WEDDING</span>
+                    <span class="nav-subtitle">Thiệp Cưới Online</span>
+                </div>
+            </a>
 
-                <ul>
-                    <li>💖 Trải nghiệm lời mời cưới kỹ nguyên số</li>
-                    <li>💖 Chạm để kết nối – Gửi trọn yêu thương</li>
-                    <li>💖 Thiệp cưới Online: Tinh tế trong từng điểm chạm</li>
-                    <li>💖 Nhanh – dễ chia sẻ – đủ bất cứ nơi đâu</li>
-                    <li>💖 Gửi lời mời trân trọng theo cách riêng của bạn</li>
+            <nav>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#hero" class="nav-link">Trang Chủ</a></li>
+                    <li><a href="#catalog" class="nav-link">Bộ Sưu Tập</a></li>
+                    <li><a href="#pricing" class="nav-link">Bảng Giá</a></li>
+                    <li><a href="#features" class="nav-link">Ưu Điểm</a></li>
+                    <li><a href="#process" class="nav-link">Quy Trình</a></li>
                 </ul>
+            </nav>
 
-                <div class="hero-actions">
-                    <a class="btn-main" href="https://zalo.me/0326677811">ĐẶT LÀM NGAY</a>
+            <div class="nav-actions">
+                <a href="https://zalo.me/0326677811" target="_blank" rel="noopener noreferrer" class="btn-nav-cta">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span>Tư Vấn Zalo</span>
+                </a>
+                <button class="mobile-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- HERO SECTION -->
+        <section class="hero-section" id="hero">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="hero-badge-wrap">
+                            <span class="hero-pill">
+                                <span class="pulse-dot"></span>
+                                Xu Hướng Cưới Hỏi Kỹ Thuật Số 2026
+                            </span>
+                        </div>
+
+                        <h1 class="hero-title">
+                            Trao Lời Yêu Thương<br>
+                            <span class="text-gold-shine">Thiệp Cưới Online Tinh Tế</span>
+                        </h1>
+
+                        <p class="hero-subtitle">
+                            Chạm để kết nối – Gửi trọn yêu thương. Lời mời cưới hiện đại tích hợp Google Maps chỉ đường, nhạc nền lãng mạn, album ảnh HD và mã QR mừng cưới thông minh. Tiết kiệm chi phí, chia sẻ tức thì.
+                        </p>
+
+                        <div class="hero-cta-group">
+                            <a href="#catalog" class="btn-primary">
+                                <span>Khám Phá Bộ Sưu Tập</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                            <a href="https://zalo.me/0326677811" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                                <i class="fa-solid fa-bolt"></i>
+                                <span>Đặt Thiệp Nhanh 24h</span>
+                            </a>
+                        </div>
+
+                        <div class="hero-stats-row">
+                            <div class="stat-item">
+                                <span class="stat-number">50+</span>
+                                <span class="stat-label">Mẫu Thiết Kế Độc Quyền</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">24 Giờ</span>
+                                <span class="stat-label">Thời Gian Hoàn Thiện</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">1.000+</span>
+                                <span class="stat-label">Cặp Đôi Đã Tin Chọn</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="mockup-composition">
+                            <div class="mockup-card card-left">
+                                <img src="./images/thiep-22.png" alt="Mẫu thiệp cưới 22">
+                            </div>
+                            <div class="mockup-card card-center">
+                                <img src="./images/thiep-20.png" alt="Mẫu thiệp cưới 20">
+                            </div>
+                            <div class="mockup-card card-right">
+                                <img src="./images/thiep-23.png" alt="Mẫu thiệp cưới 23">
+                            </div>
+                            <div class="floating-feature-tag">
+                                <i class="fa-solid fa-heart"></i>
+                                <span>Chạm để mở ra trang web cưới của bạn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATALOG SECTION -->
+        <section class="catalog-section" id="catalog">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Bộ Sưu Tập Mới Nhất</span>
+                    <h2 class="section-title">Khám Phá Các Mẫu Thiệp & Video</h2>
+                    <p class="section-desc">
+                        Đa dạng phong cách từ Hiện đại, Tối giản, Cổ điển tới Sang trọng đẳng cấp. Bấm để trải nghiệm trực tiếp giao diện thực tế.
+                    </p>
+                    <div class="ornament-line">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                </div>
+
+                <!-- Catalog Filter Controls -->
+                <div class="catalog-controls">
+                    <!-- Main Category Tabs -->
+                    <div class="main-tabs-wrap">
+                        <button class="tab-btn active" data-tab="weddingCards">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Thiệp Cưới Điện Tử</span>
+                            <span class="tab-count">0</span>
+                        </button>
+                        <button class="tab-btn" data-tab="invitationCards">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <span>Thiệp Báo Cưới 2 Mặt</span>
+                            <span class="tab-count">0</span>
+                        </button>
+                        <button class="tab-btn" data-tab="weddingVideos">
+                            <i class="fa-solid fa-video"></i>
+                            <span>Video & Slide Chiếu LED</span>
+                            <span class="tab-count">0</span>
+                        </button>
+                        <button class="tab-btn" data-tab="birthdayCards">
+                            <i class="fa-solid fa-cake-candles"></i>
+                            <span>Thiệp Sinh Nhật / Sự Kiện</span>
+                            <span class="tab-count">0</span>
+                        </button>
+                    </div>
+
+                    <!-- Sub Toolbar (Search & Tag Filter) -->
+                    <div class="sub-toolbar">
+                        <div class="search-box-wrap">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="catalogSearchInput" class="search-input" placeholder="Tìm kiếm mẫu thiệp (VD: Thiệp 20, Thiệp 01)...">
+                            <i class="fa-solid fa-xmark search-clear-btn" id="searchClearBtn" title="Xóa tìm kiếm"></i>
+                        </div>
+
+                        <div class="sub-filter-tags">
+                            <button class="tag-btn active" data-tag="all">Tất cả mẫu</button>
+                            <button class="tag-btn" data-tag="best">🔥 Bán chạy nhất</button>
+                            <button class="tag-btn" data-tag="new">✨ Mẫu mới nhất</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Counter -->
+                <div class="results-summary" id="resultsSummary">
+                    Đang nạp dữ liệu mẫu thiệp cưới...
+                </div>
+
+                <!-- Cards Grid Container -->
+                <div class="cards-grid" id="catalogCardsGrid">
+                    <!-- Cards will be dynamically injected here by main.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING SECTION -->
+        <section class="pricing-section" id="pricing">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Bảng Giá Dịch Vụ</span>
+                    <h2 class="section-title">Chi Phí Tối Ưu - Giá Trị Trọn Vẹn</h2>
+                    <p class="section-desc">
+                        Chỉ với một phần nhỏ chi phí so với in ấn truyền thống, bạn sở hữu website cưới hoàn chỉnh, lưu giữ kỷ niệm vĩnh cửu.
+                    </p>
+                    <div class="ornament-line">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                </div>
+
+                <!-- Pricing Tier Cards -->
+                <div class="pricing-grid">
+                    <!-- Tier 1 -->
+                    <div class="pricing-tier-card">
+                        <div class="tier-header">
+                            <span class="tier-badge-title">GÓI 1 - TIÊU CHUẨN</span>
+                            <h3 class="tier-name">1 Thiệp Nhà Trai hoặc Gái</h3>
+                            <p class="tier-desc">Dành cho 1 bên gia đình với thông tin riêng biệt</p>
+                            <div class="tier-price-box">
+                                <span class="tier-price-amount">139K</span>
+                                <span class="tier-price-unit">/ trọn gói</span>
+                            </div>
+                            <div class="tier-sub-price">Thời gian hoàn thiện: 1 - 2 ngày</div>
+                        </div>
+
+                        <ul class="tier-features-list">
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Giao diện web cưới sang trọng, hiện đại</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Tích hợp Google Maps dẫn đường chính xác</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Tự chọn bài hát nhạc nền lãng mạn yêu thích</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Đồng hồ đếm ngược tới ngày thành hôn</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Mã QR mừng cưới tiện lợi cho khách phương xa</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Miễn phí 3 lần chỉnh sửa thông tin</span>
+                            </li>
+                        </ul>
+
+                        <a href="https://zalo.me/0326677811?text=Xin%20chào,%20mình%20muốn%20đăng%20ký%20GÓI%201%20(139K)" target="_blank" rel="noopener noreferrer" class="btn-tier-cta">
+                            <span>Chọn Gói 1</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Tier 2 -->
+                    <div class="pricing-tier-card">
+                        <div class="tier-header">
+                            <span class="tier-badge-title">GÓI 2 - TIỆN LỢI</span>
+                            <h3 class="tier-name">1 Thiệp Dùng Chung</h3>
+                            <p class="tier-desc">Tổ chức chung tiệc hoặc bạn bè hai bên</p>
+                            <div class="tier-price-box">
+                                <span class="tier-price-amount">219K</span>
+                                <span class="tier-price-unit">/ trọn gói</span>
+                            </div>
+                            <div class="tier-sub-price">Thời gian hoàn thiện: 1 - 2 ngày</div>
+                        </div>
+
+                        <ul class="tier-features-list">
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Toàn bộ quyền lợi của Gói Tiêu Chuẩn</span>
+                            </li>
+                            <li class="tier-feature-item accent-feature">
+                                <i class="fa-solid fa-star"></i>
+                                <span>Tích hợp thông tin cả Nhà Trai & Nhà Gái trên 1 thiệp</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Hiển thị 2 địa chỉ tổ chức & 2 bản đồ riêng biệt</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Album ảnh cưới HD không giới hạn số lượng ảnh</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Form gửi lời chúc & xác nhận tham dự (RSVP)</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Miễn phí 3 lần chỉnh sửa thông tin</span>
+                            </li>
+                        </ul>
+
+                        <a href="https://zalo.me/0326677811?text=Xin%20chào,%20mình%20muốn%20đăng%20ký%20GÓI%202%20(219K)" target="_blank" rel="noopener noreferrer" class="btn-tier-cta">
+                            <span>Chọn Gói 2</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+
+                    <!-- Tier 3: Featured -->
+                    <div class="pricing-tier-card featured">
+                        <div class="popular-ribbon">
+                            <i class="fa-solid fa-crown"></i>
+                            <span>Được Chọn Nhiều Nhất</span>
+                        </div>
+
+                        <div class="tier-header">
+                            <span class="tier-badge-title">GÓI 3 - COMBO ĐÔI</span>
+                            <h3 class="tier-name">Combo 2 Thiệp Riêng Biệt</h3>
+                            <p class="tier-desc">1 link Nhà Trai + 1 link Nhà Gái chuẩn chỉnh nghi thức</p>
+                            <div class="tier-price-box">
+                                <span class="tier-price-amount">219K</span>
+                                <span class="tier-price-unit">/ Cùng mẫu</span>
+                            </div>
+                            <div class="tier-sub-price">Khác mẫu: <strong>249K</strong> | Hoàn thiện: 1 - 2 ngày</div>
+                        </div>
+
+                        <ul class="tier-features-list">
+                            <li class="tier-feature-item accent-feature">
+                                <i class="fa-solid fa-check-double"></i>
+                                <span><strong>Sở hữu 2 link web riêng:</strong> 1 Nhà Trai + 1 Nhà Gái</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Chuẩn mực văn phong & thời gian của từng gia đình</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Tùy biến mã QR mừng cưới riêng cho từng cô dâu chú rể</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Tích hợp 2 bản đồ dẫn đường chi tiết từng hôn trường</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Ưu tiên tốc độ xử lý và gửi duyệt bản nháp sớm</span>
+                            </li>
+                            <li class="tier-feature-item">
+                                <i class="fa-solid fa-check"></i>
+                                <span>Miễn phí 3 lần chỉnh sửa thông tin</span>
+                            </li>
+                        </ul>
+
+                        <a href="https://zalo.me/0326677811?text=Xin%20chào,%20mình%20muốn%20đăng%20ký%20GÓI%203%20COMBO" target="_blank" rel="noopener noreferrer" class="btn-tier-cta">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Chọn Gói Combo Nổi Bật</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pricing Policies & Add-ons -->
+                <div class="pricing-policy-wrap">
+                    <div class="policy-header">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <h4>Quy Định & Dịch Vụ Bổ Sung Minh Bạch</h4>
+                    </div>
+                    <div class="policy-grid">
+                        <div class="policy-item">
+                            <div class="policy-icon">
+                                <i class="fa-solid fa-user-tag"></i>
+                            </div>
+                            <div class="policy-text">
+                                <h5>Cá Nhân Hóa Tên Khách Mời</h5>
+                                <p>Tự động chèn tên từng khách quý vào trang bìa thiệp (Gửi riêng cho từng người).</p>
+                                <span class="policy-tag">+50K / thiệp</span>
+                            </div>
+                        </div>
+
+                        <div class="policy-item">
+                            <div class="policy-icon">
+                                <i class="fa-solid fa-pen-ruler"></i>
+                            </div>
+                            <div class="policy-text">
+                                <h5>Tùy Chỉnh Nội Dung Chuyên Sâu</h5>
+                                <p>Thêm mục dòng thời gian (timeline), quy định trang phục (dresscode), album ảnh tùy biến.</p>
+                                <span class="policy-tag">30K / yêu cầu</span>
+                            </div>
+                        </div>
+
+                        <div class="policy-item">
+                            <div class="policy-icon">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </div>
+                            <div class="policy-text">
+                                <h5>Hỗ Trợ Chỉnh Sửa Tận Tình</h5>
+                                <p>Miễn phí 3 lần chỉnh sửa đầu tiên. Chỉnh sửa từ lần thứ 4 (trừ lỗi sai sót do shop): 20K/lần.</p>
+                                <span class="policy-tag">3 Lần Miễn Phí</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Ưu Điểm Vượt Trội</span>
+                    <h2 class="section-title">Vì Sao Hơn 1.000+ Cặp Đôi Tin Chọn?</h2>
+                    <p class="section-desc">
+                        Không chỉ là tấm thiệp mời, chúng tôi kiến tạo trải nghiệm kỹ thuật số chạm đến cảm xúc của từng vị khách quý.
+                    </p>
+                    <div class="ornament-line">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </div>
+                        <h4>Gửi Lời Mời Trong Tích Tắc</h4>
+                        <p>Dễ dàng chia sẻ qua Zalo, Messenger, SMS chỉ với 1 cú click. Khách mời ở xa hay ở nước ngoài đều nhận được ngay lập tức.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <h4>Chỉ Đường Thông Minh</h4>
+                        <p>Tích hợp trực tiếp Google Maps, giúp khách mời tìm kiếm địa điểm tổ chức tiệc cưới chuẩn xác, không lo lạc đường.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <h4>Giai Điệu Tình Yêu Du Dương</h4>
+                        <p>Khách mời vừa mở thiệp là nhạc nền tình yêu vang lên, tự do chọn bài hát kỷ niệm gắn liền với chuyện tình của hai bạn.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <h4>Hộp Mừng Cưới & QR Ngân Hàng</h4>
+                        <p>Khách phương xa không thể đến dự vẫn có thể gửi gắm lời chúc và món quà mừng dễ dàng qua mã QR ngân hàng tiện lợi.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+                        <h4>Tương Thích Mọi Thiết Bị</h4>
+                        <p>Hiển thị mượt mà trên iPhone, Android, iPad và Máy tính với hiệu ứng mở thiệp mượt mà 60fps đỉnh cao.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+                        <h4>Lưu Giữ Kỷ Niệm Vĩnh Cửu</h4>
+                        <p>Link thiệp tồn tại lâu dài, là cuốn nhật ký số lưu giữ những hình ảnh đẹp nhất của ngày trọng đại theo năm tháng.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROCESS SECTION -->
+        <section class="process-section" id="process">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Quy Trình Đơn Giản</span>
+                    <h2 class="section-title">4 Bước Sở Hữu Thiệp Cưới Hoàn Hảo</h2>
+                    <p class="section-desc">
+                        Nhanh gọn, chính xác và chuyên nghiệp. Nhận sản phẩm hoàn thiện chỉ sau 24 giờ làm việc.
+                    </p>
+                    <div class="ornament-line">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                </div>
+
+                <div class="process-steps-grid">
+                    <div class="step-card">
+                        <div class="step-number-badge">1</div>
+                        <h4 class="step-title">Chọn Mẫu Ưng Ý</h4>
+                        <p class="step-desc">Khám phá bộ sưu tập và chọn mẫu thiệp hoặc video phù hợp với phong cách của hai bạn.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number-badge">2</div>
+                        <h4 class="step-title">Gửi Thông Tin Qua Zalo</h4>
+                        <p class="step-desc">Gửi ảnh cưới, thông tin cô dâu chú rể, thời gian, địa điểm tổ chức tiệc cưới cho đội ngũ thiết kế.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number-badge">3</div>
+                        <h4 class="step-title">Duyệt Bản Nháp Demo</h4>
+                        <p class="step-desc">Nhận link xem trước trong vòng 24h. Bạn kiểm tra nội dung và yêu cầu chỉnh sửa nếu cần.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number-badge">4</div>
+                        <h4 class="step-title">Nhận Thiệp & Gửi Đi</h4>
+                        <p class="step-desc">Nhận link web chính thức và bắt đầu gửi lời mời trân trọng tới những người thân yêu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA BANNER SECTION -->
+        <section class="cta-banner-section">
+            <div class="container">
+                <div class="cta-banner-box">
+                    <h2>Khởi Đầu Hôn Nhân Viên Mãn Cùng Love Wedding</h2>
+                    <p>Hãy để chúng tôi đồng hành cùng bạn tạo nên lời mời cưới chỉn chu, trang trọng và đáng nhớ nhất trong cuộc đời.</p>
+                    <div class="cta-banner-actions">
+                        <a href="https://zalo.me/0326677811" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <span>Liên Hệ Zalo: 0326.677.811</span>
+                        </a>
+                        <a href="#catalog" class="btn-secondary">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Xem Lại Các Mẫu Thiệp</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>LOVE WEDDING</h3>
+                    <p>Chuyên thiết kế thiệp cưới online, thiệp mời điện tử, video cưới và slide trình chiếu màn hình LED cho ngày trọng đại.</p>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>Hotline / Zalo: <strong>0326.677.811</strong></span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Email: contact@lovewedding.vn</span>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Danh Mục Mẫu</h4>
+                    <ul class="footer-links">
+                        <li><a href="#catalog">Thiệp cưới điện tử</a></li>
+                        <li><a href="#catalog">Thiệp mời báo cưới 2 mặt</a></li>
+                        <li><a href="#catalog">Video cưới trình chiếu LED</a></li>
+                        <li><a href="#catalog">Background màn led sân khấu</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Liên Kết Nhanh</h4>
+                    <ul class="footer-links">
+                        <li><a href="#hero">Trang chủ</a></li>
+                        <li><a href="#pricing">Bảng giá dịch vụ</a></li>
+                        <li><a href="#features">Ưu điểm nổi bật</a></li>
+                        <li><a href="#process">Quy trình làm thiệp</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Cam Kết Dịch Vụ</h4>
+                    <p>✨ Thiết kế tỉ mỉ, tôn trọng phong cách riêng</p>
+                    <p>⚡ Hoàn thiện đúng hẹn chỉ sau 24h</p>
+                    <p>💖 Hỗ trợ tận tình cho đến tận ngày cưới</p>
                 </div>
             </div>
 
-            <div class="hero-img right">
-                <img src="https://w.ladicdn.com/s400x400/63edf0c0ef1e900012159053/image-removebg-preview-6-20250113191601-a5qlv.png">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Love Wedding. All rights reserved. Thiết kế thiệp cưới online cao cấp.</p>
+                <p>Hotline hỗ trợ khách hàng: <a href="tel:0326677811" style="color: var(--gold-light);">0326.677.811</a></p>
             </div>
         </div>
-    </section>
+    </footer>
 
-    <section class="pricing">
-    <div class="pricing-box">
-        <div class="pricing-header">
-            <div class="col name">GÓI THIỆP</div>
-            <div class="col normal">
-                LÀM THƯỜNG<br><span>(1 - 2 ngày)</span>
+    <!-- VIDEO LIGHTBOX MODAL -->
+    <div id="videoModalOverlay" class="video-modal-overlay">
+        <div class="video-modal-container">
+            <div class="modal-header-bar">
+                <h3 id="modalVideoTitle" class="modal-title-text">Xem Video Cưới</h3>
+                <button class="btn-close-modal" id="modalCloseBtn" title="Đóng modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
-            <!-- <div class="col fast">
-                LÀM GẤP<br><span>(≤24h)</span>
-            </div> -->
-        </div>
 
-        <div class="pricing-row">
-            <div class="col name">GÓI 1<br><small>1 thiệp Nhà Trai hoặc Nhà Gái</small></div>
-            <div class="col normal price-template">139K</div>
-            <!-- <div class="col fast">195K</div> -->
-        </div>
-
-        <div class="pricing-row">
-            <div class="col name">GÓI 2<br><small>1 thiệp dùng chung</small></div>
-            <div class="col normal price-template">219K</div>
-            <!-- <div class="col fast">285K</div> -->
-        </div>
-
-        <div class="pricing-row">
-            <div class="col name">GÓI 3<br><small>Combo 2 thiệp (1 nhà trai + 1 nhà gái cùng mẫu)</small></div>
-            <div class="col normal price-template">219K<br><small>Khác Mẫu 249k</small></div>
-            <!-- <div class="col fast">325K</div> -->
-        </div>
-
-        <div class="pricing-note">
-            [+ Điền tên từng khách +50K/thiệp]
-        </div>
-    </div>
-
-    <div class="pricing-note-box">
-    <div class="note-header">LƯU Ý</div>
-
-    <div class="note-row">
-        <div class="note-text">
-            Đổi mẫu sau khi hoàn thiện<br>
-            <!-- <small>(chỉ hỗ trợ gói làm thường)</small> -->
-        </div>
-        <div class="note-price">Tính giá làm thiệp mới</div>
-    </div>
-
-    <div class="note-row">
-        <div class="note-text">
-            Tùy chỉnh nội dung chuyên sâu<br>
-            <small>(VD: Thay toàn bộ ảnh, thêm timeline, dresscode, ...)</small>
-        </div>
-        <div class="note-price">30K/Yêu cầu</div>
-    </div>
-
-    <div class="note-row">
-        <div class="note-text">
-            Hỗ trợ chỉnh sửa 3 lần miễn phí – Tính phí từ lần 4<br>
-            <small>(Trừ lỗi sai thông tin)</small>
-        </div>
-        <div class="note-price">20k/Lần</div>
-    </div>
-</div>
-
-</section>
-
-
-    <!-- ===== MENU ===== -->
-    <div class="tabs">
-        <div class="tab active" data-tab="weddingCards">💌 Thiệp cưới</div>
-        <div class="tab" data-tab="invitationCards">📨 Thiệp mời báo cưới</div>
-        <div class="tab" data-tab="weddingVideos">🎥 Video cưới</div>
-    </div>
-
-    <!-- ===== CONTENT ===== -->
-    <div class="card-list active" id="weddingCards"></div>
-    <div class="card-list" id="invitationCards"></div>
-    <div class="card-list" id="weddingVideos"></div>
-
-    <!-- ===== VIDEO MODAL ===== -->
-    <div id="videoModal" class="video-modal">
-        <div class="video-box">
-            <span class="close" onclick="closeVideo()">✕</span>
-            <video id="videoPlayer" controls></video>
-            <iframe id="youtubePlayer" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <script>
-        fetch("./data.json")
-            .then(res => res.json())
-            .then(data => {
-                renderCards(data.weddingCards, "weddingCards");
-                renderCards(data.invitationCards, "invitationCards");
-                renderCards(data.weddingVideos, "weddingVideos", true);
-            })
-            .catch(err => console.error("Load data.json lỗi:", err));
-
-
-        /* ===== RENDER ===== */
-        function renderCards(list, id, isVideo = false) {
-            const box = document.getElementById(id);
-            box.innerHTML = "";
-            list.forEach(item => {
-                const card = document.createElement("div");
-                card.className = isVideo ? "card video-card" : "card";
-
-                card.innerHTML = `
-            <div class="thumb">
-                ${item.tag ? `
-                <div class="badge ${item.tag}">
-                    ${item.tag === "best" ? "🔥 BEST SELLER" : "✨ NEW"}
-                </div>` : ""}
-                <img src="${item.image}">
+            <div class="modal-player-wrap">
+                <video id="modalVideoPlayer" controls playsinline></video>
+                <iframe id="modalYoutubePlayer" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
-            <div class="info">
-                <h3>${item.name}</h3>
-                <div class="price">${item.price}</div>
+
+            <div class="modal-footer-bar">
+                <div class="modal-price-display" id="modalVideoPrice">189.000đ</div>
+                <a id="modalVideoOrderBtn" href="https://zalo.me/0326677811" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <span>Đặt Làm Video Này</span>
+                </a>
             </div>
-            <div class="btn">${isVideo ? "Xem video" : "Xem thiệp"}</div>
-        `;
+        </div>
+    </div>
 
-                if (isVideo) {
-                    card.onclick = () => openVideo(item);
-                } else {
-                    card.onclick = () => window.open(item.url, "_blank");
-                }
+    <!-- FLOATING ACTIONS WIDGET -->
+    <div class="floating-actions-container">
+        <!-- Nút bật/tắt hoa rơi -->
+        <button id="petalsToggleBtn" class="btn-floating btn-petals-toggle" title="Tắt / Bật hiệu ứng hoa rơi">
+            <i class="fa-solid fa-leaf"></i>
+        </button>
 
-                box.appendChild(card);
-            });
-        }
+        <!-- Nút cuộn lên đầu trang -->
+        <button id="backToTopBtn" class="btn-floating back-to-top" title="Lên đầu trang">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
 
-        /* ===== TAB SWITCH ===== */
-        document.querySelectorAll(".tab").forEach(tab => {
-            tab.onclick = () => {
-                document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-                document.querySelectorAll(".card-list").forEach(c => c.classList.remove("active"));
+        <!-- Nút Zalo Pulse -->
+        <a href="https://zalo.me/0326677811" target="_blank" rel="noopener noreferrer" class="btn-floating zalo-pulse" title="Tư vấn qua Zalo">
+            <i class="fa-solid fa-comment-dots"></i>
+        </a>
+    </div>
 
-                tab.classList.add("active");
-                document.getElementById(tab.dataset.tab).classList.add("active");
-            };
-        });
-
-        /* ===== VIDEO CONTROL ===== */
-        function openVideo(item) {
-            const modal = document.getElementById("videoModal");
-            const video = document.getElementById("videoPlayer");
-            const youtube = document.getElementById("youtubePlayer");
-
-            modal.classList.add("active");
-
-            video.pause();
-            video.src = "";
-            youtube.src = "";
-            video.style.display = "none";
-            youtube.style.display = "none";
-
-            if (item.type === "mp4") {
-                video.src = item.video;
-                video.style.display = "block";
-                video.play();
-            }
-
-            if (item.type === "youtube") {
-                youtube.src = item.video + "?autoplay=1";
-                youtube.style.display = "block";
-            }
-        }
-
-        function closeVideo() {
-            const modal = document.getElementById("videoModal");
-            const video = document.getElementById("videoPlayer");
-            const youtube = document.getElementById("youtubePlayer");
-
-            modal.classList.remove("active");
-            video.pause();
-            video.src = "";
-            youtube.src = "";
-        }
-
-        document.getElementById("videoModal").onclick = function (e) {
-            if (e.target.id === "videoModal") closeVideo();
-        };
-    </script>
+    <!-- Application Script -->
+    <script src="./js/main.js"></script>
 
 </body>
 

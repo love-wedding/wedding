@@ -222,5 +222,16 @@
       "video": "https://hilo.id.vn/web/videos/background-1.mp4",
       "type": "mp4"
     }
+  ],
+
+  "birthdayCards": [
+    {
+      "id": "happybirthday-1",
+      "name": "VIP - Món quà kỷ niệm, tình yêu, sinh nhật",
+      "price": "59.000đ",
+      "tag": "",
+      "image": "./images/happy-1.png",
+      "url": "https://love-wedding.github.io/happy/happybirthday-1/"
+    }
   ]
 }
