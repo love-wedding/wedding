@@ -157,8 +157,9 @@ function renderCatalog() {
         if (state.searchQuery.trim() !== '') {
             const query = state.searchQuery.toLowerCase().trim();
             const nameMatch = (item.name || '').toLowerCase().includes(query);
+            const titleMatch = (item.title || '').toLowerCase().includes(query);
             const idMatch = (item.id || '').toLowerCase().includes(query);
-            if (!nameMatch && !idMatch) return false;
+            if (!nameMatch && !idMatch && !titleMatch) return false;
         }
 
         return true;
@@ -269,12 +270,28 @@ function getBadgeHtml(tag) {
    ========================================================================== */
 function setupEventListeners() {
     // Category Tabs Switching
+    // document.querySelectorAll('.tab-btn').forEach(btn => {
+    //     btn.addEventListener('click', () => {
+    //         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    //         btn.classList.add('active');
+    //         state.activeCategory = btn.dataset.tab;
+    //         renderCatalog();
+    //     });
+    // });
+        // Category Tabs Switching
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             state.activeCategory = btn.dataset.tab;
             renderCatalog();
+
+            // Cuộn ngang để tab vừa chọn nằm giữa (chỉ tác động thanh tab, không cuộn cả trang)
+            const wrap = btn.closest('.main-tabs-wrap');
+            if (wrap && wrap.scrollWidth > wrap.clientWidth) {
+                const target = btn.offsetLeft - (wrap.clientWidth - btn.offsetWidth) / 2;
+                wrap.scrollTo({ left: target, behavior: 'smooth' });
+            }
         });
     });
 

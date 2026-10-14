@@ -1,8 +1,9 @@
 {
   "weddingCards": [
-  {
+    {
       "id": "thiep-20",
-      "name": "Thiệp 20",
+      "name": "Thiệp 20 - Biển Xanh Tinh Khôi",
+      "title": "Biển Xanh Tinh Khôi",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-20.png",
@@ -10,7 +11,8 @@
     },
     {
       "id": "thiep-22",
-      "name": "Thiệp 22",
+      "name": "Thiệp 22 - Hỷ Sự Duyên Nồng",
+      "title": "Hỷ Sự Duyên Nồng",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-22.png",
@@ -18,7 +20,8 @@
     },
     {
       "id": "thiep-23",
-      "name": "Thiệp 23",
+      "name": "Thiệp 23 - Thước Phim Kỷ Niệm",
+      "title": "Thước Phim Kỷ Niệm",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-23.png",
@@ -26,7 +29,8 @@
     },
     {
       "id": "thiep-2",
-      "name": "Thiệp 02",
+      "name": "Thiệp 02 - Tơ Hồng Kết Duyên",
+      "title": "Tơ Hồng Kết Duyên",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-2.png",
@@ -34,7 +38,8 @@
     },
     {
       "id": "thiep-4",
-      "name": "Thiệp 04",
+      "name": "Thiệp 04 - Phong Thư Hoàng Gia",
+      "title": "Phong Thư Hoàng Gia",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-4.png",
@@ -42,7 +47,8 @@
     },
     {
       "id": "thiep-5",
-      "name": "Thiệp 05",
+      "name": "Thiệp 05 - Hiện Đại Thành Thị",
+      "title": "Hiện Đại Thành Thị",
       "price": "149.000đ",
       "tag": "new",
       "image": "./images/thiep-5.png",
@@ -50,7 +56,8 @@
     },
     {
       "id": "thiep-6",
-      "name": "Thiệp 06",
+      "name": "Thiệp 06 - Tấm Vé Tình Yêu",
+      "title": "Tấm Vé Tình Yêu",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-6.png",
@@ -58,7 +65,8 @@
     },
     {
       "id": "thiep-7",
-      "name": "Thiệp 07",
+      "name": "Thiệp 07 - Hồng Hỷ Giao Duyên",
+      "title": "Hồng Hỷ Giao Duyên",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-7.png",
@@ -66,7 +74,8 @@
     },
     {
       "id": "thiep-8",
-      "name": "Thiệp 08",
+      "name": "Thiệp 08 - Xanh Rêu Quý Phái",
+      "title": "Xanh Rêu Quý Phái",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-8.png",
@@ -74,7 +83,8 @@
     },
     {
       "id": "thiep-9",
-      "name": "Thiệp 09",
+      "name": "Thiệp 09 - Thư Hoa Dập Nổi",
+      "title": "Thư Hoa Dập Nổi",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-9.png",
@@ -82,7 +92,8 @@
     },
     {
       "id": "thiep-10",
-      "name": "Thiệp 10",
+      "name": "Thiệp 10 - Cánh Cửa Hạnh Phúc",
+      "title": "Cánh Cửa Hạnh Phúc",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-10.png",
@@ -90,7 +101,8 @@
     },
     {
       "id": "thiep-1",
-      "name": "Thiệp 01",
+      "name": "Thiệp 01 - Thanh Xuân Tinh Khôi",
+      "title": "Thanh Xuân Tinh Khôi",
       "price": "139.000đ",
       "tag": "best",
       "image": "./images/thiep-1.png",
@@ -98,7 +110,8 @@
     },
     {
       "id": "thiep-1_v2",
-      "name": "Thiệp 01 v2",
+      "name": "Thiệp 01 v2 - Vũ Khúc Hồng Mơ",
+      "title": "Vũ Khúc Hồng Mơ",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-1_v2.png",
@@ -106,7 +119,8 @@
     },
     {
       "id": "thiep-11",
-      "name": "Thiệp 11",
+      "name": "Thiệp 11 - Trái Tim Nồng Nàn",
+      "title": "Trái Tim Nồng Nàn",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-11.png",
@@ -114,7 +128,8 @@
     },
     {
       "id": "thiep-12",
-      "name": "Thiệp 12",
+      "name": "Thiệp 12 - Tối Giản Hàn Quốc",
+      "title": "Tối Giản Hàn Quốc",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-12.png",
@@ -122,7 +137,8 @@
     },
     {
       "id": "thiep-13",
-      "name": "Thiệp 13",
+      "name": "Thiệp 13 - Vườn Hoa Tinh Khôi",
+      "title": "Vườn Hoa Tinh Khôi",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-13.png",
@@ -130,7 +146,8 @@
     },
     {
       "id": "thiep-15",
-      "name": "Thiệp 15",
+      "name": "Thiệp 15 - Nụ Hôn Ánh Nắng",
+      "title": "Nụ Hôn Ánh Nắng",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-15.png",
@@ -138,7 +155,8 @@
     },
     {
       "id": "thiep-17",
-      "name": "Thiệp 17",
+      "name": "Thiệp 17 - Lụa Trắng Duyên Dáng",
+      "title": "Lụa Trắng Duyên Dáng",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-17.png",
@@ -146,7 +164,8 @@
     },
     {
       "id": "thiep-18",
-      "name": "Thiệp 18",
+      "name": "Thiệp 18 - Lễ Đường Rừng Xanh",
+      "title": "Lễ Đường Rừng Xanh",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-18.png",
@@ -154,18 +173,19 @@
     },
     {
       "id": "thiep-21",
-      "name": "Thiệp 21 - Mẫu không ảnh",
+      "name": "Thiệp 21 - Tranh Vẽ Duyên Nồng (Không ảnh)",
+      "title": "Tranh Vẽ Duyên Nồng",
       "price": "139.000đ",
       "tag": "new",
       "image": "./images/thiep-21.png",
       "url": "https://love-wedding.github.io/wedding/thiep-21/"
     }
   ],
-
   "invitationCards": [
     {
       "id": "bao-cuoi-1",
-      "name": "Thiệp Mời 2 Mặt - Mẫu 1",
+      "name": "Thiệp Mời 2 Mặt - Khuynh Diệp Kim Sa",
+      "title": "Khuynh Diệp Kim Sa",
       "price": "89.000đ",
       "tag": "new",
       "image": "./images/thiep-14.png",
@@ -173,17 +193,18 @@
     },
     {
       "id": "bao-cuoi-2",
-      "name": "Thiệp Mời 2 Mặt - Mẫu 2",
+      "name": "Thiệp Mời 2 Mặt - Màu Nước Duyên Hồng",
+      "title": "Màu Nước Duyên Hồng",
       "price": "89.000đ",
       "tag": "",
       "image": "./images/thiep-16.png",
       "url": "https://love-wedding.github.io/wedding/thiep-16/"
     }
   ],
-
   "weddingVideos": [
     {
       "name": "Slide trình chiếu màn led 1",
+      "title": "Slide Chiếu Led Sang Trọng 1",
       "price": "189.000đ",
       "tag": "new",
       "image": "./images/video-1.png",
@@ -192,6 +213,7 @@
     },
     {
       "name": "Slide trình chiếu màn led 2",
+      "title": "Slide Chiếu Led Lãng Mạn 2",
       "price": "189.000đ",
       "tag": "best",
       "image": "./images/video-2.png",
@@ -200,6 +222,7 @@
     },
     {
       "name": "Slide trình chiếu màn led 3",
+      "title": "Slide Chiếu Led Hiện Đại 3",
       "price": "189.000đ",
       "tag": "new",
       "image": "./images/video-3.png",
@@ -208,6 +231,7 @@
     },
     {
       "name": "Background chiếu led 1",
+      "title": "Background Chiếu Led Không Gian 1",
       "price": "49.000đ",
       "tag": "",
       "image": "./images/bg-1.png",
@@ -216,6 +240,7 @@
     },
     {
       "name": "Background chiếu led 2",
+      "title": "Background Chiếu Led Lung Linh 2",
       "price": "49.000đ",
       "tag": "",
       "image": "./images/bg-2.png",
@@ -223,15 +248,24 @@
       "type": "mp4"
     }
   ],
-
   "birthdayCards": [
     {
       "id": "happybirthday-1",
       "name": "VIP - Món quà kỷ niệm, tình yêu, sinh nhật",
+      "title": "Món Quà Tình Yêu & Kỷ Niệm VIP",
       "price": "59.000đ",
       "tag": "",
       "image": "./images/happy-1.png",
       "url": "https://love-wedding.github.io/happy/happybirthday-1/"
+    },
+    {
+      "id": "happybirthday-2",
+      "name": "VIP - Món quà kỷ niệm, tình yêu, sinh nhật",
+      "title": "Món Quà Tình Yêu & Kỷ Niệm VIP 2",
+      "price": "59.000đ",
+      "tag": "",
+      "image": "./images/happy-1.png",
+      "url": "https://love-wedding.github.io/happy/happybirthday-2/"
     }
   ]
 }

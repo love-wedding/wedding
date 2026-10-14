@@ -1884,7 +1884,7 @@ button {
     }
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .nav-menu {
         position: fixed;
         top: 73px;
@@ -1953,6 +1953,160 @@ button {
         padding: 10px 16px;
         font-size: 0.88rem;
     }
+} */
+
+
+@media (max-width: 768px) {
+    /* ===== HEADER MOBILE ===== */
+    .nav-container {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .nav-brand {
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .nav-logo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .nav-title {
+        font-size: 1rem;
+        letter-spacing: 1px;
+        white-space: nowrap;
+    }
+
+    .nav-subtitle {
+        font-size: 0.62rem;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+    }
+
+    .nav-actions {
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    /* Nút Tư Vấn Zalo: nhỏ lại, không xuống dòng */
+    .btn-nav-cta {
+        padding: 7px 12px;
+        font-size: 0.78rem;
+        gap: 6px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .btn-nav-cta span {
+        white-space: nowrap;
+    }
+
+    .mobile-toggle {
+        display: block;
+        font-size: 1.25rem;
+        padding: 4px;
+    }
+
+    /* Menu mở ra bám ngay dưới header, không phụ thuộc chiều cao header */
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 24px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        display: none;
+        gap: 18px;
+    }
+
+    .nav-menu.open {
+        display: flex;
+    }
+
+    /* ===== HERO ===== */
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .mockup-composition {
+        height: 380px;
+    }
+
+    .mockup-card.card-left, .mockup-card.card-right {
+        width: 160px;
+        height: 250px;
+    }
+
+    .mockup-card.card-center {
+        width: 190px;
+        height: 290px;
+    }
+
+    /* ===== GRID ===== */
+    .cards-grid.grid-video {
+        grid-template-columns: 1fr;
+    }
+
+    .cards-grid.grid-invitation,
+    .cards-grid.grid-birthday {
+        grid-template-columns: 1fr;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .process-steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* ===== TAB DANH MỤC: 1 HÀNG + SCROLL NGANG ===== */
+    .catalog-controls {
+        padding: 18px 16px;
+    }
+
+    .main-tabs-wrap {
+        flex-wrap: nowrap;
+        justify-content: flex-start;   /* bắt buộc, nếu để center thì tab đầu bị cắt */
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+        margin: 0 -16px 18px;          /* tràn sát mép khung trắng */
+        padding: 4px 16px 16px;
+    }
+
+    .main-tabs-wrap::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        flex: 0 0 auto;                /* không co, không xuống dòng */
+        white-space: nowrap;
+        scroll-snap-align: center;
+        padding: 10px 16px;
+        font-size: 0.88rem;
+        gap: 8px;
+    }
+
+    .tab-btn i {
+        font-size: 1rem;
+    }
+
+    .tab-btn span {
+        white-space: nowrap;
+    }
 }
 
 @media (max-width: 520px) {
@@ -1981,5 +2135,26 @@ button {
 
     .search-box-wrap {
         max-width: 100%;
+    }
+}
+
+
+@media (max-width: 400px) {
+    .nav-container {
+        padding: 10px 12px;
+    }
+
+    .nav-title {
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-subtitle {
+        display: none;
+    }
+
+    .btn-nav-cta {
+        padding: 6px 10px;
+        font-size: 0.72rem;
     }
 }
