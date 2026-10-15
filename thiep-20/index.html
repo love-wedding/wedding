@@ -8474,11 +8474,10 @@ https://maps.app.goo.gl/6cLvxjsnC4fLQZL29
 
                                     if (!openingScreen || !dateElement) return;
 
-                                    /* Lấy ngày từ dòng đầu tiên của HTML Box */
-                                    const dateText =
-                                        typeof LT_WEDDING_DATE !== "undefined"
-                                            ? LT_WEDDING_DATE
-                                            : "21.06.2026";
+                                    /* Lấy ngày từ window.LT_WEDDING_DATE hoặc mặc định */
+                                    const getDateText = () => (typeof window.LT_WEDDING_DATE !== "undefined" && window.LT_WEDDING_DATE)
+                                        ? window.LT_WEDDING_DATE
+                                        : (typeof LT_WEDDING_DATE !== "undefined" ? LT_WEDDING_DATE : "10.10.2026");
 
                                     const typingStartDelay = 1000;
                                     const totalTypingDuration = 1400;
@@ -8492,6 +8491,13 @@ https://maps.app.goo.gl/6cLvxjsnC4fLQZL29
                                     const oldHtmlOverflow = document.documentElement.style.overflow;
                                     const oldBodyTouchAction = document.body.style.touchAction;
 
+                                    // Nếu đang nằm trong iframe Studio Editor, đóng ngay màn hình intro để sửa thiệp
+                                    if (window.parent && window.parent !== window) {
+                                        openingScreen.style.display = "none";
+                                        if (openingScreen.parentNode) openingScreen.parentNode.removeChild(openingScreen);
+                                        return;
+                                    }
+
                                     document.body.style.overflow = "hidden";
                                     document.documentElement.style.overflow = "hidden";
                                     document.body.style.touchAction = "none";
@@ -8501,7 +8507,10 @@ https://maps.app.goo.gl/6cLvxjsnC4fLQZL29
                                             cursorElement.classList.add("is-visible");
                                         }
 
-                                        const typingSpeed = totalTypingDuration / dateText.length;
+                                        // Xoá sạch toàn bộ text cũ trước khi gõ để tránh dính chữ
+                                        dateElement.textContent = "";
+                                        const dateText = getDateText();
+                                        const typingSpeed = totalTypingDuration / Math.max(1, dateText.length);
 
                                         typingTimer = window.setInterval(function () {
                                             if (currentCharacter < dateText.length) {
@@ -8522,7 +8531,7 @@ https://maps.app.goo.gl/6cLvxjsnC4fLQZL29
                                             typingTimer = null;
                                         }
 
-                                        dateElement.textContent = dateText;
+                                        dateElement.textContent = getDateText();
 
                                         if (cursorElement) {
                                             cursorElement.classList.remove("is-visible");
@@ -9786,11 +9795,7 @@ https://maps.app.goo.gl/6cLvxjsnC4fLQZL29
                 }
             })()
     </script>
-    <script type="module"
-        src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920"
-        integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA=="
-        data-cf-beacon='{"version":"2024.11.0","token":"b8e945b6a8e14d3d96417c96dd75b400","r":1,"spa":2}'
-        crossorigin="anonymous"></script>
+    <script src="../card-bridge.js"></script>
 </body>
 
 </html>

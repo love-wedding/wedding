@@ -17,6 +17,8 @@
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="./css/style.css">
+    <!-- Studio Customizer Stylesheet -->
+    <link rel="stylesheet" href="./css/editor.css">
 </head>
 
 <body>
@@ -633,8 +635,378 @@
         </a>
     </div>
 
+    <!-- ==========================================================================
+         WEDDING CARD STUDIO CUSTOMIZER MODAL
+         ========================================================================== -->
+    <div id="weddingStudioModal" class="studio-modal-overlay">
+        <div class="studio-container">
+            <!-- Studio Header -->
+            <header class="studio-header">
+                <div class="studio-header-left">
+                    <span class="studio-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Studio Editor</span>
+                    <div class="studio-title-box">
+                        <h3 id="studioTemplateNameLabel">Chỉnh Sửa Thiệp Cưới</h3>
+                        <p>Thay đổi thông tin và xem trước trực tiếp trên điện thoại</p>
+                    </div>
+                </div>
+
+                <div class="studio-header-actions">
+                    <button class="btn-studio-action" onclick="resetStudioDraft()" title="Khôi phục nội dung mặc định">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Đặt lại</span>
+                    </button>
+                    <button class="btn-studio-action" onclick="copyShareLink()" title="Sao chép link bản nháp">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <span>Chia sẻ</span>
+                    </button>
+                    <button class="btn-studio-action" onclick="openFullscreenPreview()" title="Mở trang thiệp toàn màn hình">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <span>Xem thực tế</span>
+                    </button>
+                    <button class="btn-studio-action btn-studio-gold" onclick="orderViaZalo()" title="Gửi thông tin đã sửa qua Zalo shop">
+                        <i class="fa-solid fa-comment-dots"></i>
+                        <span>Đặt mẫu này qua Zalo</span>
+                    </button>
+                    <button class="btn-studio-close" onclick="closeWeddingEditor()" title="Đóng trình chỉnh sửa (Esc)">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Studio Body -->
+            <div class="studio-body">
+                <!-- Sidebar Form Controls -->
+                <aside class="studio-sidebar">
+                    <!-- Navigation Tabs -->
+                    <nav class="studio-tabs-nav">
+                        <button class="studio-tab-item active" data-tab="couple">
+                            <i class="fa-solid fa-heart"></i>
+                            <span>Cặp Đôi & Bố Mẹ</span>
+                        </button>
+                        <button class="studio-tab-item" data-tab="event">
+                            <i class="fa-solid fa-calendar-check"></i>
+                            <span>Lễ Cưới & Tiệc</span>
+                        </button>
+                        <button class="studio-tab-item" data-tab="media">
+                            <i class="fa-solid fa-image"></i>
+                            <span>Hình Ảnh</span>
+                        </button>
+                        <button class="studio-tab-item" data-tab="banking">
+                            <i class="fa-solid fa-qrcode"></i>
+                            <span>Mừng Cưới QR</span>
+                        </button>
+                    </nav>
+
+                    <!-- Scrollable Form Content -->
+                    <div class="studio-form-content">
+                        <!-- TAB 1: CẶP ĐÔI & GIA ĐÌNH -->
+                        <div class="studio-tab-panel active" id="tab-panel-couple">
+                            <div class="form-group-title">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Thông Tin Chú Rể</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Tên hiển thị trang bìa <span class="req">*</span></label>
+                                    <input type="text" class="form-input" data-field="groomNameShort" placeholder="VD: Anh Tú">
+                                    <span class="form-hint">Xuất hiện ở phong bì / bìa thiệp mở</span>
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Họ & Tên đầy đủ <span class="req">*</span></label>
+                                    <input type="text" class="form-input" data-field="groomNameFull" placeholder="VD: Nguyễn Anh Tú">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Họ tên Bố Mẹ Nhà Trai</label>
+                                    <textarea class="form-textarea" data-field="groomParents" placeholder="ÔNG CẤN VĂN AN&#10;BÀ NGUYỄN THỊ HẢI"></textarea>
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Quê quán / Tỉnh thành</label>
+                                    <input type="text" class="form-input" data-field="groomParentsCity" placeholder="VD: Quận 8, Hồ Chí Minh">
+                                </div>
+                            </div>
+
+                            <div class="form-group-title" style="margin-top: 24px;">
+                                <i class="fa-solid fa-person-dress"></i>
+                                <span>Thông Tin Cô Dâu</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Tên hiển thị trang bìa <span class="req">*</span></label>
+                                    <input type="text" class="form-input" data-field="brideNameShort" placeholder="VD: Diệu Nhi">
+                                    <span class="form-hint">Xuất hiện ở phong bì / bìa thiệp mở</span>
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Họ & Tên đầy đủ <span class="req">*</span></label>
+                                    <input type="text" class="form-input" data-field="brideNameFull" placeholder="VD: Trần Diệu Nhi">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Họ tên Bố Mẹ Nhà Gái</label>
+                                    <textarea class="form-textarea" data-field="brideParents" placeholder="ÔNG TRẦN VĂN HÙNG&#10;BÀ LÊ THỊ MAI"></textarea>
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Quê quán / Tỉnh thành</label>
+                                    <input type="text" class="form-input" data-field="brideParentsCity" placeholder="VD: Quận 1, Hồ Chí Minh">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: LỄ CƯỚI & TIỆC MỪNG -->
+                        <div class="studio-tab-panel" id="tab-panel-event">
+                            <div class="form-group-title">
+                                <i class="fa-solid fa-bell"></i>
+                                <span>Tiêu Đề & Nghi Thức</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Tiêu đề thông báo</label>
+                                    <input type="text" class="form-input" data-field="ceremonyTitle" placeholder="Trân Trọng Báo Tin Lễ Thành Hôn Của">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Tên tiệc mừng</label>
+                                    <input type="text" class="form-input" data-field="partyTitle" placeholder="TIỆC MỪNG LỄ THÀNH HÔN (hoặc LỄ VU QUY)">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Giờ & Thứ</label>
+                                    <input type="text" class="form-input" data-field="partyTime" placeholder="Vào Lúc 10h00 | Thứ 6">
+                                </div>
+                            </div>
+
+                            <div class="form-group-title" style="margin-top: 24px;">
+                                <i class="fa-solid fa-clock"></i>
+                                <span>Thời Gian Diễn Ra</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Ngày (Dương)</label>
+                                    <input type="text" class="form-input" data-field="partyDay" placeholder="30">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Tháng</label>
+                                    <input type="text" class="form-input" data-field="partyMonth" placeholder="03">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Năm</label>
+                                    <input type="text" class="form-input" data-field="partyYear" placeholder="2025">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Ngày Âm Lịch</label>
+                                    <input type="text" class="form-input" data-field="partyLunar" placeholder="Ngày 02 Tháng 03 Năm Ất Tỵ">
+                                </div>
+                            </div>
+
+                            <div class="form-group-title" style="margin-top: 24px;">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                <span>Địa Điểm & Bản Đồ Chỉ Đường</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Tên nhà hàng / Tư gia</label>
+                                    <input type="text" class="form-input" data-field="venueName" placeholder="Trung Tâm Tiệc Cưới The ADORA Center">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Địa chỉ chi tiết</label>
+                                    <textarea class="form-textarea" data-field="venueAddress" placeholder="431 Hoàng Văn Thụ, Phường 4, Tân Bình, Hồ Chí Minh"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Link Google Maps (Mở ứng dụng dẫn đường)</label>
+                                    <input type="text" class="form-input" data-field="mapUrl" placeholder="https://maps.app.goo.gl/...">
+                                    <span class="form-hint">Khách bấm nút "Xem chỉ đường" sẽ mở thẳng bản đồ trên điện thoại</span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Mã nhúng Iframe Google Maps (Hoặc Link Embed)</label>
+                                    <textarea class="form-textarea" data-field="mapEmbedUrl" placeholder='Dán mã &lt;iframe src="https://www.google.com/maps/embed?..." ...&gt;&lt;/iframe&gt; hoặc link embed tại đây'></textarea>
+                                    <span class="form-hint">Hệ thống tự động hiển thị khung bản đồ trực tiếp trên thiệp</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: HÌNH ẢNH -->
+                        <div class="studio-tab-panel" id="tab-panel-media">
+                            <div class="form-group-title">
+                                <i class="fa-solid fa-camera-retro"></i>
+                                <span>Ảnh Bìa Thiệp Cưới</span>
+                            </div>
+                            <div class="image-upload-box" id="coverPhotoUploadBox" onclick="document.getElementById('coverPhotoFileInput').click()">
+                                <input type="file" id="coverPhotoFileInput" accept="image/*" style="display: none;" onchange="handleCoverImageSelect(this)">
+                                <img src="" alt="Ảnh bìa xem trước" id="coverPhotoPreview" class="image-upload-preview">
+                                <div class="upload-placeholder">
+                                    <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                    <p style="font-size: 13px; font-weight: 600; margin: 0 0 4px 0;">Nhấn để chọn ảnh từ máy</p>
+                                    <p style="font-size: 11px; color: var(--studio-text-muted); margin: 0;">Hỗ trợ JPG, PNG, WEBP (Tự động hiển thị xem trước)</p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-studio-action" style="margin-top: 10px; font-size: 11px;" onclick="removeCoverImage(event)">
+                                <i class="fa-solid fa-trash-can"></i> Xóa ảnh tự chọn
+                            </button>
+
+                            <div class="form-group-title" style="margin-top: 24px;">
+                                <i class="fa-solid fa-images"></i>
+                                <span>Album Ảnh Cưới</span>
+                            </div>
+                            <p style="font-size: 12px; color: var(--studio-text-muted); line-height: 1.6;">
+                                Mẫu thiệp đã có sẵn bộ ảnh demo sang trọng. Sau khi chốt đơn qua Zalo, bạn chỉ cần gửi ảnh qua Zalo để chúng tôi tối ưu chất lượng HD sắc nét nhất cho bạn!
+                            </p>
+                        </div>
+
+                        <!-- TAB 4: MỪNG CƯỚI & VIETQR -->
+                        <div class="studio-tab-panel" id="tab-panel-banking">
+                            <div class="form-group-title">
+                                <i class="fa-solid fa-qrcode"></i>
+                                <span>Tài Khoản Mừng Cưới & Tự Sinh VietQR</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Chọn ngân hàng</label>
+                                    <select class="form-select" id="studio_bankCode" data-field="bankCode"></select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Số tài khoản</label>
+                                    <input type="text" class="form-input" data-field="bankAccount" placeholder="VD: 0326677811">
+                                </div>
+                                <div class="form-col">
+                                    <label class="form-label">Tên chủ tài khoản (Viết hoa)</label>
+                                    <input type="text" class="form-input" data-field="bankAccountName" placeholder="VD: NGUYEN TAN DAT">
+                                </div>
+                            </div>
+                            <div class="form-hint" style="margin-top: 10px; padding: 10px; background: rgba(212, 175, 55, 0.08); border-radius: 6px; border-left: 3px solid var(--studio-gold);">
+                                <i class="fa-solid fa-shield-halved" style="color: var(--studio-gold);"></i> 
+                                Hệ thống tự động tạo mã QR chuẩn Napas VietQR để khách quét chuyển khoản mừng cưới siêu nhanh!
+                            </div>
+
+                            <div class="form-group-title" style="margin-top: 24px;">
+                                <i class="fa-solid fa-table-list"></i>
+                                <span>Lưu Lời Chúc Vào Google Sheet</span>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-col">
+                                    <label class="form-label">Link Google Apps Script (Web App .exec)</label>
+                                    <input type="text" class="form-input" data-field="googleSheetExecUrl" placeholder="https://script.google.com/macros/s/.../exec">
+                                    <span class="form-hint">Dán link triển khai Web App của Google Sheet để tự động lưu tên khách, lời chúc & xác nhận tham dự.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar Footer -->
+                    <div class="studio-sidebar-footer" style="flex-wrap: wrap;">
+                        <button type="button" class="btn-studio-action" onclick="exportToNewFolder()" title="Tạo 1 thư mục riêng biệt cho khách, không đè lên thiep-4">
+                            <i class="fa-solid fa-folder-plus"></i>
+                            <span>Tạo Folder Thiệp Riêng</span>
+                        </button>
+                        <button class="btn-studio-action btn-studio-gold btn-save-draft" onclick="orderViaZalo()">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Hoàn tất & Gửi duyệt Zalo</span>
+                        </button>
+                    </div>
+                </aside>
+
+                <!-- Right Preview Pane -->
+                <main class="studio-preview-pane">
+                    <div class="preview-toolbar">
+                        <button class="preview-device-btn active">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                            <span>iPhone Preview (Live)</span>
+                        </button>
+                        <div class="preview-status-indicator">
+                            <span class="status-dot"></span>
+                            <span id="studioStatusText">Đã kết nối thời gian thực</span>
+                        </div>
+                    </div>
+
+                    <!-- Phone Mockup Device -->
+                    <div class="mockup-phone-frame">
+                        <div class="phone-island">
+                            <div class="phone-speaker"></div>
+                        </div>
+                        <iframe id="studioCardIframe" class="card-preview-iframe" title="Card Live Preview"></iframe>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         IMAGE ADJUSTMENT MODAL (Phóng to / thu nhỏ & Căn chỉnh vị trí)
+         ========================================================================== -->
+    <div id="imageAdjustModal" class="image-adjust-modal-overlay">
+        <div class="image-adjust-card">
+            <div class="image-adjust-header">
+                <h4><i class="fa-solid fa-crop-simple"></i> Căn Chỉnh & Thay Thế Ảnh</h4>
+                <button type="button" class="btn-studio-close" onclick="closeImageAdjustModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="image-adjust-body">
+                <!-- Preview Canvas Frame -->
+                <div class="image-adjust-preview-frame">
+                    <div id="adjustPreviewCanvas" class="image-adjust-preview-canvas"></div>
+                    <div class="image-adjust-grid-lines"></div>
+                </div>
+
+                <!-- Thay ảnh mới -->
+                <div>
+                    <input type="file" id="adjustModalFileInput" accept="image/*" style="display: none;" onchange="handleModalImageUpload(this)">
+                    <button type="button" class="btn-studio-action" style="width: 100%; justify-content: center;" onclick="document.getElementById('adjustModalFileInput').click()">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <span>Chọn ảnh khác từ máy tính / điện thoại</span>
+                    </button>
+                </div>
+
+                <!-- Slider Zoom -->
+                <div class="slider-group">
+                    <div class="slider-header-row">
+                        <span><i class="fa-solid fa-magnifying-glass-plus"></i> Thu phóng (Zoom)</span>
+                        <span class="val" id="valZoom">100%</span>
+                    </div>
+                    <input type="range" class="slider-input" id="sliderZoom" min="80" max="300" value="100" oninput="onImageAdjustSliderChange()">
+                </div>
+
+                <!-- Slider Position X -->
+                <div class="slider-group">
+                    <div class="slider-header-row">
+                        <span><i class="fa-solid fa-arrows-left-right"></i> Vị trí ngang (Trái - Phải)</span>
+                        <span class="val" id="valPosX">50%</span>
+                    </div>
+                    <input type="range" class="slider-input" id="sliderPosX" min="0" max="100" value="50" oninput="onImageAdjustSliderChange()">
+                </div>
+
+                <!-- Slider Position Y -->
+                <div class="slider-group">
+                    <div class="slider-header-row">
+                        <span><i class="fa-solid fa-arrows-up-down"></i> Vị trí dọc (Trên - Dưới)</span>
+                        <span class="val" id="valPosY">50%</span>
+                    </div>
+                    <input type="range" class="slider-input" id="sliderPosY" min="0" max="100" value="50" oninput="onImageAdjustSliderChange()">
+                </div>
+            </div>
+            <div class="image-adjust-footer">
+                <button type="button" class="btn-studio-action" onclick="closeImageAdjustModal()">Hủy</button>
+                <button type="button" class="btn-studio-action btn-studio-gold" onclick="applyImageAdjustment()">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Áp dụng vào thiệp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Application Script -->
     <script src="./js/main.js"></script>
+    <!-- Studio Editor Script -->
+    <script src="./js/editor.js"></script>
 
 </body>
 

@@ -241,8 +241,11 @@ function renderCatalog() {
                         <span class="card-price-pill">${item.price || '139.000đ'}</span>
                     </div>
                     <div class="card-actions-row">
-                        <a href="${itemUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-view">
-                            <i class="fa-regular fa-eye"></i> Xem demo
+                        <button type="button" class="btn-card-edit" onclick="openWeddingEditor('${item.id}', '${(item.name || '').replace(/'/g, "\\'")}', '${item.url || ''}')" title="Tự thiết kế & chỉnh sửa mẫu này trực tiếp">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Tự sửa thiệp
+                        </button>
+                        <a href="${itemUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-view" title="Xem bản mẫu gốc">
+                            <i class="fa-regular fa-eye"></i> Demo
                         </a>
                         <a class="btn-card-order" href="${zaloOrderUrl}" target="_blank" rel="noopener noreferrer" title="Đặt mẫu này qua Zalo">
                             <i class="fa-solid fa-comment-dots"></i>

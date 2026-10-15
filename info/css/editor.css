@@ -1,0 +1,746 @@
+/* ==========================================================================
+   LOVE WEDDING - STUDIO CUSTOMIZER STYLESHEET
+   Thiết kế giao diện Studio Editor trực tiếp trên web (HTML/CSS/JS thuần)
+   ========================================================================== */
+
+/* Ẩn thanh cuộn nhưng vẫn cho phép cuộn nội dung */
+html,
+body {
+    scrollbar-width: none !important;
+    /* Firefox */
+    -ms-overflow-style: none !important;
+    /* Edge cũ */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none !important;
+    /* Chrome, Safari */
+}
+
+/* Ẩn thanh cuộn bên trong iframe hoặc khung xem trước */
+iframe,
+.preview-container,
+.preview-frame {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+iframe::-webkit-scrollbar,
+.preview-container::-webkit-scrollbar,
+.preview-frame::-webkit-scrollbar {
+    display: none !important;
+}
+
+:root {
+    --studio-bg: #0f1117;
+    --studio-surface: #181b24;
+    --studio-surface-card: #202431;
+    --studio-border: rgba(255, 255, 255, 0.08);
+    --studio-border-focus: #c5a059;
+    --studio-text: #f0f2f5;
+    --studio-text-muted: #9aa0a6;
+    --studio-gold: #d4af37;
+    --studio-gold-light: #f5e3a9;
+    --studio-gold-dark: #aa820a;
+    --studio-accent: #e74c3c;
+    --studio-success: #2ecc71;
+}
+
+/* Modal Overlay Fullscreen */
+.studio-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(8, 10, 15, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 99999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.studio-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Studio Window Container */
+.studio-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: var(--studio-bg);
+    color: var(--studio-text);
+    overflow: hidden;
+}
+
+/* Studio Header Bar */
+.studio-header {
+    height: 64px;
+    padding: 0 24px;
+    background: var(--studio-surface);
+    border-bottom: 1px solid var(--studio-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.studio-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.studio-badge {
+    background: linear-gradient(135deg, var(--studio-gold), var(--studio-gold-dark));
+    color: #1a1a1a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.studio-title-box h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.studio-title-box p {
+    font-size: 12px;
+    color: var(--studio-text-muted);
+    margin: 2px 0 0 0;
+}
+
+.studio-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-studio-action {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    border: 1px solid var(--studio-border);
+    background: var(--studio-surface-card);
+    color: var(--studio-text);
+}
+
+.btn-studio-action:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-studio-gold {
+    background: linear-gradient(135deg, #d4af37, #b8860b);
+    color: #0b0c10;
+    border: none;
+    font-weight: 600;
+}
+
+.btn-studio-gold:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+}
+
+.btn-studio-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--studio-border);
+    color: var(--studio-text-muted);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.btn-studio-close:hover {
+    background: rgba(231, 76, 60, 0.2);
+    color: #ff6b6b;
+    border-color: rgba(231, 76, 60, 0.4);
+}
+
+/* Studio Workspace Body (2 Columns) */
+.studio-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Left Column: Form Editor Panel */
+.studio-sidebar {
+    width: 480px;
+    max-width: 480px;
+    background: var(--studio-surface);
+    border-right: 1px solid var(--studio-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 5;
+}
+
+/* Tabs Navigation */
+.studio-tabs-nav {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid var(--studio-border);
+    padding: 6px 8px;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.studio-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.studio-tab-item {
+    flex: 1;
+    min-width: fit-content;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+    color: var(--studio-text-muted);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.studio-tab-item:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.studio-tab-item.active {
+    background: var(--studio-surface-card);
+    color: var(--studio-gold-light);
+    border: 1px solid var(--studio-border);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Sections Scroll Area */
+.studio-form-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px;
+}
+
+.studio-tab-panel {
+    display: none;
+    animation: fadeInTab 0.25s ease;
+}
+
+.studio-tab-panel.active {
+    display: block;
+}
+
+@keyframes fadeInTab {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Form Controls & Layout */
+.form-group-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--studio-gold-light);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed rgba(212, 175, 55, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.form-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--studio-text);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.form-label span.req {
+    color: var(--studio-accent);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    background: var(--studio-surface-card);
+    border: 1px solid var(--studio-border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #fff;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    border-color: var(--studio-border-focus);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 64px;
+}
+
+.form-hint {
+    font-size: 11px;
+    color: var(--studio-text-muted);
+    margin-top: 4px;
+}
+
+/* Image Upload Preview Box */
+.image-upload-box {
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-upload-box:hover {
+    border-color: var(--studio-gold);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.image-upload-preview {
+    max-height: 140px;
+    border-radius: 6px;
+    display: none;
+    margin: 0 auto 10px;
+    object-fit: cover;
+}
+
+.image-upload-box.has-image .image-upload-preview {
+    display: block;
+}
+
+.image-upload-box.has-image .upload-placeholder {
+    display: none;
+}
+
+.upload-icon {
+    font-size: 28px;
+    color: var(--studio-gold);
+    margin-bottom: 8px;
+}
+
+/* Right Column: Live Mobile Mockup Preview */
+.studio-preview-pane {
+    flex: 1;
+    background: radial-gradient(circle at center, #1b202d 0%, #0e1017 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Preview Toolbar on Top of Device */
+.preview-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    background: rgba(24, 27, 36, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid var(--studio-border);
+}
+
+.preview-device-btn {
+    background: transparent;
+    border: none;
+    color: var(--studio-text-muted);
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.preview-device-btn:hover,
+.preview-device-btn.active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.preview-device-btn.active {
+    color: var(--studio-gold-light);
+}
+
+.preview-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--studio-success);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 10px;
+}
+
+.preview-status-indicator .status-dot {
+    width: 7px;
+    height: 7px;
+    background: var(--studio-success);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--studio-success);
+    animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* Smartphone Mockup Frame */
+.mockup-phone-frame {
+    width: 420px;
+    height: 840px;
+    max-height: 85vh;
+    background: #000;
+    border-radius: 46px;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8),
+        0 0 0 10px #2a2e39,
+        0 0 0 12px #181a20;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Phone Speaker & Dynamic Island */
+.phone-island {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 24px;
+    background: #000;
+    border-radius: 14px;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.phone-speaker {
+    width: 40px;
+    height: 4px;
+    background: #222;
+    border-radius: 2px;
+}
+
+/* The Card Iframe */
+.card-preview-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #fff;
+    border-radius: 36px;
+}
+
+/* Bottom Bar of Studio Sidebar */
+.studio-sidebar-footer {
+    padding: 16px 24px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid var(--studio-border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.studio-sidebar-footer .btn-save-draft {
+    flex: 1;
+}
+
+/* Button "Tự sửa thiệp" in Catalog Card */
+.card-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.btn-card-edit {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #d4af37 0%, #aa820a 100%);
+    color: #0d0f15 !important;
+    font-size: 13px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-card-edit:hover {
+    filter: brightness(1.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.45);
+    color: #000 !important;
+}
+
+.btn-card-view {
+    padding: 9px 12px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+/* Mobile Responsive */
+@media (max-width: 991px) {
+    .studio-body {
+        flex-direction: column;
+    }
+
+    .studio-sidebar {
+        width: 100%;
+        max-width: 100%;
+        height: 50%;
+        border-right: none;
+        border-bottom: 1px solid var(--studio-border);
+    }
+
+    .studio-preview-pane {
+        height: 50%;
+        padding: 12px;
+    }
+
+    .mockup-phone-frame {
+        width: 320px;
+        height: 100%;
+        border-radius: 28px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 0 6px #2a2e39;
+    }
+}
+
+/* ==========================================================================
+   IMAGE ADJUSTMENT MODAL (Căn chỉnh phóng to / thu nhỏ ảnh)
+   ========================================================================== */
+.image-adjust-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 100000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.image-adjust-modal-overlay.active {
+    display: flex;
+}
+
+.image-adjust-card {
+    width: 480px;
+    max-width: 95vw;
+    background: var(--studio-surface);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: zoomInModal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoomInModal {
+    from {
+        transform: scale(0.92);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.image-adjust-header {
+    padding: 16px 20px;
+    background: var(--studio-surface-card);
+    border-bottom: 1px solid var(--studio-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.image-adjust-header h4 {
+    margin: 0;
+    font-size: 15px;
+    color: var(--studio-gold-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.image-adjust-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Khung preview có lưới căn chỉnh */
+.image-adjust-preview-frame {
+    width: 100%;
+    height: 240px;
+    background: #000;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed rgba(212, 175, 55, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-adjust-preview-canvas {
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-size 0.1s ease, background-position 0.1s ease;
+}
+
+.image-adjust-grid-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background:
+        linear-gradient(to right, transparent 33.3%, rgba(255, 255, 255, 0.08) 33.3%, rgba(255, 255, 255, 0.08) 33.6%, transparent 33.6%, transparent 66.6%, rgba(255, 255, 255, 0.08) 66.6%, rgba(255, 255, 255, 0.08) 66.9%, transparent 66.9%),
+        linear-gradient(to bottom, transparent 33.3%, rgba(255, 255, 255, 0.08) 33.3%, rgba(255, 255, 255, 0.08) 33.6%, transparent 33.6%, transparent 66.6%, rgba(255, 255, 255, 0.08) 66.6%, rgba(255, 255, 255, 0.08) 66.9%, transparent 66.9%);
+}
+
+.slider-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.slider-header-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--studio-text-muted);
+}
+
+.slider-header-row span.val {
+    color: var(--studio-gold-light);
+    font-weight: 600;
+}
+
+.slider-input {
+    width: 100%;
+    accent-color: var(--studio-gold);
+    cursor: pointer;
+}
+
+.image-adjust-footer {
+    padding: 14px 20px;
+    background: var(--studio-surface-card);
+    border-top: 1px solid var(--studio-border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
