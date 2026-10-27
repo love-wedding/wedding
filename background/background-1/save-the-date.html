@@ -1,0 +1,3024 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Save the Date – Quốc Anh & Kiều Hân</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #020207;
+      --ink: #eef0fa;
+      --soft: #b9bfe0;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #020207;
+        --ink: #eef0fa;
+        --soft: #b9bfe0;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #020207;
+      --ink: #eef0fa;
+      --soft: #b9bfe0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #stage {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 1024px;
+      height: 576px;
+      transform-origin: 0 0;
+      pointer-events: none;
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .t {
+      position: absolute;
+      left: 0;
+      width: 1024px;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(6px);
+      transition:
+        opacity 1.3s ease,
+        filter 1.3s ease,
+        transform 1.3s ease;
+    }
+
+    .t.on {
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+
+    .m {
+      font:
+        400 76px/80px "Pinyon Script",
+        cursive;
+      text-shadow: 0 0 18px rgba(200, 210, 255, 0.4);
+    }
+
+    .m span {
+      display: inline-block;
+      position: relative;
+      top: 18px;
+      margin-left: -0.3em;
+    }
+
+    #mono {
+      top: 52px;
+    }
+
+    #mono2 {
+      top: 74px;
+    }
+
+    #sd {
+      top: 200px;
+      font:
+        500 15px/20px "Cormorant Garamond",
+        serif;
+      letter-spacing: 0.58em;
+      text-indent: 0.58em;
+      color: #c4c9e2;
+    }
+
+    #names {
+      top: 248px;
+      font:
+        400 52px/68px "Pinyon Script",
+        cursive;
+      word-spacing: 0.42em;
+      letter-spacing: 0.03em;
+      text-shadow: 0 0 14px rgba(200, 210, 255, 0.3);
+    }
+
+    #names s {
+      text-decoration: none;
+      font-size: 0.5em;
+      color: var(--soft);
+    }
+
+    #date {
+      top: 339px;
+      font:
+        500 19px/26px "Cormorant Garamond",
+        serif;
+      letter-spacing: 0.1em;
+      color: #d6d9ec;
+    }
+
+    #love {
+      top: 260px;
+      font:
+        500 15px/20px "Cormorant Garamond",
+        serif;
+      letter-spacing: 0.53em;
+      text-indent: 0.53em;
+      color: #c4c9e2;
+    }
+
+    #hearts {
+      top: 304px;
+      font: 13px/20px serif;
+      letter-spacing: 1.1em;
+      text-indent: 1.1em;
+      color: var(--soft);
+    }
+
+    #ui {
+      position: fixed;
+      right: 14px;
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+      z-index: 10;
+      font:
+        500 13px/1.4 "Cormorant Garamond",
+        Georgia,
+        serif;
+      color: var(--ink);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+      text-align: right;
+    }
+
+    #ui.show,
+    #ui.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.hide-export #ui,
+    #ui.hide-export {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    #ui button,
+    #ui select {
+      font: inherit;
+      color: var(--ink);
+      background: rgba(20, 22, 45, 0.8);
+      border: 1px solid rgba(185, 191, 224, 0.4);
+      border-radius: 8px;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+
+    #ui button:hover {
+      border-color: rgba(220, 226, 255, 0.9);
+    }
+
+    #ui button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    #xp {
+      display: none;
+      margin-bottom: 8px;
+      padding: 12px 14px;
+      background: rgba(10, 11, 28, 0.88);
+      border: 1px solid rgba(185, 191, 224, 0.3);
+      border-radius: 12px;
+      text-align: left;
+      width: 250px;
+      backdrop-filter: blur(6px);
+    }
+
+    #ui.open #xp {
+      display: block;
+    }
+
+    #xp label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 8px;
+    }
+
+    #xbar {
+      height: 5px;
+      background: rgba(185, 191, 224, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 10px 0 6px;
+      display: none;
+    }
+
+    #xbar i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: #c9d2ff;
+    }
+
+    #xmsg {
+      font-size: 12px;
+      color: var(--soft);
+      min-height: 16px;
+    }
+
+    #xp .row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    #xp .row button {
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="c"></canvas>
+  <div id="stage" role="img" aria-label="Save the date: Quốc Anh và Kiều Hân, 25.10.2026">
+    <div class="t m" id="mono">A<span>H</span></div>
+    <div class="t m" id="mono2">A<span>H</span></div>
+    <div class="t" id="sd">SAVE THE DATE</div>
+    <div class="t" id="names">Quốc Anh <s>&amp;</s> Kiều Hân</div>
+    <div class="t" id="date">25.10.2026</div>
+    <div class="t" id="love">
+      TRUE LOVE IS ETERNAL, INFINITE, AND ALWAYS LIKE ITSELF.
+    </div>
+    <div class="t" id="hearts">♥♥♥</div>
+  </div>
+  <div id="ui">
+    <div id="xp">
+      <label>Độ phân giải
+        <select id="xres">
+          <option value="1920x1080">Full HD 1080p</option>
+          <option value="2560x1440">2K 1440p</option>
+          <option value="3840x2160" selected>4K 2160p</option>
+        </select></label>
+      <label>Khung hình/giây
+        <select id="xfps">
+          <option value="30" selected>30 fps</option>
+          <option value="60">60 fps</option>
+        </select></label>
+      <label>Số vòng lặp
+        <select id="xloop">
+          <option value="1" selected>1 (13s)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+        </select></label>
+      <div id="xbar"><i></i></div>
+      <div id="xmsg">Dùng Chrome/Edge. Giữ tab mở khi đang xuất.</div>
+      <div class="row">
+        <button id="xgo">Bắt đầu xuất</button><button id="xcancel" style="display: none">Huỷ</button>
+      </div>
+    </div>
+    <button id="xtoggle">⬇ Xuất video</button>
+  </div>
+  <script>
+    "use strict";
+    var Mp4Muxer = (() => {
+      var e = Object.defineProperty,
+        t = Object.getOwnPropertyDescriptor,
+        i = Object.getOwnPropertyNames,
+        s = Object.prototype.hasOwnProperty,
+        a = (e, t, i) => {
+          if (!t.has(e)) throw TypeError("Cannot " + i);
+        },
+        r = (e, t, i) => (
+          a(e, t, "read from private field"), i ? i.call(e) : t.get(e)
+        ),
+        n = (e, t, i) => {
+          if (t.has(e))
+            throw TypeError(
+              "Cannot add the same private member more than once",
+            );
+          t instanceof WeakSet ? t.add(e) : t.set(e, i);
+        },
+        o = (e, t, i, s) => (
+          a(e, t, "write to private field"),
+          s ? s.call(e, i) : t.set(e, i),
+          i
+        ),
+        h = (e, t, i) => (a(e, t, "access private method"), i),
+        l = {};
+      ((t, i) => {
+        for (var s in i) e(t, s, { get: i[s], enumerable: !0 });
+      })(l, {
+        ArrayBufferTarget: () => xe,
+        FileSystemWritableFileStreamTarget: () => Ee,
+        Muxer: () => Ut,
+        StreamTarget: () => ze,
+      });
+      var d,
+        f,
+        u,
+        m,
+        p,
+        c,
+        w,
+        g,
+        y = new Uint8Array(8),
+        b = new DataView(y.buffer),
+        k = (e) => [((e % 256) + 256) % 256],
+        T = (e) => (b.setUint16(0, e, !1), [y[0], y[1]]),
+        v = (e) => (b.setUint32(0, e, !1), [y[1], y[2], y[3]]),
+        C = (e) => (b.setUint32(0, e, !1), [y[0], y[1], y[2], y[3]]),
+        S = (e) => (
+          b.setUint32(0, Math.floor(e / 2 ** 32), !1),
+          b.setUint32(4, e, !1),
+          [y[0], y[1], y[2], y[3], y[4], y[5], y[6], y[7]]
+        ),
+        x = (e) => (b.setInt16(0, 256 * e, !1), [y[0], y[1]]),
+        z = (e) => (
+          b.setInt32(0, 65536 * e, !1), [y[0], y[1], y[2], y[3]]
+        ),
+        E = (e) => (
+          b.setInt32(0, 2 ** 30 * e, !1), [y[0], y[1], y[2], y[3]]
+        ),
+        A = (e, t = !1) => {
+          let i = Array(e.length)
+            .fill(null)
+            .map((t, i) => e.charCodeAt(i));
+          return t && i.push(0), i;
+        },
+        M = (e) => e && e[e.length - 1],
+        W = (e) => {
+          let t;
+          for (let i of e)
+            (!t ||
+              i.presentationTimestamp > t.presentationTimestamp) &&
+              (t = i);
+          return t;
+        },
+        O = (e, t, i = !0) => {
+          let s = e * t;
+          return i ? Math.round(s) : s;
+        },
+        B = (e) => {
+          let t = e * (Math.PI / 180),
+            i = Math.cos(t),
+            s = Math.sin(t);
+          return [i, s, 0, -s, i, 0, 0, 0, 1];
+        },
+        U = B(0),
+        j = (e) => [
+          z(e[0]),
+          z(e[1]),
+          E(e[2]),
+          z(e[3]),
+          z(e[4]),
+          E(e[5]),
+          z(e[6]),
+          z(e[7]),
+          E(e[8]),
+        ],
+        D = (e) =>
+          e
+            ? "object" != typeof e
+              ? e
+              : Array.isArray(e)
+                ? e.map(D)
+                : Object.fromEntries(
+                  Object.entries(e).map(([e, t]) => [e, D(t)]),
+                )
+            : e,
+        I = (e) => e >= 0 && e < 2 ** 32,
+        R = (e, t, i) => ({
+          type: e,
+          contents: t && new Uint8Array(t.flat(10)),
+          children: i,
+        }),
+        N = (e, t, i, s, a) => R(e, [k(t), v(i), s ?? []], a),
+        V = (e) => ({ type: "mdat", largeSize: e }),
+        L = (e, t, i = !1) =>
+          R("moov", null, [
+            F(t, e),
+            ...e.map((e) => $(e, t)),
+            i ? le(e) : null,
+          ]),
+        F = (e, t) => {
+          let i = O(
+            Math.max(
+              0,
+              ...t
+                .filter((e) => e.samples.length > 0)
+                .map((e) => {
+                  const t = W(e.samples);
+                  return t.presentationTimestamp + t.duration;
+                }),
+            ),
+            Mt,
+          ),
+            s = Math.max(...t.map((e) => e.id)) + 1,
+            a = !I(e) || !I(i),
+            r = a ? S : C;
+          return N("mvhd", +a, 0, [
+            r(e),
+            r(e),
+            C(Mt),
+            r(i),
+            z(1),
+            x(1),
+            Array(10).fill(0),
+            j(U),
+            Array(24).fill(0),
+            C(s),
+          ]);
+        },
+        $ = (e, t) => R("trak", null, [P(e, t), H(e, t)]),
+        P = (e, t) => {
+          let i,
+            s = W(e.samples),
+            a = O(s ? s.presentationTimestamp + s.duration : 0, Mt),
+            r = !I(t) || !I(a),
+            n = r ? S : C;
+          return (
+            (i =
+              "video" === e.info.type
+                ? "number" == typeof e.info.rotation
+                  ? B(e.info.rotation)
+                  : e.info.rotation
+                : U),
+            N("tkhd", +r, 3, [
+              n(t),
+              n(t),
+              C(e.id),
+              C(0),
+              n(a),
+              Array(8).fill(0),
+              T(0),
+              T(0),
+              x("audio" === e.info.type ? 1 : 0),
+              T(0),
+              j(i),
+              z("video" === e.info.type ? e.info.width : 0),
+              z("video" === e.info.type ? e.info.height : 0),
+            ])
+          );
+        },
+        H = (e, t) =>
+          R("mdia", null, [
+            _(e, t),
+            q("video" === e.info.type ? "vide" : "soun"),
+            G(e),
+          ]),
+        _ = (e, t) => {
+          let i = W(e.samples),
+            s = O(
+              i ? i.presentationTimestamp + i.duration : 0,
+              e.timescale,
+            ),
+            a = !I(t) || !I(s),
+            r = a ? S : C;
+          return N("mdhd", +a, 0, [
+            r(t),
+            r(t),
+            C(e.timescale),
+            r(s),
+            T(21956),
+            T(0),
+          ]);
+        },
+        q = (e) =>
+          N("hdlr", 0, 0, [
+            A("mhlr"),
+            A(e),
+            C(0),
+            C(0),
+            C(0),
+            A("mp4-muxer-hdlr", !0),
+          ]),
+        G = (e) =>
+          R("minf", null, [
+            "video" === e.info.type ? J() : K(),
+            Q(),
+            Z(e),
+          ]),
+        J = () => N("vmhd", 0, 1, [T(0), T(0), T(0), T(0)]),
+        K = () => N("smhd", 0, 0, [T(0), T(0)]),
+        Q = () => R("dinf", null, [X()]),
+        X = () => N("dref", 0, 0, [C(1)], [Y()]),
+        Y = () => N("url ", 0, 1),
+        Z = (e) => {
+          const t =
+            e.compositionTimeOffsetTable.length > 1 ||
+            e.compositionTimeOffsetTable.some(
+              (e) => 0 !== e.sampleCompositionTimeOffset,
+            );
+          return R("stbl", null, [
+            ee(e),
+            se(e),
+            ae(e),
+            re(e),
+            ne(e),
+            oe(e),
+            t ? he(e) : null,
+          ]);
+        },
+        ee = (e) =>
+          N(
+            "stsd",
+            0,
+            0,
+            [C(1)],
+            [
+              "video" === e.info.type
+                ? te(ke[e.info.codec], e)
+                : ie(ve[e.info.codec], e),
+            ],
+          ),
+        te = (e, t) => {
+          return R(
+            e,
+            [
+              Array(6).fill(0),
+              T(1),
+              T(0),
+              T(0),
+              Array(12).fill(0),
+              T(t.info.width),
+              T(t.info.height),
+              C(4718592),
+              C(4718592),
+              C(0),
+              T(1),
+              Array(32).fill(0),
+              T(24),
+              ((i = 65535), b.setInt16(0, i, !1), [y[0], y[1]]),
+            ],
+            [Te[t.info.codec](t)],
+          );
+          var i;
+        },
+        ie = (e, t) =>
+          R(
+            e,
+            [
+              Array(6).fill(0),
+              T(1),
+              T(0),
+              T(0),
+              C(0),
+              T(t.info.numberOfChannels),
+              T(16),
+              T(0),
+              T(0),
+              z(t.info.sampleRate),
+            ],
+            [Ce[t.info.codec](t)],
+          ),
+        se = (e) =>
+          N("stts", 0, 0, [
+            C(e.timeToSampleTable.length),
+            e.timeToSampleTable.map((e) => [
+              C(e.sampleCount),
+              C(e.sampleDelta),
+            ]),
+          ]),
+        ae = (e) => {
+          if (e.samples.every((e) => "key" === e.type)) return null;
+          let t = [...e.samples.entries()].filter(
+            ([, e]) => "key" === e.type,
+          );
+          return N("stss", 0, 0, [
+            C(t.length),
+            t.map(([e]) => C(e + 1)),
+          ]);
+        },
+        re = (e) =>
+          N("stsc", 0, 0, [
+            C(e.compactlyCodedChunkTable.length),
+            e.compactlyCodedChunkTable.map((e) => [
+              C(e.firstChunk),
+              C(e.samplesPerChunk),
+              C(1),
+            ]),
+          ]),
+        ne = (e) =>
+          N("stsz", 0, 0, [
+            C(0),
+            C(e.samples.length),
+            e.samples.map((e) => C(e.size)),
+          ]),
+        oe = (e) =>
+          e.finalizedChunks.length > 0 &&
+            M(e.finalizedChunks).offset >= 2 ** 32
+            ? N("co64", 0, 0, [
+              C(e.finalizedChunks.length),
+              e.finalizedChunks.map((e) => S(e.offset)),
+            ])
+            : N("stco", 0, 0, [
+              C(e.finalizedChunks.length),
+              e.finalizedChunks.map((e) => C(e.offset)),
+            ]),
+        he = (e) =>
+          N("ctts", 0, 0, [
+            C(e.compositionTimeOffsetTable.length),
+            e.compositionTimeOffsetTable.map((e) => [
+              C(e.sampleCount),
+              C(e.sampleCompositionTimeOffset),
+            ]),
+          ]),
+        le = (e) => R("mvex", null, e.map(de)),
+        de = (e) => N("trex", 0, 0, [C(e.id), C(1), C(0), C(0), C(0)]),
+        fe = (e, t) => R("moof", null, [ue(e), ...t.map(pe)]),
+        ue = (e) => N("mfhd", 0, 0, [C(e)]),
+        me = (e) => {
+          let t = 0,
+            i = 0,
+            s = "delta" === e.type;
+          return (i |= +s), (t |= s ? 1 : 2), (t << 24) | (i << 16);
+        },
+        pe = (e) => R("traf", null, [ce(e), we(e), ge(e)]),
+        ce = (e) => {
+          let t = 0;
+          (t |= 8), (t |= 16), (t |= 32), (t |= 131072);
+          let i =
+            e.currentChunk.samples[1] ?? e.currentChunk.samples[0],
+            s = {
+              duration: i.timescaleUnitsToNextSample,
+              size: i.size,
+              flags: me(i),
+            };
+          return N("tfhd", 0, 131128, [
+            C(e.id),
+            C(s.duration),
+            C(s.size),
+            C(s.flags),
+          ]);
+        },
+        we = (e) =>
+          N("tfdt", 1, 0, [
+            S(O(e.currentChunk.startTimestamp, e.timescale)),
+          ]),
+        ge = (e) => {
+          let t = e.currentChunk.samples.map(
+            (e) => e.timescaleUnitsToNextSample,
+          ),
+            i = e.currentChunk.samples.map((e) => e.size),
+            s = e.currentChunk.samples.map(me),
+            a = e.currentChunk.samples.map((t) =>
+              O(
+                t.presentationTimestamp - t.decodeTimestamp,
+                e.timescale,
+              ),
+            ),
+            r = new Set(t),
+            n = new Set(i),
+            o = new Set(s),
+            h = new Set(a),
+            l = 2 === o.size && s[0] !== s[1],
+            d = r.size > 1,
+            f = n.size > 1,
+            u = !l && o.size > 1,
+            m = h.size > 1 || [...h].some((e) => 0 !== e),
+            p = 0;
+          return (
+            (p |= 1),
+            (p |= 4 * +l),
+            (p |= 256 * +d),
+            (p |= 512 * +f),
+            (p |= 1024 * +u),
+            (p |= 2048 * +m),
+            N("trun", 1, p, [
+              C(e.currentChunk.samples.length),
+              C(
+                e.currentChunk.offset - e.currentChunk.moofOffset ||
+                0,
+              ),
+              l ? C(s[0]) : [],
+              e.currentChunk.samples.map((e, r) => {
+                return [
+                  d ? C(t[r]) : [],
+                  f ? C(i[r]) : [],
+                  u ? C(s[r]) : [],
+                  m
+                    ? ((n = a[r]),
+                      b.setInt32(0, n, !1),
+                      [y[0], y[1], y[2], y[3]])
+                    : [],
+                ];
+                var n;
+              }),
+            ])
+          );
+        },
+        ye = (e, t) =>
+          N("tfra", 1, 0, [
+            C(e.id),
+            C(63),
+            C(e.finalizedChunks.length),
+            e.finalizedChunks.map((i) => [
+              S(O(i.startTimestamp, e.timescale)),
+              S(i.moofOffset),
+              C(t + 1),
+              C(1),
+              C(1),
+            ]),
+          ]),
+        be = () => N("mfro", 0, 0, [C(0)]),
+        ke = { avc: "avc1", hevc: "hvc1", vp9: "vp09", av1: "av01" },
+        Te = {
+          avc: (e) =>
+            e.info.decoderConfig &&
+            R("avcC", [
+              ...new Uint8Array(e.info.decoderConfig.description),
+            ]),
+          hevc: (e) =>
+            e.info.decoderConfig &&
+            R("hvcC", [
+              ...new Uint8Array(e.info.decoderConfig.description),
+            ]),
+          vp9: (e) => {
+            if (!e.info.decoderConfig) return null;
+            let t = e.info.decoderConfig;
+            if (!t.colorSpace)
+              throw new Error(
+                "'colorSpace' is required in the decoder config for VP9.",
+              );
+            let i = t.codec.split("."),
+              s = Number(i[1]),
+              a = Number(i[2]),
+              r =
+                0 +
+                (Number(i[3]) << 4) +
+                Number(t.colorSpace.fullRange);
+            return N("vpcC", 1, 0, [
+              k(s),
+              k(a),
+              k(r),
+              k(2),
+              k(2),
+              k(2),
+              T(0),
+            ]);
+          },
+          av1: () => R("av1C", [129, 0, 0, 0]),
+        },
+        ve = { aac: "mp4a", opus: "Opus" },
+        Ce = {
+          aac: (e) => {
+            let t = new Uint8Array(e.info.decoderConfig.description);
+            return N("esds", 0, 0, [
+              C(58753152),
+              k(32 + t.byteLength),
+              T(1),
+              k(0),
+              C(75530368),
+              k(18 + t.byteLength),
+              k(64),
+              k(21),
+              v(0),
+              C(130071),
+              C(130071),
+              C(92307584),
+              k(t.byteLength),
+              ...t,
+              C(109084800),
+              k(1),
+              k(2),
+            ]);
+          },
+          opus: (e) => {
+            let t = 3840,
+              i = 0;
+            const s = e.info.decoderConfig?.description;
+            if (s) {
+              if (s.byteLength < 18)
+                throw new TypeError(
+                  "Invalid decoder description provided for Opus; must be at least 18 bytes long.",
+                );
+              const e = ArrayBuffer.isView(s)
+                ? new DataView(s.buffer, s.byteOffset, s.byteLength)
+                : new DataView(s);
+              (t = e.getUint16(10, !0)), (i = e.getInt16(14, !0));
+            }
+            return R("dOps", [
+              k(0),
+              k(e.info.numberOfChannels),
+              T(t),
+              C(e.info.sampleRate),
+              x(i),
+              k(0),
+            ]);
+          },
+        },
+        Se = (Symbol("isTarget"), class { }),
+        xe = class extends Se {
+          constructor() {
+            super(...arguments), (this.buffer = null);
+          }
+        },
+        ze = class extends Se {
+          constructor(e) {
+            if ((super(), (this.options = e), "object" != typeof e))
+              throw new TypeError(
+                "StreamTarget requires an options object to be passed to its constructor.",
+              );
+            if (e.onData) {
+              if ("function" != typeof e.onData)
+                throw new TypeError(
+                  "options.onData, when provided, must be a function.",
+                );
+              if (e.onData.length < 2)
+                throw new TypeError(
+                  "options.onData, when provided, must be a function that takes in at least two arguments (data and position). Ignoring the position argument, which specifies the byte offset at which the data is to be written, can lead to broken outputs.",
+                );
+            }
+            if (void 0 !== e.chunked && "boolean" != typeof e.chunked)
+              throw new TypeError(
+                "options.chunked, when provided, must be a boolean.",
+              );
+            if (
+              void 0 !== e.chunkSize &&
+              (!Number.isInteger(e.chunkSize) || e.chunkSize <= 0)
+            )
+              throw new TypeError(
+                "options.chunkSize, when provided, must be a positive integer.",
+              );
+          }
+        },
+        Ee = class extends Se {
+          constructor(e, t) {
+            if (
+              (super(),
+                (this.stream = e),
+                (this.options = t),
+                !(e instanceof FileSystemWritableFileStream))
+            )
+              throw new TypeError(
+                "FileSystemWritableFileStreamTarget requires a FileSystemWritableFileStream instance.",
+              );
+            if (void 0 !== t && "object" != typeof t)
+              throw new TypeError(
+                "FileSystemWritableFileStreamTarget's options, when provided, must be an object.",
+              );
+            if (
+              t &&
+              void 0 !== t.chunkSize &&
+              (!Number.isInteger(t.chunkSize) || t.chunkSize <= 0)
+            )
+              throw new TypeError(
+                "options.chunkSize, when provided, must be a positive integer",
+              );
+          }
+        },
+        Ae = class {
+          constructor() {
+            (this.pos = 0),
+              n(this, d, new Uint8Array(8)),
+              n(this, f, new DataView(r(this, d).buffer)),
+              (this.offsets = new WeakMap());
+          }
+          seek(e) {
+            this.pos = e;
+          }
+          writeU32(e) {
+            r(this, f).setUint32(0, e, !1),
+              this.write(r(this, d).subarray(0, 4));
+          }
+          writeU64(e) {
+            r(this, f).setUint32(0, Math.floor(e / 2 ** 32), !1),
+              r(this, f).setUint32(4, e, !1),
+              this.write(r(this, d).subarray(0, 8));
+          }
+          writeAscii(e) {
+            for (let t = 0; t < e.length; t++)
+              r(this, f).setUint8(t % 8, e.charCodeAt(t)),
+                t % 8 == 7 && this.write(r(this, d));
+            e.length % 8 != 0 &&
+              this.write(r(this, d).subarray(0, e.length % 8));
+          }
+          writeBox(e) {
+            if (
+              (this.offsets.set(e, this.pos),
+                e.contents && !e.children)
+            )
+              this.writeBoxHeader(
+                e,
+                e.size ?? e.contents.byteLength + 8,
+              ),
+                this.write(e.contents);
+            else {
+              let t = this.pos;
+              if (
+                (this.writeBoxHeader(e, 0),
+                  e.contents && this.write(e.contents),
+                  e.children)
+              )
+                for (let t of e.children) t && this.writeBox(t);
+              let i = this.pos,
+                s = e.size ?? i - t;
+              this.seek(t), this.writeBoxHeader(e, s), this.seek(i);
+            }
+          }
+          writeBoxHeader(e, t) {
+            this.writeU32(e.largeSize ? 1 : t),
+              this.writeAscii(e.type),
+              e.largeSize && this.writeU64(t);
+          }
+          measureBoxHeader(e) {
+            return 8 + (e.largeSize ? 8 : 0);
+          }
+          patchBox(e) {
+            let t = this.pos;
+            this.seek(this.offsets.get(e)),
+              this.writeBox(e),
+              this.seek(t);
+          }
+          measureBox(e) {
+            if (e.contents && !e.children) {
+              return this.measureBoxHeader(e) + e.contents.byteLength;
+            }
+            {
+              let t = this.measureBoxHeader(e);
+              if (
+                (e.contents && (t += e.contents.byteLength),
+                  e.children)
+              )
+                for (let i of e.children)
+                  i && (t += this.measureBox(i));
+              return t;
+            }
+          }
+        };
+      (d = new WeakMap()), (f = new WeakMap());
+      var Me,
+        We,
+        Oe = class extends Ae {
+          constructor(e) {
+            super(),
+              n(this, w),
+              n(this, u, void 0),
+              n(this, m, new ArrayBuffer(65536)),
+              n(this, p, new Uint8Array(r(this, m))),
+              n(this, c, 0),
+              o(this, u, e);
+          }
+          write(e) {
+            h(this, w, g).call(this, this.pos + e.byteLength),
+              r(this, p).set(e, this.pos),
+              (this.pos += e.byteLength),
+              o(this, c, Math.max(r(this, c), this.pos));
+          }
+          finalize() {
+            h(this, w, g).call(this, this.pos),
+              (r(this, u).buffer = r(this, m).slice(
+                0,
+                Math.max(r(this, c), this.pos),
+              ));
+          }
+        };
+      (u = new WeakMap()),
+        (m = new WeakMap()),
+        (p = new WeakMap()),
+        (c = new WeakMap()),
+        (w = new WeakSet()),
+        (g = function (e) {
+          let t = r(this, m).byteLength;
+          for (; t < e;) t *= 2;
+          if (t === r(this, m).byteLength) return;
+          let i = new ArrayBuffer(t),
+            s = new Uint8Array(i);
+          s.set(r(this, p), 0), o(this, m, i), o(this, p, s);
+        });
+      var Be = class extends Ae {
+        constructor(e) {
+          super(), n(this, Me, void 0), n(this, We, []), o(this, Me, e);
+        }
+        write(e) {
+          r(this, We).push({ data: e.slice(), start: this.pos }),
+            (this.pos += e.byteLength);
+        }
+        flush() {
+          if (0 === r(this, We).length) return;
+          let e = [],
+            t = [...r(this, We)].sort((e, t) => e.start - t.start);
+          e.push({ start: t[0].start, size: t[0].data.byteLength });
+          for (let i = 1; i < t.length; i++) {
+            let s = e[e.length - 1],
+              a = t[i];
+            a.start <= s.start + s.size
+              ? (s.size = Math.max(
+                s.size,
+                a.start + a.data.byteLength - s.start,
+              ))
+              : e.push({ start: a.start, size: a.data.byteLength });
+          }
+          for (let t of e) {
+            t.data = new Uint8Array(t.size);
+            for (let e of r(this, We))
+              t.start <= e.start &&
+                e.start < t.start + t.size &&
+                t.data.set(e.data, e.start - t.start);
+            r(this, Me).options.onData?.(t.data, t.start);
+          }
+          r(this, We).length = 0;
+        }
+        finalize() { }
+      };
+      (Me = new WeakMap()), (We = new WeakMap());
+      var Ue,
+        je,
+        De,
+        Ie,
+        Re,
+        Ne,
+        Ve,
+        Le,
+        Fe,
+        $e,
+        Pe,
+        He = class extends Ae {
+          constructor(e) {
+            if (
+              (super(),
+                n(this, Ie),
+                n(this, Ne),
+                n(this, Le),
+                n(this, $e),
+                n(this, Ue, void 0),
+                n(this, je, void 0),
+                n(this, De, []),
+                o(this, Ue, e),
+                o(this, je, e.options?.chunkSize ?? 16777216),
+                !Number.isInteger(r(this, je)) || r(this, je) < 1024)
+            )
+              throw new Error(
+                "Invalid StreamTarget options: chunkSize must be an integer not smaller than 1024.",
+              );
+          }
+          write(e) {
+            h(this, Ie, Re).call(this, e, this.pos),
+              h(this, $e, Pe).call(this),
+              (this.pos += e.byteLength);
+          }
+          finalize() {
+            h(this, $e, Pe).call(this, !0);
+          }
+        };
+      (Ue = new WeakMap()),
+        (je = new WeakMap()),
+        (De = new WeakMap()),
+        (Ie = new WeakSet()),
+        (Re = function (e, t) {
+          let i = r(this, De).findIndex(
+            (e) => e.start <= t && t < e.start + r(this, je),
+          );
+          -1 === i && (i = h(this, Le, Fe).call(this, t));
+          let s = r(this, De)[i],
+            a = t - s.start,
+            n = e.subarray(0, Math.min(r(this, je) - a, e.byteLength));
+          s.data.set(n, a);
+          let o = { start: a, end: a + n.byteLength };
+          if (
+            (h(this, Ne, Ve).call(this, s, o),
+              0 === s.written[0].start &&
+              s.written[0].end === r(this, je) &&
+              (s.shouldFlush = !0),
+              r(this, De).length > 2)
+          ) {
+            for (let e = 0; e < r(this, De).length - 1; e++)
+              r(this, De)[e].shouldFlush = !0;
+            h(this, $e, Pe).call(this);
+          }
+          n.byteLength < e.byteLength &&
+            h(this, Ie, Re).call(
+              this,
+              e.subarray(n.byteLength),
+              t + n.byteLength,
+            );
+        }),
+        (Ne = new WeakSet()),
+        (Ve = function (e, t) {
+          let i = 0,
+            s = e.written.length - 1,
+            a = -1;
+          for (; i <= s;) {
+            let r = Math.floor(i + (s - i + 1) / 2);
+            e.written[r].start <= t.start
+              ? ((i = r + 1), (a = r))
+              : (s = r - 1);
+          }
+          for (
+            e.written.splice(a + 1, 0, t),
+            (-1 === a || e.written[a].end < t.start) && a++;
+            a < e.written.length - 1 &&
+            e.written[a].end >= e.written[a + 1].start;
+
+          )
+            (e.written[a].end = Math.max(
+              e.written[a].end,
+              e.written[a + 1].end,
+            )),
+              e.written.splice(a + 1, 1);
+        }),
+        (Le = new WeakSet()),
+        (Fe = function (e) {
+          let t = {
+            start: Math.floor(e / r(this, je)) * r(this, je),
+            data: new Uint8Array(r(this, je)),
+            written: [],
+            shouldFlush: !1,
+          };
+          return (
+            r(this, De).push(t),
+            r(this, De).sort((e, t) => e.start - t.start),
+            r(this, De).indexOf(t)
+          );
+        }),
+        ($e = new WeakSet()),
+        (Pe = function (e = !1) {
+          for (let t = 0; t < r(this, De).length; t++) {
+            let i = r(this, De)[t];
+            if (i.shouldFlush || e) {
+              for (let e of i.written)
+                r(this, Ue).options.onData?.(
+                  i.data.subarray(e.start, e.end),
+                  i.start + e.start,
+                );
+              r(this, De).splice(t--, 1);
+            }
+          }
+        });
+      var _e,
+        qe,
+        Ge,
+        Je,
+        Ke,
+        Qe,
+        Xe,
+        Ye,
+        Ze,
+        et,
+        tt,
+        it,
+        st,
+        at,
+        rt,
+        nt,
+        ot,
+        ht,
+        lt,
+        dt,
+        ft,
+        ut,
+        mt,
+        pt,
+        ct,
+        wt,
+        gt,
+        yt,
+        bt,
+        kt,
+        Tt,
+        vt,
+        Ct,
+        St,
+        xt,
+        zt,
+        Et,
+        At = class extends He {
+          constructor(e) {
+            super(
+              new ze({
+                onData: (t, i) =>
+                  e.stream.write({
+                    type: "write",
+                    data: t,
+                    position: i,
+                  }),
+                chunkSize: e.options?.chunkSize,
+              }),
+            );
+          }
+        },
+        Mt = 1e3,
+        Wt = ["avc", "hevc", "vp9", "av1"],
+        Ot = ["aac", "opus"],
+        Bt = ["strict", "offset", "cross-track-offset"],
+        Ut = class {
+          constructor(e) {
+            if (
+              (n(this, st),
+                n(this, rt),
+                n(this, ot),
+                n(this, lt),
+                n(this, ft),
+                n(this, mt),
+                n(this, ct),
+                n(this, gt),
+                n(this, bt),
+                n(this, Tt),
+                n(this, Ct),
+                n(this, xt),
+                n(this, _e, void 0),
+                n(this, qe, void 0),
+                n(this, Ge, void 0),
+                n(this, Je, void 0),
+                n(this, Ke, null),
+                n(this, Qe, null),
+                n(this, Xe, Math.floor(Date.now() / 1e3) + 2082844800),
+                n(this, Ye, []),
+                n(this, Ze, 1),
+                n(this, et, []),
+                n(this, tt, []),
+                n(this, it, !1),
+                h(this, st, at).call(this, e),
+                (e.video = D(e.video)),
+                (e.audio = D(e.audio)),
+                (e.fastStart = D(e.fastStart)),
+                (this.target = e.target),
+                o(this, _e, { firstTimestampBehavior: "strict", ...e }),
+                e.target instanceof xe)
+            )
+              o(this, qe, new Oe(e.target));
+            else if (e.target instanceof ze)
+              o(
+                this,
+                qe,
+                e.target.options?.chunked
+                  ? new He(e.target)
+                  : new Be(e.target),
+              );
+            else {
+              if (!(e.target instanceof Ee))
+                throw new Error(`Invalid target: ${e.target}`);
+              o(this, qe, new At(e.target));
+            }
+            h(this, lt, dt).call(this), h(this, rt, nt).call(this);
+          }
+          addVideoChunk(e, t, i, s) {
+            if (!(e instanceof EncodedVideoChunk))
+              throw new TypeError(
+                "addVideoChunk's first argument (sample) must be of type EncodedVideoChunk.",
+              );
+            if (t && "object" != typeof t)
+              throw new TypeError(
+                "addVideoChunk's second argument (meta), when provided, must be an object.",
+              );
+            if (void 0 !== i && (!Number.isFinite(i) || i < 0))
+              throw new TypeError(
+                "addVideoChunk's third argument (timestamp), when provided, must be a non-negative real number.",
+              );
+            if (void 0 !== s && !Number.isFinite(s))
+              throw new TypeError(
+                "addVideoChunk's fourth argument (compositionTimeOffset), when provided, must be a real number.",
+              );
+            let a = new Uint8Array(e.byteLength);
+            e.copyTo(a),
+              this.addVideoChunkRaw(
+                a,
+                e.type,
+                i ?? e.timestamp,
+                e.duration,
+                t,
+                s,
+              );
+          }
+          addVideoChunkRaw(e, t, i, s, a, n) {
+            if (!(e instanceof Uint8Array))
+              throw new TypeError(
+                "addVideoChunkRaw's first argument (data) must be an instance of Uint8Array.",
+              );
+            if ("key" !== t && "delta" !== t)
+              throw new TypeError(
+                "addVideoChunkRaw's second argument (type) must be either 'key' or 'delta'.",
+              );
+            if (!Number.isFinite(i) || i < 0)
+              throw new TypeError(
+                "addVideoChunkRaw's third argument (timestamp) must be a non-negative real number.",
+              );
+            if (!Number.isFinite(s) || s < 0)
+              throw new TypeError(
+                "addVideoChunkRaw's fourth argument (duration) must be a non-negative real number.",
+              );
+            if (a && "object" != typeof a)
+              throw new TypeError(
+                "addVideoChunkRaw's fifth argument (meta), when provided, must be an object.",
+              );
+            if (void 0 !== n && !Number.isFinite(n))
+              throw new TypeError(
+                "addVideoChunkRaw's sixth argument (compositionTimeOffset), when provided, must be a real number.",
+              );
+            if ((h(this, xt, zt).call(this), !r(this, _e).video))
+              throw new Error("No video track declared.");
+            if (
+              "object" == typeof r(this, _e).fastStart &&
+              r(this, Ke).samples.length ===
+              r(this, _e).fastStart.expectedVideoChunks
+            )
+              throw new Error(
+                `Cannot add more video chunks than specified in 'fastStart' (${r(this, _e).fastStart.expectedVideoChunks}).`,
+              );
+            let o = h(this, mt, pt).call(
+              this,
+              r(this, Ke),
+              e,
+              t,
+              i,
+              s,
+              a,
+              n,
+            );
+            if (
+              "fragmented" === r(this, _e).fastStart &&
+              r(this, Qe)
+            ) {
+              for (
+                ;
+                r(this, tt).length > 0 &&
+                r(this, tt)[0].decodeTimestamp <= o.decodeTimestamp;
+
+              ) {
+                let e = r(this, tt).shift();
+                h(this, ct, wt).call(this, r(this, Qe), e);
+              }
+              o.decodeTimestamp <= r(this, Qe).lastDecodeTimestamp
+                ? h(this, ct, wt).call(this, r(this, Ke), o)
+                : r(this, et).push(o);
+            } else h(this, ct, wt).call(this, r(this, Ke), o);
+          }
+          addAudioChunk(e, t, i) {
+            if (!(e instanceof EncodedAudioChunk))
+              throw new TypeError(
+                "addAudioChunk's first argument (sample) must be of type EncodedAudioChunk.",
+              );
+            if (t && "object" != typeof t)
+              throw new TypeError(
+                "addAudioChunk's second argument (meta), when provided, must be an object.",
+              );
+            if (void 0 !== i && (!Number.isFinite(i) || i < 0))
+              throw new TypeError(
+                "addAudioChunk's third argument (timestamp), when provided, must be a non-negative real number.",
+              );
+            let s = new Uint8Array(e.byteLength);
+            e.copyTo(s),
+              this.addAudioChunkRaw(
+                s,
+                e.type,
+                i ?? e.timestamp,
+                e.duration,
+                t,
+              );
+          }
+          addAudioChunkRaw(e, t, i, s, a) {
+            if (!(e instanceof Uint8Array))
+              throw new TypeError(
+                "addAudioChunkRaw's first argument (data) must be an instance of Uint8Array.",
+              );
+            if ("key" !== t && "delta" !== t)
+              throw new TypeError(
+                "addAudioChunkRaw's second argument (type) must be either 'key' or 'delta'.",
+              );
+            if (!Number.isFinite(i) || i < 0)
+              throw new TypeError(
+                "addAudioChunkRaw's third argument (timestamp) must be a non-negative real number.",
+              );
+            if (!Number.isFinite(s) || s < 0)
+              throw new TypeError(
+                "addAudioChunkRaw's fourth argument (duration) must be a non-negative real number.",
+              );
+            if (a && "object" != typeof a)
+              throw new TypeError(
+                "addAudioChunkRaw's fifth argument (meta), when provided, must be an object.",
+              );
+            if ((h(this, xt, zt).call(this), !r(this, _e).audio))
+              throw new Error("No audio track declared.");
+            if (
+              "object" == typeof r(this, _e).fastStart &&
+              r(this, Qe).samples.length ===
+              r(this, _e).fastStart.expectedAudioChunks
+            )
+              throw new Error(
+                `Cannot add more audio chunks than specified in 'fastStart' (${r(this, _e).fastStart.expectedAudioChunks}).`,
+              );
+            let n = h(this, mt, pt).call(
+              this,
+              r(this, Qe),
+              e,
+              t,
+              i,
+              s,
+              a,
+            );
+            if (
+              "fragmented" === r(this, _e).fastStart &&
+              r(this, Ke)
+            ) {
+              for (
+                ;
+                r(this, et).length > 0 &&
+                r(this, et)[0].decodeTimestamp <= n.decodeTimestamp;
+
+              ) {
+                let e = r(this, et).shift();
+                h(this, ct, wt).call(this, r(this, Ke), e);
+              }
+              n.decodeTimestamp <= r(this, Ke).lastDecodeTimestamp
+                ? h(this, ct, wt).call(this, r(this, Qe), n)
+                : r(this, tt).push(n);
+            } else h(this, ct, wt).call(this, r(this, Qe), n);
+          }
+          finalize() {
+            if (r(this, it))
+              throw new Error(
+                "Cannot finalize a muxer more than once.",
+              );
+            if ("fragmented" === r(this, _e).fastStart) {
+              for (let e of r(this, et))
+                h(this, ct, wt).call(this, r(this, Ke), e);
+              for (let e of r(this, tt))
+                h(this, ct, wt).call(this, r(this, Qe), e);
+              h(this, Tt, vt).call(this, !1);
+            } else
+              r(this, Ke) && h(this, bt, kt).call(this, r(this, Ke)),
+                r(this, Qe) &&
+                h(this, bt, kt).call(this, r(this, Qe));
+            let e = [r(this, Ke), r(this, Qe)].filter(Boolean);
+            if ("in-memory" === r(this, _e).fastStart) {
+              let t;
+              for (let i = 0; i < 2; i++) {
+                let i = L(e, r(this, Xe)),
+                  s = r(this, qe).measureBox(i);
+                t = r(this, qe).measureBox(r(this, Je));
+                let a = r(this, qe).pos + s + t;
+                for (let e of r(this, Ye)) {
+                  e.offset = a;
+                  for (let { data: i } of e.samples)
+                    (a += i.byteLength), (t += i.byteLength);
+                }
+                if (a < 2 ** 32) break;
+                t >= 2 ** 32 && (r(this, Je).largeSize = !0);
+              }
+              let i = L(e, r(this, Xe));
+              r(this, qe).writeBox(i),
+                (r(this, Je).size = t),
+                r(this, qe).writeBox(r(this, Je));
+              for (let e of r(this, Ye))
+                for (let t of e.samples)
+                  r(this, qe).write(t.data), (t.data = null);
+            } else if ("fragmented" === r(this, _e).fastStart) {
+              let t = r(this, qe).pos,
+                i = ((e) => R("mfra", null, [...e.map(ye), be()]))(
+                  e,
+                );
+              r(this, qe).writeBox(i);
+              let s = r(this, qe).pos - t;
+              r(this, qe).seek(r(this, qe).pos - 4),
+                r(this, qe).writeU32(s);
+            } else {
+              let t = r(this, qe).offsets.get(r(this, Je)),
+                i = r(this, qe).pos - t;
+              (r(this, Je).size = i),
+                (r(this, Je).largeSize = i >= 2 ** 32),
+                r(this, qe).patchBox(r(this, Je));
+              let s = L(e, r(this, Xe));
+              if ("object" == typeof r(this, _e).fastStart) {
+                r(this, qe).seek(r(this, Ge)),
+                  r(this, qe).writeBox(s);
+                let e = t - r(this, qe).pos;
+                r(this, qe).writeBox({ type: "free", size: e });
+              } else r(this, qe).writeBox(s);
+            }
+            h(this, Ct, St).call(this),
+              r(this, qe).finalize(),
+              o(this, it, !0);
+          }
+        };
+      return (
+        (_e = new WeakMap()),
+        (qe = new WeakMap()),
+        (Ge = new WeakMap()),
+        (Je = new WeakMap()),
+        (Ke = new WeakMap()),
+        (Qe = new WeakMap()),
+        (Xe = new WeakMap()),
+        (Ye = new WeakMap()),
+        (Ze = new WeakMap()),
+        (et = new WeakMap()),
+        (tt = new WeakMap()),
+        (it = new WeakMap()),
+        (st = new WeakSet()),
+        (at = function (e) {
+          if ("object" != typeof e)
+            throw new TypeError(
+              "The muxer requires an options object to be passed to its constructor.",
+            );
+          if (!(e.target instanceof Se))
+            throw new TypeError(
+              "The target must be provided and an instance of Target.",
+            );
+          if (e.video) {
+            if (!Wt.includes(e.video.codec))
+              throw new TypeError(
+                `Unsupported video codec: ${e.video.codec}`,
+              );
+            if (!Number.isInteger(e.video.width) || e.video.width <= 0)
+              throw new TypeError(
+                `Invalid video width: ${e.video.width}. Must be a positive integer.`,
+              );
+            if (
+              !Number.isInteger(e.video.height) ||
+              e.video.height <= 0
+            )
+              throw new TypeError(
+                `Invalid video height: ${e.video.height}. Must be a positive integer.`,
+              );
+            const t = e.video.rotation;
+            if ("number" == typeof t && ![0, 90, 180, 270].includes(t))
+              throw new TypeError(
+                `Invalid video rotation: ${t}. Has to be 0, 90, 180 or 270.`,
+              );
+            if (
+              Array.isArray(t) &&
+              (9 !== t.length || t.some((e) => "number" != typeof e))
+            )
+              throw new TypeError(
+                `Invalid video transformation matrix: ${t.join()}`,
+              );
+            if (
+              void 0 !== e.video.frameRate &&
+              (!Number.isInteger(e.video.frameRate) ||
+                e.video.frameRate <= 0)
+            )
+              throw new TypeError(
+                `Invalid video frame rate: ${e.video.frameRate}. Must be a positive integer.`,
+              );
+          }
+          if (e.audio) {
+            if (!Ot.includes(e.audio.codec))
+              throw new TypeError(
+                `Unsupported audio codec: ${e.audio.codec}`,
+              );
+            if (
+              !Number.isInteger(e.audio.numberOfChannels) ||
+              e.audio.numberOfChannels <= 0
+            )
+              throw new TypeError(
+                `Invalid number of audio channels: ${e.audio.numberOfChannels}. Must be a positive integer.`,
+              );
+            if (
+              !Number.isInteger(e.audio.sampleRate) ||
+              e.audio.sampleRate <= 0
+            )
+              throw new TypeError(
+                `Invalid audio sample rate: ${e.audio.sampleRate}. Must be a positive integer.`,
+              );
+          }
+          if (
+            e.firstTimestampBehavior &&
+            !Bt.includes(e.firstTimestampBehavior)
+          )
+            throw new TypeError(
+              `Invalid first timestamp behavior: ${e.firstTimestampBehavior}`,
+            );
+          if ("object" == typeof e.fastStart) {
+            if (e.video) {
+              if (void 0 === e.fastStart.expectedVideoChunks)
+                throw new TypeError(
+                  "'fastStart' is an object but is missing property 'expectedVideoChunks'.",
+                );
+              if (
+                !Number.isInteger(e.fastStart.expectedVideoChunks) ||
+                e.fastStart.expectedVideoChunks < 0
+              )
+                throw new TypeError(
+                  "'expectedVideoChunks' must be a non-negative integer.",
+                );
+            }
+            if (e.audio) {
+              if (void 0 === e.fastStart.expectedAudioChunks)
+                throw new TypeError(
+                  "'fastStart' is an object but is missing property 'expectedAudioChunks'.",
+                );
+              if (
+                !Number.isInteger(e.fastStart.expectedAudioChunks) ||
+                e.fastStart.expectedAudioChunks < 0
+              )
+                throw new TypeError(
+                  "'expectedAudioChunks' must be a non-negative integer.",
+                );
+            }
+          } else if (
+            ![!1, "in-memory", "fragmented"].includes(e.fastStart)
+          )
+            throw new TypeError(
+              "'fastStart' option must be false, 'in-memory', 'fragmented' or an object.",
+            );
+        }),
+        (rt = new WeakSet()),
+        (nt = function () {
+          var e;
+          if (
+            (r(this, qe).writeBox(
+              (e = {
+                holdsAvc: "avc" === r(this, _e).video?.codec,
+                fragmented: "fragmented" === r(this, _e).fastStart,
+              }).fragmented
+                ? R("ftyp", [
+                  A("iso5"),
+                  C(512),
+                  A("iso5"),
+                  A("iso6"),
+                  A("mp41"),
+                ])
+                : R("ftyp", [
+                  A("isom"),
+                  C(512),
+                  A("isom"),
+                  e.holdsAvc ? A("avc1") : [],
+                  A("mp41"),
+                ]),
+            ),
+              o(this, Ge, r(this, qe).pos),
+              "in-memory" === r(this, _e).fastStart)
+          )
+            o(this, Je, V(!1));
+          else if ("fragmented" === r(this, _e).fastStart);
+          else {
+            if ("object" == typeof r(this, _e).fastStart) {
+              let e = h(this, ot, ht).call(this);
+              r(this, qe).seek(r(this, qe).pos + e);
+            }
+            o(this, Je, V(!0)), r(this, qe).writeBox(r(this, Je));
+          }
+          h(this, Ct, St).call(this);
+        }),
+        (ot = new WeakSet()),
+        (ht = function () {
+          if ("object" != typeof r(this, _e).fastStart) return;
+          let e = 0,
+            t = [
+              r(this, _e).fastStart.expectedVideoChunks,
+              r(this, _e).fastStart.expectedAudioChunks,
+            ];
+          for (let i of t)
+            i &&
+              ((e += 8 * Math.ceil((2 / 3) * i)),
+                (e += 4 * i),
+                (e += 12 * Math.ceil((2 / 3) * i)),
+                (e += 4 * i),
+                (e += 8 * i));
+          return (e += 4096), e;
+        }),
+        (lt = new WeakSet()),
+        (dt = function () {
+          if (
+            (r(this, _e).video &&
+              o(this, Ke, {
+                id: 1,
+                info: {
+                  type: "video",
+                  codec: r(this, _e).video.codec,
+                  width: r(this, _e).video.width,
+                  height: r(this, _e).video.height,
+                  rotation: r(this, _e).video.rotation ?? 0,
+                  decoderConfig: null,
+                },
+                timescale: r(this, _e).video.frameRate ?? 57600,
+                samples: [],
+                finalizedChunks: [],
+                currentChunk: null,
+                firstDecodeTimestamp: void 0,
+                lastDecodeTimestamp: -1,
+                timeToSampleTable: [],
+                compositionTimeOffsetTable: [],
+                lastTimescaleUnits: null,
+                lastSample: null,
+                compactlyCodedChunkTable: [],
+              }),
+              r(this, _e).audio &&
+              (o(this, Qe, {
+                id: r(this, _e).video ? 2 : 1,
+                info: {
+                  type: "audio",
+                  codec: r(this, _e).audio.codec,
+                  numberOfChannels: r(this, _e).audio
+                    .numberOfChannels,
+                  sampleRate: r(this, _e).audio.sampleRate,
+                  decoderConfig: null,
+                },
+                timescale: r(this, _e).audio.sampleRate,
+                samples: [],
+                finalizedChunks: [],
+                currentChunk: null,
+                firstDecodeTimestamp: void 0,
+                lastDecodeTimestamp: -1,
+                timeToSampleTable: [],
+                compositionTimeOffsetTable: [],
+                lastTimescaleUnits: null,
+                lastSample: null,
+                compactlyCodedChunkTable: [],
+              }),
+                "aac" === r(this, _e).audio.codec))
+          ) {
+            let e = h(this, ft, ut).call(
+              this,
+              2,
+              r(this, _e).audio.sampleRate,
+              r(this, _e).audio.numberOfChannels,
+            );
+            r(this, Qe).info.decoderConfig = {
+              codec: r(this, _e).audio.codec,
+              description: e,
+              numberOfChannels: r(this, _e).audio.numberOfChannels,
+              sampleRate: r(this, _e).audio.sampleRate,
+            };
+          }
+        }),
+        (ft = new WeakSet()),
+        (ut = function (e, t, i) {
+          let s = [
+            96e3, 88200, 64e3, 48e3, 44100, 32e3, 24e3, 22050, 16e3,
+            12e3, 11025, 8e3, 7350,
+          ].indexOf(t),
+            a = i,
+            r = "";
+          (r += e.toString(2).padStart(5, "0")),
+            (r += s.toString(2).padStart(4, "0")),
+            15 === s && (r += t.toString(2).padStart(24, "0")),
+            (r += a.toString(2).padStart(4, "0"));
+          let n = 8 * Math.ceil(r.length / 8);
+          r = r.padEnd(n, "0");
+          let o = new Uint8Array(r.length / 8);
+          for (let e = 0; e < r.length; e += 8)
+            o[e / 8] = parseInt(r.slice(e, e + 8), 2);
+          return o;
+        }),
+        (mt = new WeakSet()),
+        (pt = function (e, t, i, s, a, r, n) {
+          let o = s / 1e6,
+            l = (s - (n ?? 0)) / 1e6,
+            d = a / 1e6,
+            f = h(this, gt, yt).call(this, o, l, e);
+          return (
+            (o = f.presentationTimestamp),
+            (l = f.decodeTimestamp),
+            r?.decoderConfig &&
+            (null === e.info.decoderConfig
+              ? (e.info.decoderConfig = r.decoderConfig)
+              : Object.assign(
+                e.info.decoderConfig,
+                r.decoderConfig,
+              )),
+            {
+              presentationTimestamp: o,
+              decodeTimestamp: l,
+              duration: d,
+              data: t,
+              size: t.byteLength,
+              type: i,
+              timescaleUnitsToNextSample: O(d, e.timescale),
+            }
+          );
+        }),
+        (ct = new WeakSet()),
+        (wt = function (e, t) {
+          "fragmented" !== r(this, _e).fastStart && e.samples.push(t);
+          const i = O(
+            t.presentationTimestamp - t.decodeTimestamp,
+            e.timescale,
+          );
+          if (null !== e.lastTimescaleUnits) {
+            let s = O(t.decodeTimestamp, e.timescale, !1),
+              a = Math.round(s - e.lastTimescaleUnits);
+            if (
+              ((e.lastTimescaleUnits += a),
+                (e.lastSample.timescaleUnitsToNextSample = a),
+                "fragmented" !== r(this, _e).fastStart)
+            ) {
+              let t = M(e.timeToSampleTable);
+              1 === t.sampleCount
+                ? ((t.sampleDelta = a), t.sampleCount++)
+                : t.sampleDelta === a
+                  ? t.sampleCount++
+                  : (t.sampleCount--,
+                    e.timeToSampleTable.push({
+                      sampleCount: 2,
+                      sampleDelta: a,
+                    }));
+              const s = M(e.compositionTimeOffsetTable);
+              s.sampleCompositionTimeOffset === i
+                ? s.sampleCount++
+                : e.compositionTimeOffsetTable.push({
+                  sampleCount: 1,
+                  sampleCompositionTimeOffset: i,
+                });
+            }
+          } else
+            (e.lastTimescaleUnits = 0),
+              "fragmented" !== r(this, _e).fastStart &&
+              (e.timeToSampleTable.push({
+                sampleCount: 1,
+                sampleDelta: O(t.duration, e.timescale),
+              }),
+                e.compositionTimeOffsetTable.push({
+                  sampleCount: 1,
+                  sampleCompositionTimeOffset: i,
+                }));
+          e.lastSample = t;
+          let s = !1;
+          if (e.currentChunk) {
+            let i =
+              t.presentationTimestamp - e.currentChunk.startTimestamp;
+            if ("fragmented" === r(this, _e).fastStart) {
+              e === (r(this, Ke) ?? r(this, Qe)) &&
+                "key" === t.type &&
+                i >= 1 &&
+                ((s = !0), h(this, Tt, vt).call(this));
+            } else s = i >= 0.5;
+          } else s = !0;
+          s &&
+            (e.currentChunk && h(this, bt, kt).call(this, e),
+              (e.currentChunk = {
+                startTimestamp: t.presentationTimestamp,
+                samples: [],
+              })),
+            e.currentChunk.samples.push(t);
+        }),
+        (gt = new WeakSet()),
+        (yt = function (e, t, i) {
+          const s = "strict" === r(this, _e).firstTimestampBehavior,
+            a = -1 === i.lastDecodeTimestamp;
+          if (s && a && 0 !== t)
+            throw new Error(
+              `The first chunk for your media track must have a timestamp of 0 (received DTS=${t}).Non-zero first timestamps are often caused by directly piping frames or audio data from a MediaStreamTrack into the encoder. Their timestamps are typically relative to the age of thedocument, which is probably what you want.\n\nIf you want to offset all timestamps of a track such that the first one is zero, set firstTimestampBehavior: 'offset' in the options.\n`,
+            );
+          if (
+            "offset" === r(this, _e).firstTimestampBehavior ||
+            "cross-track-offset" === r(this, _e).firstTimestampBehavior
+          ) {
+            let s;
+            void 0 === i.firstDecodeTimestamp &&
+              (i.firstDecodeTimestamp = t),
+              (s =
+                "offset" === r(this, _e).firstTimestampBehavior
+                  ? i.firstDecodeTimestamp
+                  : Math.min(
+                    r(this, Ke)?.firstDecodeTimestamp ?? 1 / 0,
+                    r(this, Qe)?.firstDecodeTimestamp ?? 1 / 0,
+                  )),
+              (t -= s),
+              (e -= s);
+          }
+          if (t < i.lastDecodeTimestamp)
+            throw new Error(
+              `Timestamps must be monotonically increasing (DTS went from ${1e6 * i.lastDecodeTimestamp} to ${1e6 * t}).`,
+            );
+          return (
+            (i.lastDecodeTimestamp = t),
+            { presentationTimestamp: e, decodeTimestamp: t }
+          );
+        }),
+        (bt = new WeakSet()),
+        (kt = function (e) {
+          if ("fragmented" === r(this, _e).fastStart)
+            throw new Error(
+              "Can't finalize individual chunks if 'fastStart' is set to 'fragmented'.",
+            );
+          if (e.currentChunk)
+            if (
+              (e.finalizedChunks.push(e.currentChunk),
+                r(this, Ye).push(e.currentChunk),
+                (0 !== e.compactlyCodedChunkTable.length &&
+                  M(e.compactlyCodedChunkTable).samplesPerChunk ===
+                  e.currentChunk.samples.length) ||
+                e.compactlyCodedChunkTable.push({
+                  firstChunk: e.finalizedChunks.length,
+                  samplesPerChunk: e.currentChunk.samples.length,
+                }),
+                "in-memory" !== r(this, _e).fastStart)
+            ) {
+              e.currentChunk.offset = r(this, qe).pos;
+              for (let t of e.currentChunk.samples)
+                r(this, qe).write(t.data), (t.data = null);
+              h(this, Ct, St).call(this);
+            } else e.currentChunk.offset = 0;
+        }),
+        (Tt = new WeakSet()),
+        (vt = function (e = !0) {
+          if ("fragmented" !== r(this, _e).fastStart)
+            throw new Error(
+              "Can't finalize a fragment unless 'fastStart' is set to 'fragmented'.",
+            );
+          let t = [r(this, Ke), r(this, Qe)].filter(
+            (e) => e && e.currentChunk,
+          );
+          if (0 === t.length) return;
+          let i = ((s = this),
+            (a = Ze),
+          {
+            set _(e) {
+              o(s, a, e, n);
+            },
+            get _() {
+              return r(s, a, l);
+            },
+          })._++;
+          var s, a, n, l;
+          if (1 === i) {
+            let e = L(t, r(this, Xe), !0);
+            r(this, qe).writeBox(e);
+          }
+          let d = r(this, qe).pos,
+            f = fe(i, t);
+          r(this, qe).writeBox(f);
+          {
+            let e = V(!1),
+              i = 0;
+            for (let e of t)
+              for (let t of e.currentChunk.samples) i += t.size;
+            let s = r(this, qe).measureBox(e) + i;
+            s >= 2 ** 32 &&
+              ((e.largeSize = !0),
+                (s = r(this, qe).measureBox(e) + i)),
+              (e.size = s),
+              r(this, qe).writeBox(e);
+          }
+          for (let e of t) {
+            (e.currentChunk.offset = r(this, qe).pos),
+              (e.currentChunk.moofOffset = d);
+            for (let t of e.currentChunk.samples)
+              r(this, qe).write(t.data), (t.data = null);
+          }
+          let u = r(this, qe).pos;
+          r(this, qe).seek(r(this, qe).offsets.get(f));
+          let m = fe(i, t);
+          r(this, qe).writeBox(m), r(this, qe).seek(u);
+          for (let e of t)
+            e.finalizedChunks.push(e.currentChunk),
+              r(this, Ye).push(e.currentChunk),
+              (e.currentChunk = null);
+          e && h(this, Ct, St).call(this);
+        }),
+        (Ct = new WeakSet()),
+        (St = function () {
+          r(this, qe) instanceof Be && r(this, qe).flush();
+        }),
+        (xt = new WeakSet()),
+        (zt = function () {
+          if (r(this, it))
+            throw new Error(
+              "Cannot add new video or audio chunks after the file has been finalized.",
+            );
+        }),
+        (Et = l),
+        ((a, r, n, o) => {
+          if ((r && "object" == typeof r) || "function" == typeof r)
+            for (let h of i(r))
+              s.call(a, h) ||
+                h === n ||
+                e(a, h, {
+                  get: () => r[h],
+                  enumerable: !(o = t(r, h)) || o.enumerable,
+                });
+          return a;
+        })(e({}, "__esModule", { value: !0 }), Et)
+      );
+    })();
+    "object" == typeof module &&
+      "object" == typeof module.exports &&
+      Object.assign(module.exports, Mp4Muxer);
+  </script>
+  <script>
+    const cv = document.getElementById("c"),
+      ctx = cv.getContext("2d"),
+      st = document.getElementById("stage");
+    const rnd = (a, b) => a + Math.random() * (b - a),
+      cl = (k) => (k < 0 ? 0 : k > 1 ? 1 : k),
+      sm = (k) => {
+        k = cl(k);
+        return k * k * (3 - 2 * k);
+      };
+    /* ===== CONFIG THỜI GIAN (đơn vị: giây) =====
+Màn 1: chữ "Save the date" hiện từ S1_IN đến S1_END
+GAP  : khoảng nghỉ giữa màn 1 -> màn 2 (chỉnh số này để chuyển màn nhanh/chậm)
+Màn 2: chữ "True love..." hiện trong S2_LEN giây
+OUTRO: thời gian zoom + tối dần ở cuối rồi lặp lại */
+    const CFG = {
+      S1_IN: 1.5,
+      S1_END: 5.2,
+      GAP: 1.5,
+      S2_LEN: 3.6,
+      OUTRO: 2.4,
+    };
+    const S2_START = CFG.S1_END + CFG.GAP,
+      S2_END = S2_START + CFG.S2_LEN;
+    const E = S2_END + 0.3; // mốc bắt đầu zoom cuối vòng
+    const CYCLE = E + CFG.OUTRO; // tổng chu kỳ (mặc định = 13s)
+    const IMP = [1.65, S2_START - 0.1],
+      BEAM = [0.25, S2_START - 1.5]; // thời điểm va chạm & tia sáng rơi
+    const DCOL = [
+      "rgba(236,240,255,.92)",
+      "rgba(188,196,240,.72)",
+      "rgba(142,153,218,.55)",
+      "rgba(112,124,192,.42)",
+    ];
+    const BCOL = [
+      "rgba(232,236,255,.8)",
+      "rgba(190,198,238,.55)",
+      "rgba(148,158,212,.42)",
+      "rgba(122,132,190,.32)",
+    ];
+    let W,
+      H,
+      dpr,
+      u,
+      su,
+      cx,
+      cy,
+      rx,
+      STAR,
+      DISC,
+      BAND,
+      glow,
+      PIL,
+      RAIN,
+      SB,
+      SBIG;
+    const mkc = (w, h) => {
+      const k = document.createElement("canvas");
+      k.width = w;
+      k.height = h;
+      return k;
+    };
+    glow = mkc(128, 128);
+    {
+      const g = glow.getContext("2d"),
+        r = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+      r.addColorStop(0, "rgba(240,244,255,1)");
+      r.addColorStop(0.18, "rgba(200,210,250,.45)");
+      r.addColorStop(1, "rgba(150,165,235,0)");
+      g.fillStyle = r;
+      g.fillRect(0, 0, 128, 128);
+    }
+    PIL = mkc(48, 320);
+    {
+      const g = PIL.getContext("2d"),
+        h = g.createLinearGradient(0, 0, 48, 0); // cột sáng xanh xám, mờ ở hai đầu
+      h.addColorStop(0, "rgba(140,155,215,0)");
+      h.addColorStop(0.2, "rgba(150,165,225,.45)");
+      h.addColorStop(0.5, "rgba(165,178,235,.75)");
+      h.addColorStop(0.8, "rgba(150,165,225,.45)");
+      h.addColorStop(1, "rgba(140,155,215,0)");
+      g.fillStyle = h;
+      g.fillRect(0, 0, 48, 320);
+      g.globalCompositeOperation = "destination-in";
+      const v = g.createLinearGradient(0, 0, 0, 320);
+      v.addColorStop(0, "rgba(0,0,0,0)");
+      v.addColorStop(0.18, "#000");
+      v.addColorStop(0.82, "#000");
+      v.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = v;
+      g.fillRect(0, 0, 48, 320);
+    }
+
+    function build() {
+      STAR = Array.from(
+        { length: Math.min(7000, Math.floor((W * H) / 170)) },
+        () => ({
+          x: rnd(0, W),
+          y: rnd(0, H),
+          r: (Math.random() < 0.08 ? rnd(1, 1.6) : rnd(0.3, 0.9)) * su,
+          vx: rnd(-4, -1),
+          ph: rnd(0, 6.3),
+          sp: rnd(0.5, 2),
+          big: Math.random() < 0.012,
+        }),
+      );
+      // mưa sao rơi trong vùng giữa hai dải bụi
+      RAIN = Array.from(
+        { length: Math.min(220, Math.floor(W / 9)) },
+        () => ({
+          x: rnd(-0.05 * W, 1.05 * W),
+          ph: rnd(0, 1),
+          sp: rnd(0.05, 0.14), // sp: tốc độ rơi (vòng/giây)
+          len: rnd(14, 46) * su,
+          sz: rnd(0.9, 2) * su,
+          tilt: rnd(0.12, 0.3), // độ dài đuôi, độ dày, độ nghiêng
+          tw: rnd(0, 6.3),
+          big: Math.random() < 0.12,
+        }),
+      );
+      SB = Array.from({ length: 16 }, () => ({
+        sp: rnd(0.5, 2),
+        ph: rnd(0, 6.3),
+        a: [],
+      }));
+      SBIG = []; // sao thường gom 16 nhóm nhấp nháy -> vẽ 1 lần/nhóm (nhanh hơn nhiều)
+      for (const s of STAR) {
+        if (s.big) SBIG.push(s);
+        else SB[Math.floor(Math.random() * 16)].a.push(s);
+      }
+      DISC = [[], [], [], []];
+      const nd = Math.min(7000, Math.floor((W * H) / 110));
+      for (let i = 0; i < nd; i++) {
+        const rn = Math.pow(Math.random(), 1.05);
+        DISC[Math.min(3, Math.floor(rn * 4.4))].push({
+          r: rn * rx,
+          t0: rnd(0, 6.28) + rn * 4,
+          w: 0.25 / (0.3 + rn),
+          s: rnd(0.8, 1.8) * su * (1.35 - rn * 0.6),
+        });
+      }
+      BAND = [
+        { y: 0.295, sig: 0.034, sp: -7, n: 8000, k: 0.65 },
+        { y: 0.68, sig: 0.045, sp: 16, n: 9000, k: 0.8 },
+      ].map((b) => {
+        const a = Array.from({ length: 4 }, () =>
+          Array.from({ length: 8 }, () => []),
+        );
+        for (let i = 0; i < b.n; i++) {
+          const d =
+            ((rnd(-1, 1) + rnd(-1, 1) + rnd(-1, 1)) / 1.7) *
+            (Math.random() < 0.3 ? 3 : 1);
+          a[Math.floor(Math.pow(Math.random(), 0.6) * 4)][
+            Math.floor(Math.random() * 8)
+          ].push({
+            x: rnd(0, W),
+            y: d * b.sig * H,
+            ph: rnd(0, 6.3),
+            s: rnd(0.7, 1.7) * su * b.k + 0.3,
+          });
+        }
+        return { ...b, a };
+      });
+    }
+    function layout() {
+      // tính kích thước theo W,H hiện tại rồi dựng lại các hạt
+      u = W < H ? W / 700 : Math.min(W / 1024, H / 576);
+      su = Math.max(u, 0.7);
+      cx = W * 0.49;
+      cy = H * 0.76;
+      rx = W * 0.17 * (W < H ? 1.6 : 1);
+      build();
+    }
+    function resize() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth;
+      H = innerHeight;
+      cv.width = W * dpr;
+      cv.height = H * dpr;
+      layout();
+      st.style.transform = `translate(${(W - 1024 * u) / 2}px,${(H - 576 * u) / 2}px) scale(${u})`;
+    }
+    const el = (id) => document.getElementById(id);
+    const { S1_IN, S1_END } = CFG;
+    const TXT = [
+      [el("mono"), [S1_IN, S1_END]],
+      [el("mono2"), [S2_START, S2_END]],
+      [el("sd"), [S1_IN + 0.4, S1_END - 0.2]],
+      [el("names"), [S1_IN + 0.6, S1_END - 0.1]],
+      [el("date"), [S1_IN + 1.2, S1_END - 0.2]],
+      [el("love"), [S2_START + 0.3, S2_END - 0.1]],
+      [el("hearts"), [S2_START + 0.6, S2_END - 0.1]],
+    ];
+    let T0 = performance.now();
+    let EXPORTING = false;
+    function frame(now) {
+      if (!EXPORTING) {
+        const t = (now - T0) / 1000,
+          p = t % CYCLE;
+        for (const [e, w] of TXT) {
+          const on = p >= w[0] && p < w[1];
+          if (e.classList.contains("on") !== on)
+            e.classList.toggle("on", on);
+        }
+        render(ctx, t, false);
+      }
+      requestAnimationFrame(frame);
+    }
+    function render(ctx, t, txt) {
+      // vẽ 1 khung hình tại thời điểm t (txt=true: vẽ cả chữ lên canvas để xuất video)
+      const p = t % CYCLE;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#020207";
+      ctx.fillRect(0, 0, W, H);
+      const z = 1 + 0.1 * sm((p - E) / 2.4); // cuối vòng: kéo gần (zoom) rồi tối dần
+      ctx.translate(W / 2, H / 2);
+      ctx.scale(z, z);
+      ctx.translate(-W / 2, -H / 2);
+      const zk = 1 + 0.8 * sm((p - E) / 2);
+      ctx.fillStyle = "#f2f3ff";
+      for (const s of SBIG) {
+        const x = (((s.x + s.vx * t) % W) + W) % W,
+          a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * s.sp + s.ph));
+        ctx.globalAlpha = a * 0.85;
+        const sz = s.r * zk * 3;
+        ctx.fillRect(x, s.y, sz, sz);
+        ctx.globalCompositeOperation = "lighter";
+        ctx.globalAlpha = a * 0.5;
+        ctx.drawImage(
+          glow,
+          x - s.r * 6,
+          s.y - s.r * 6,
+          s.r * 12,
+          s.r * 12,
+        );
+        ctx.globalCompositeOperation = "source-over";
+      }
+      for (const g of SB) {
+        const a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * g.sp + g.ph));
+        ctx.globalAlpha = a * 0.85;
+        ctx.beginPath();
+        for (const s of g.a) {
+          const x = (((s.x + s.vx * t) % W) + W) % W,
+            sz = s.r * zk * 1.6;
+          ctx.rect(x, s.y, sz, sz);
+        }
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = "lighter";
+      // hai cột sáng đứng yên giữa hai dải bụi
+      [0.16, 0.87].forEach((px, i) => {
+        ctx.globalAlpha = Math.min(
+          1,
+          0.4 +
+          0.12 * Math.sin(t * 0.6 + i * 2.3) +
+          (i ? 0.5 * sm((p - E + 0.2) / 1.4) : 0),
+        );
+        const w = 30 * su;
+        ctx.drawImage(PIL, W * px - w / 2, H * 0.28, w, H * 0.42);
+      });
+      // mưa sao: rơi xuống trong khung giữa hai dải bụi
+      {
+        const y0 = H * 0.35,
+          y1 = H * 0.62,
+          hh = y1 - y0;
+        ctx.lineCap = "round";
+        for (const r of RAIN) {
+          const k = (r.ph + t * r.sp) % 1,
+            e = Math.pow(k, 1.2); // rơi tăng tốc nhẹ
+          const y = y0 + e * hh,
+            x = r.x - (y - y0) * r.tilt; // trôi chéo sang trái
+          const env = Math.pow(Math.sin(Math.PI * k), 0.9); // hiện dần - tắt dần
+          const a = env * (0.55 + 0.45 * Math.sin(t * 2 + r.tw));
+          if (a < 0.02) continue;
+          const L = r.len * (0.5 + 0.5 * env),
+            tx = x + L * r.tilt,
+            ty = y - L;
+          const g = ctx.createLinearGradient(tx, ty, x, y);
+          g.addColorStop(0, "rgba(200,210,255,0)");
+          g.addColorStop(1, "rgba(245,247,255,1)");
+          ctx.globalAlpha = a * 0.9;
+          ctx.strokeStyle = g;
+          ctx.lineWidth = r.sz;
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+          const gr = (r.big ? 7 : 4) * r.sz;
+          ctx.globalAlpha = a * (r.big ? 0.8 : 0.5);
+          ctx.drawImage(glow, x - gr, y - gr, gr * 2, gr * 2); // đầu sao phát sáng
+        }
+      }
+      // hai dải bụi sao: dải xa trôi một chiều, dải gần trôi chiều ngược lại
+      const hz = 1 + 0.8 * sm((p - E) / 2); // quầng sương mờ quanh hai dải bụi
+      ctx.globalAlpha = 0.4 * hz;
+      ctx.drawImage(
+        glow,
+        -W * 0.15,
+        H * 0.295 - H * 0.09,
+        W * 1.3,
+        H * 0.18,
+      );
+      ctx.globalAlpha = 0.42 * hz;
+      ctx.drawImage(
+        glow,
+        -W * 0.15,
+        H * 0.68 - H * 0.11,
+        W * 1.3,
+        H * 0.22,
+      );
+      ctx.globalAlpha = 0.06;
+      ctx.drawImage(glow, -W * 0.1, H * 0.3, W * 1.2, H * 0.4);
+      for (const b of BAND) {
+        const by = b.y * H;
+        for (let k = 0; k < 4; k++) {
+          ctx.fillStyle = BCOL[k];
+          for (let j = 0; j < 8; j++) {
+            ctx.globalAlpha =
+              0.6 + 0.4 * Math.sin(t * 1.3 + j * 0.785);
+            ctx.beginPath();
+            for (const q of b.a[k][j]) {
+              const x = (((q.x + b.sp * t) % W) + W) % W,
+                y =
+                  by +
+                  q.y +
+                  Math.sin(x * 0.004 + q.ph * 0.2 + t * 0.15) *
+                  H *
+                  0.006;
+              ctx.rect(x, y, q.s, q.s);
+            }
+            ctx.fill();
+          }
+        }
+      }
+      // va chạm: q = số giây kể từ lúc tia sáng chạm thiên hà
+      let q = -1;
+      for (const im of IMP) {
+        const d = p - im;
+        if (d >= 0 && d < 4.6) q = d;
+      }
+      const fl = q >= 0 ? Math.exp(-q * 2.2) : 0,
+        rEnv = q < 0 ? 0 : sm(q / 0.45) * (1 - sm((q - 1.5) / 1));
+      const dz = 1 - sm((p - E - 0.2) / 1.4);
+      ctx.globalAlpha =
+        (0.5 + 0.1 * Math.sin(t * 0.8) + 0.15 * rEnv) * dz;
+      ctx.drawImage(
+        glow,
+        cx - rx * 1.5,
+        cy - rx * 0.22,
+        rx * 3,
+        rx * 0.44,
+      );
+      ctx.globalAlpha = Math.min(1, 0.4 + 0.9 * fl + 0.3 * rEnv) * dz;
+      ctx.drawImage(
+        glow,
+        cx - rx * 0.7,
+        cy - rx * 0.1,
+        rx * 1.4,
+        rx * 0.2,
+      );
+      for (let k = 0; k < 4; k++) {
+        ctx.fillStyle = DCOL[k];
+        ctx.globalAlpha = 0.85 * dz;
+        ctx.beginPath();
+        for (const d of DISC[k]) {
+          const th = d.t0 + d.w * t;
+          ctx.rect(
+            cx + Math.cos(th) * d.r,
+            cy + Math.sin(th) * d.r * 0.14,
+            d.s,
+            d.s,
+          );
+        }
+        ctx.fill();
+      }
+      if (fl > 0.02) {
+        ctx.globalAlpha = Math.min(1, fl * 1.3);
+        ctx.drawImage(
+          glow,
+          cx - rx * 0.55,
+          cy - rx * 0.1,
+          rx * 1.1,
+          rx * 0.2,
+        );
+        if (q < 0.55) {
+          const h = H * 0.09 * (1 - q / 0.55),
+            g = ctx.createLinearGradient(0, cy, 0, cy - h);
+          g.addColorStop(0, "rgba(255,255,255,1)");
+          g.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.globalAlpha = 1;
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 4 * su;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx, cy - h);
+          ctx.stroke();
+        }
+      }
+      if (rEnv > 0.01) {
+        // 5 vòng tròn đồng tâm sáng chạy xoắn
+        for (let i = 0; i < 6; i++) {
+          const r = rx * 1.05 * (0.18 + 0.17 * i),
+            ra = rEnv * (1 - 0.1 * i);
+          ctx.strokeStyle = "#d4dcff";
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, r, r * 0.15, 0, 0, 6.3);
+          ctx.globalAlpha = ra * 0.08;
+          ctx.lineWidth = 10 * su;
+          ctx.stroke();
+          ctx.globalAlpha = ra * 0.2;
+          ctx.lineWidth = 4.5 * su;
+          ctx.stroke();
+          ctx.globalAlpha = ra * 0.75;
+          ctx.lineWidth = 1.6 * su;
+          ctx.stroke();
+        }
+      }
+      if (q >= 0.9 && q < 4.4) {
+        // vòng mảnh lan rộng ra ngoài
+        const r = rx * (1 + (q - 0.9)),
+          a = 0.5 * sm((q - 0.9) / 0.5) * (1 - sm((q - 3) / 1.4));
+        ctx.strokeStyle = "#a9b3e8";
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, r, r * 0.15, 0, 0, 6.3);
+        ctx.globalAlpha = a * 0.16;
+        ctx.lineWidth = 22 * su;
+        ctx.stroke();
+        ctx.globalAlpha = a * 0.3;
+        ctx.lineWidth = 10 * su;
+        ctx.stroke();
+        ctx.globalAlpha = a * 0.32;
+        ctx.lineWidth = 1.8 * su;
+        ctx.stroke();
+        ctx.fillStyle = "#dfe5ff";
+        for (let j = 0; j < 500; j++) {
+          const an = (j / 500) * 6.283 + t * 0.05,
+            rr = r + Math.sin(j * 7.3) * 9 * su;
+          ctx.globalAlpha =
+            a * (0.4 + 0.6 * Math.abs(Math.sin(j * 12.9)));
+          ctx.fillRect(
+            cx + Math.cos(an) * rr,
+            cy + Math.sin(an) * rr * 0.15,
+            1.5 * su,
+            1.5 * su,
+          );
+        }
+      }
+      // tia sáng nhỏ rơi từ trên xuống thiên hà (tăng tốc nhẹ)
+      for (const s0 of BEAM) {
+        const k = (p - s0) / 1.4;
+        if (k < 0 || k > 1) continue;
+        const y = H * (0.22 + 0.54 * Math.pow(k, 1.25)),
+          len = H * 0.05,
+          g = ctx.createLinearGradient(0, y - len, 0, y);
+        g.addColorStop(0, "rgba(220,228,255,0)");
+        g.addColorStop(1, "rgba(255,255,255,1)");
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = g;
+        ctx.lineWidth = 3 * su;
+        ctx.beginPath();
+        ctx.moveTo(cx, y - len);
+        ctx.lineTo(cx, y);
+        ctx.stroke();
+        const r = 12 * su;
+        ctx.globalAlpha = 0.9;
+        ctx.drawImage(glow, cx - r, y - r, r * 2, r * 2);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = "source-over"; // tối dần cuối vòng, sáng dần đầu vòng
+      const fade = Math.max(cl((p - E - 1.45) / 0.85), cl(1 - p / 0.35));
+      if (fade > 0) {
+        ctx.globalAlpha = fade;
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, W, H);
+      }
+      if (txt) drawText(ctx, p);
+    }
+
+    /* ===== VẼ CHỮ LÊN CANVAS (chỉ dùng khi xuất video) ===== */
+    const SERIF = "'Cormorant Garamond',serif",
+      SCRIPT = "'Pinyon Script',cursive";
+    const MONO = {
+      top: 52,
+      lh: 80,
+      fs: 76,
+      fam: SCRIPT,
+      wt: 400,
+      kind: "mono",
+      col: "#eef0fa",
+      sh: [18, "rgba(200,210,255,.4)"],
+    };
+    const SPEC = {
+      mono: MONO,
+      mono2: { ...MONO, top: 74 },
+      sd: {
+        top: 200,
+        lh: 20,
+        fs: 15,
+        fam: SERIF,
+        wt: 500,
+        ls: 0.58,
+        ind: 1,
+        col: "#c4c9e2",
+        txt: "SAVE THE DATE",
+      },
+      names: {
+        top: 248,
+        lh: 68,
+        fs: 52,
+        fam: SCRIPT,
+        wt: 400,
+        kind: "names",
+        col: "#eef0fa",
+        sh: [14, "rgba(200,210,255,.3)"],
+      },
+      date: {
+        top: 339,
+        lh: 26,
+        fs: 19,
+        fam: SERIF,
+        wt: 500,
+        ls: 0.1,
+        col: "#d6d9ec",
+        txt: "25.10.2026",
+      },
+      love: {
+        top: 260,
+        lh: 20,
+        fs: 15,
+        fam: SERIF,
+        wt: 500,
+        ls: 0.53,
+        ind: 1,
+        col: "#c4c9e2",
+        txt: "TRUE LOVE IS ETERNAL, INFINITE, AND ALWAYS LIKE ITSELF.",
+      },
+      hearts: {
+        top: 304,
+        lh: 20,
+        fs: 13,
+        fam: "serif",
+        wt: 400,
+        ls: 1.1,
+        ind: 1,
+        col: "#b9bfe0",
+        txt: "♥♥♥",
+      },
+    };
+    function tv(w, p) {
+      // độ hiện 0..1 của chữ, mô phỏng transition 1.3s của bản xem trước
+      const a = w[0],
+        b = w[1];
+      if (p < a) return 0;
+      if (p < b) return sm((p - a) / 1.3);
+      return sm((b - a) / 1.3) * (1 - sm((p - b) / 1.3));
+    }
+    function drawText(ctx, p) {
+      const k = dpr * u;
+      for (const [e, w] of TXT) {
+        const v = tv(w, p);
+        if (v < 0.003) continue;
+        const sp = SPEC[e.id];
+        ctx.save();
+        ctx.setTransform(
+          k,
+          0,
+          0,
+          k,
+          (dpr * (W - 1024 * u)) / 2,
+          (dpr * (H - 576 * u)) / 2,
+        );
+        ctx.globalAlpha = v;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillStyle = sp.col;
+        const bl = v < 0.98,
+          OFF = 30000; // đang mờ: chỉ vẽ cái bóng đã làm mờ (nhanh hơn ctx.filter rất nhiều)
+        if (bl) ctx.shadowBlur = 20 * (1 - v) * k;
+        else if (sp.sh) {
+          ctx.shadowBlur = sp.sh[0] * k;
+          ctx.shadowColor = sp.sh[1];
+        }
+        const ft = (tx, x, y, c) => {
+          if (bl) {
+            ctx.shadowColor = c || sp.col;
+            ctx.shadowOffsetX = OFF;
+            ctx.fillText(tx, x - OFF / k, y);
+          } else ctx.fillText(tx, x, y);
+        };
+        ctx.font = `${sp.wt} ${sp.fs}px ${sp.fam}`;
+        const m = ctx.measureText("Hg"),
+          y =
+            sp.top +
+            (sp.lh -
+              (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) /
+            2 +
+            m.fontBoundingBoxAscent +
+            6 * (1 - v);
+        if (sp.kind === "mono") {
+          ctx.letterSpacing = "0px";
+          const l1 = (window.__bgData && window.__bgData.init1) || "A";
+          const l2 = (window.__bgData && window.__bgData.init2) || "H";
+          const wA = ctx.measureText(l1).width,
+            wH = ctx.measureText(l2).width,
+            x0 = (1024 - (wA + wH - 0.3 * sp.fs)) / 2;
+          ft(l1, x0, y);
+          ft(l2, x0 + wA - 0.3 * sp.fs, y + 18);
+        } else if (sp.kind === "names") {
+          ctx.letterSpacing = 0.03 * 52 + "px";
+          ctx.wordSpacing = 0.42 * 52 + "px";
+          const gName = ((window.__bgData && window.__bgData.groom) || "Quốc Anh") + " ";
+          const bName = " " + ((window.__bgData && window.__bgData.bride) || "Kiều Hân");
+          const P = [
+            [gName, 52, sp.col],
+            ["&", 26, "#b9bfe0"],
+            [bName, 52, sp.col],
+          ];
+          let tot = 0;
+          for (const q of P) {
+            ctx.font = `400 ${q[1]}px ${SCRIPT}`;
+            q.w = ctx.measureText(q[0]).width;
+            tot += q.w;
+          }
+          let x = (1024 - tot) / 2;
+          for (const q of P) {
+            ctx.font = `400 ${q[1]}px ${SCRIPT}`;
+            ctx.fillStyle = q[2];
+            ft(q[0], x, y, q[2]);
+            x += q.w;
+          }
+        } else {
+          const ls = sp.ls * sp.fs,
+            n = [...sp.txt].length;
+          ctx.letterSpacing = "0px";
+          const w0 = ctx.measureText(sp.txt).width,
+            vis = sp.ind ? w0 + ls * (n - 1) : w0 + ls * n;
+          ctx.letterSpacing = ls + "px";
+          ft(sp.txt, (1024 - vis) / 2, y);
+        }
+        ctx.restore();
+      }
+    }
+
+    /* ===== XUẤT VIDEO MP4 (H.264) – render từng khung hình, không giật dù máy yếu ===== */
+    const $ = (id) => document.getElementById(id),
+      sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    let CANCEL = false;
+    const LV = ["28", "2A", "32", "33", "34"],
+      LT = [62.9e6, 133.5e6, 150.9e6, 251.6e6, 530e6]; // level H.264 theo số pixel/giây
+    async function pickCodec(w, h, fps, bitrate) {
+      const pr = w * h * fps;
+      let i = LT.findIndex((x) => pr <= x);
+      if (i < 0) i = 4;
+      for (; i < LV.length; i++)
+        for (const hw of ["prefer-hardware", "no-preference"]) {
+          // ưu tiên chip đồ hoạ (GPU) để mã hoá nhanh
+          const cfg = {
+            codec: "avc1.6400" + LV[i],
+            width: w,
+            height: h,
+            bitrate,
+            framerate: fps,
+            avc: { format: "avc" },
+            latencyMode: "realtime",
+            hardwareAcceleration: hw,
+          };
+          try {
+            const r = await VideoEncoder.isConfigSupported(cfg);
+            if (r.supported) return cfg;
+          } catch (e) { }
+        }
+      return null;
+    }
+    const yieldUI = () =>
+      new Promise((r) => {
+        const c = new MessageChannel();
+        c.port1.onmessage = () => r();
+        c.port2.postMessage(0);
+      });
+    function setMsg(m) {
+      const msgEl = $("xmsg");
+      if (msgEl) msgEl.textContent = m;
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: "EXPORT_STATUS", message: m }, "*");
+      }
+    }
+    async function exportVideo() {
+      if (EXPORTING) return;
+      if (!("VideoEncoder" in window)) {
+        setMsg(
+          "Trình duyệt chưa hỗ trợ. Hãy dùng Chrome hoặc Edge bản mới.",
+        );
+        return;
+      }
+      const [ow, oh] = $("xres").value.split("x").map(Number),
+        fps = +$("xfps").value,
+        loops = +$("xloop").value;
+      const scale = ow / 1920,
+        total = Math.round(CYCLE * loops * fps),
+        tag = oh >= 2160 ? "4k" : oh + "p";
+      EXPORTING = true;
+      CANCEL = false;
+      $("xgo").disabled = true;
+      $("xcancel").style.display = "";
+      $("xbar").style.display = "block";
+      const bar = $("xbar").firstElementChild;
+      let encErr = null,
+        enc = null;
+      try {
+        setMsg("Đang tải font…");
+        await Promise.all([
+          document.fonts.load("400 52px 'Pinyon Script'"),
+          document.fonts.load("500 15px 'Cormorant Garamond'"),
+          document.fonts.ready,
+        ]);
+        W = 1920;
+        H = 1080;
+        dpr = scale;
+        layout(); // dựng cảnh 16:9 chuẩn TV, phóng theo độ phân giải
+        const ex = document.createElement("canvas");
+        ex.width = ow;
+        ex.height = oh;
+        const x2 = ex.getContext("2d", { alpha: false });
+        const bitrate = Math.min(60e6, Math.round(ow * oh * fps * 0.15));
+        const cfg = await pickCodec(ow, oh, fps, bitrate);
+        if (!cfg)
+          throw new Error(
+            "Máy không mã hoá được độ phân giải này. Thử chọn thấp hơn (2K hoặc Full HD).",
+          );
+        const mux = new Mp4Muxer.Muxer({
+          target: new Mp4Muxer.ArrayBufferTarget(),
+          video: { codec: "avc", width: ow, height: oh },
+          fastStart: "in-memory",
+        });
+        enc = new VideoEncoder({
+          output: (c, m) => mux.addVideoChunk(c, m),
+          error: (e) => {
+            encErr = e;
+          },
+        });
+        enc.configure(cfg);
+        const t0 = performance.now();
+        let tr = 0,
+          te = 0;
+        for (let i = 0; i < total; i++) {
+          if (CANCEL) throw new Error("Đã huỷ.");
+          if (encErr) throw encErr;
+          let a0 = performance.now();
+          while (enc.encodeQueueSize > 8) await sleep(1);
+          te += performance.now() - a0;
+          a0 = performance.now();
+          render(x2, i / fps, true);
+          tr += performance.now() - a0;
+          a0 = performance.now();
+          const f = new VideoFrame(ex, {
+            timestamp: Math.round((i * 1e6) / fps),
+            duration: Math.round(1e6 / fps),
+          });
+          enc.encode(f, { keyFrame: i % (fps * 2) === 0 });
+          f.close();
+          te += performance.now() - a0;
+          if (i % 4 === 0) {
+            const pc = (i + 1) / total,
+              el = (performance.now() - t0) / 1000;
+            bar.style.width = pc * 100 + "%";
+            setMsg(
+              `Đang render ${Math.round(pc * 100)}% · còn ~${Math.max(0, Math.round(el / pc - el))}s · vẽ ${Math.round(tr / (i + 1))}ms + mã hoá ${Math.round(te / (i + 1))}ms /khung`,
+            );
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage({
+                type: "EXPORT_PROGRESS",
+                progress: Math.round(pc * 100),
+                message: `Đang kết xuất video 4K... ${Math.round(pc * 100)}%`,
+              }, "*");
+            }
+            await yieldUI();
+          }
+        }
+        setMsg("Đang đóng gói MP4…");
+        await enc.flush();
+        mux.finalize();
+        const url = URL.createObjectURL(
+          new Blob([mux.target.buffer], { type: "video/mp4" }),
+        );
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `save-the-date-${tag}-${fps}fps.mp4`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 60000);
+        bar.style.width = "100%";
+        setMsg("Xong! File MP4 đã được tải về.");
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: "EXPORT_FINISHED" }, "*");
+        }
+      } catch (err) {
+        const errMsg = err && err.message ? err.message : String(err);
+        setMsg(errMsg);
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: "EXPORT_ERROR", message: errMsg }, "*");
+        }
+      } finally {
+        try {
+          enc && enc.state !== "closed" && enc.close();
+        } catch (e) { }
+        resize();
+        EXPORTING = false;
+        $("xgo").disabled = false;
+        $("xcancel").style.display = "none";
+      }
+    }
+    $("xgo").onclick = exportVideo;
+    $("xcancel").onclick = () => {
+      CANCEL = true;
+    };
+    $("xtoggle").onclick = () => $("ui").classList.toggle("open");
+    
+    // Kiểm tra nếu đang nằm trong màn hình chỉnh sửa hoặc iframe thì ẩn hoàn toàn nút xuất video
+    try {
+      const isEmbedded = window.parent && window.parent !== window;
+      const hideExportParam = new URLSearchParams(window.location.search).get("hideExport") === "1" || isEmbedded;
+      if (hideExportParam) {
+        document.body.classList.add("hide-export");
+        const ui = document.getElementById("ui");
+        if (ui) ui.classList.add("hide-export");
+      }
+    } catch (e) { }
+
+    let uiT;
+    const showUI = () => {
+      if (document.body.classList.contains("hide-export")) return;
+      const ui = $("ui");
+      if (!ui) return;
+      ui.classList.add("show");
+      clearTimeout(uiT);
+      uiT = setTimeout(() => ui.classList.remove("show"), 3000);
+    };
+    ["mousemove", "pointerdown", "touchstart", "keydown"].forEach((ev) =>
+      addEventListener(ev, showUI, { passive: true }),
+    );
+    addEventListener("resize", () => {
+      if (!EXPORTING) resize();
+    });
+    resize();
+    requestAnimationFrame(frame);
+
+    /* ===== CẦU NỐI ĐỒNG BỘ DỮ LIỆU ĐỘNG (BACKGROUND BRIDGE) ===== */
+    function applyData(d) {
+      if (!d) return;
+      window.__bgData = window.__bgData || {};
+      const groom = d.groomName || d.groom || "Quốc Anh";
+      const bride = d.brideName || d.bride || "Kiều Hân";
+      const date = d.weddingDate || d.date || "25.10.2026";
+      let init1 = d.initial1 || d.init1 || "";
+      let init2 = d.initial2 || d.init2 || "";
+      if (!init1 && groom) init1 = groom.trim().charAt(0).toUpperCase();
+      if (!init2 && bride) init2 = bride.trim().charAt(0).toUpperCase();
+      if (!init1) init1 = "A";
+      if (!init2) init2 = "H";
+      const title = d.title || "SAVE THE DATE";
+      const slogan = d.slogan || "TRUE LOVE IS ETERNAL, INFINITE, AND ALWAYS LIKE ITSELF.";
+
+      window.__bgData = { groom, bride, date, init1, init2, title, slogan };
+
+      const m1 = document.getElementById("mono");
+      const m2 = document.getElementById("mono2");
+      const nm = document.getElementById("names");
+      const dt = document.getElementById("date");
+      const sd = document.getElementById("sd");
+      const lv = document.getElementById("love");
+
+      // Cập nhật Style & Vị trí Tên
+      if (nm) {
+        nm.innerHTML = `${groom} <s>&amp;</s> ${bride}`;
+        if (d.namesFontSize) nm.style.fontSize = `${d.namesFontSize}px`;
+        if (d.namesFontFamily) nm.style.fontFamily = d.namesFontFamily;
+        if (d.namesColor) nm.style.color = d.namesColor;
+        if (d.namesPosY !== undefined && d.namesPosY !== "") nm.style.top = `${d.namesPosY}px`;
+        if (d.namesPosX !== undefined && d.namesPosX !== "") {
+          nm.style.transform = `translateX(${d.namesPosX}px)`;
+        } else {
+          nm.style.transform = "";
+        }
+      }
+
+      // Cập nhật Style & Vị trí Logo (Monogram)
+      [m1, m2].forEach((m, idx) => {
+        if (!m) return;
+        m.innerHTML = `${init1}<span>${init2}</span>`;
+        if (d.monoFontSize) {
+          m.style.fontSize = `${d.monoFontSize}px`;
+          m.style.lineHeight = `${Number(d.monoFontSize) + 4}px`;
+        }
+        if (d.monoFontFamily) m.style.fontFamily = d.monoFontFamily;
+        if (d.monoColor) m.style.color = d.monoColor;
+        if (d.monoPosY !== undefined && d.monoPosY !== "") {
+          m.style.top = `${Number(d.monoPosY) + (idx === 1 ? 22 : 0)}px`;
+        }
+        if (d.monoPosX !== undefined && d.monoPosX !== "") {
+          m.style.transform = `translateX(${d.monoPosX}px)`;
+        } else {
+          m.style.transform = "";
+        }
+      });
+
+      // Cập nhật Style & Vị trí Ngày cưới
+      if (dt) {
+        dt.textContent = date;
+        if (d.dateFontSize) dt.style.fontSize = `${d.dateFontSize}px`;
+        if (d.dateFontFamily) dt.style.fontFamily = d.dateFontFamily;
+        if (d.dateColor) dt.style.color = d.dateColor;
+        if (d.datePosY !== undefined && d.datePosY !== "") dt.style.top = `${d.datePosY}px`;
+        if (d.datePosX !== undefined && d.datePosX !== "") {
+          dt.style.transform = `translateX(${d.datePosX}px)`;
+        } else {
+          dt.style.transform = "";
+        }
+      }
+
+      // Cập nhật Style & Vị trí Tiêu đề
+      if (sd) {
+        sd.textContent = title;
+        if (d.titleFontSize) sd.style.fontSize = `${d.titleFontSize}px`;
+        if (d.titleFontFamily) sd.style.fontFamily = d.titleFontFamily;
+        if (d.titleColor) sd.style.color = d.titleColor;
+        if (d.titlePosY !== undefined && d.titlePosY !== "") sd.style.top = `${d.titlePosY}px`;
+        if (d.titlePosX !== undefined && d.titlePosX !== "") {
+          sd.style.transform = `translateX(${d.titlePosX}px)`;
+        } else {
+          sd.style.transform = "";
+        }
+      }
+
+      if (lv) lv.textContent = slogan;
+
+      // Cập nhật SPEC xuất video MP4
+      if (typeof SPEC !== "undefined") {
+        if (SPEC.sd) {
+          SPEC.sd.txt = title;
+          if (d.titleFontSize) SPEC.sd.fs = Number(d.titleFontSize);
+          if (d.titleFontFamily) SPEC.sd.fam = d.titleFontFamily;
+          if (d.titleColor) SPEC.sd.col = d.titleColor;
+          if (d.titlePosY) SPEC.sd.top = Number(d.titlePosY);
+        }
+        if (SPEC.date) {
+          SPEC.date.txt = date;
+          if (d.dateFontSize) SPEC.date.fs = Number(d.dateFontSize);
+          if (d.dateFontFamily) SPEC.date.fam = d.dateFontFamily;
+          if (d.dateColor) SPEC.date.col = d.dateColor;
+          if (d.datePosY) SPEC.date.top = Number(d.datePosY);
+        }
+        if (SPEC.love) SPEC.love.txt = slogan;
+        if (SPEC.names) {
+          if (d.namesFontSize) SPEC.names.fs = Number(d.namesFontSize);
+          if (d.namesFontFamily) SPEC.names.fam = d.namesFontFamily;
+          if (d.namesColor) SPEC.names.col = d.namesColor;
+          if (d.namesPosY) SPEC.names.top = Number(d.namesPosY);
+        }
+        if (SPEC.mono) {
+          if (d.monoFontSize) SPEC.mono.fs = Number(d.monoFontSize);
+          if (d.monoFontFamily) SPEC.mono.fam = d.monoFontFamily;
+          if (d.monoColor) SPEC.mono.col = d.monoColor;
+          if (d.monoPosY) SPEC.mono.top = Number(d.monoPosY);
+        }
+      }
+    }
+
+    // Đọc URL Search Params nếu có
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("groom") || urlParams.has("bride") || urlParams.has("date") || urlParams.has("init1") || urlParams.has("init2") || urlParams.has("title")) {
+        applyData({
+          groomName: urlParams.get("groom") || undefined,
+          brideName: urlParams.get("bride") || undefined,
+          weddingDate: urlParams.get("date") || undefined,
+          initial1: urlParams.get("init1") || undefined,
+          initial2: urlParams.get("init2") || undefined,
+          title: urlParams.get("title") || undefined,
+          slogan: urlParams.get("slogan") || undefined,
+        });
+      }
+    } catch (e) {
+      console.warn("Could not parse URL params", e);
+    }
+
+    // Lắng nghe message từ trình chỉnh sửa hoặc trang cha
+    window.addEventListener("message", (e) => {
+      if (!e.data || typeof e.data !== "object") return;
+      if (e.data.type === "UPDATE_BACKGROUND_DATA" || e.data.type === "UPDATE_WEDDING_DATA") {
+        applyData(e.data.payload);
+      }
+      if (e.data.type === "RESTART_ANIMATION") {
+        T0 = performance.now();
+      }
+      if (e.data.type === "TRIGGER_EXPORT_VIDEO") {
+        const payload = e.data.payload || {};
+        if (payload.res && $("xres")) $("xres").value = payload.res;
+        if (payload.fps && $("xfps")) $("xfps").value = String(payload.fps);
+        if (payload.loop && $("xloop")) $("xloop").value = String(payload.loop);
+        exportVideo();
+      }
+    });
+
+    // Thông báo cho trang cha biết iframe đã sẵn sàng
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: "BACKGROUND_READY" }, "*");
+    }
+  </script>
+</body>
+
+</html>

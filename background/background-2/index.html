@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Save the Date – Nhật Huy & Bích Phương</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Dancing+Script:wght@500;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #060606;
+      --ink: #ece6d4;
+      --line: #cdbf9a;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #060606;
+        --ink: #ece6d4;
+        --line: #cdbf9a;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #060606;
+      --ink: #ece6d4;
+      --line: #cdbf9a;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #stage {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 1180px;
+      height: 652px;
+      transform-origin: 0 0;
+      pointer-events: none;
+      color: var(--ink);
+      text-align: center;
+    }
+
+    .t {
+      position: absolute;
+      left: 0;
+      width: 1180px;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(10px);
+      transition:
+        opacity 1.8s ease,
+        filter 1.8s ease,
+        transform 1.8s ease;
+    }
+
+    .show .t {
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+
+    #sd {
+      top: 233px;
+      height: 28px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      font:
+        500 22px/28px "Cormorant Garamond",
+        serif;
+      letter-spacing: 0.3em;
+      text-indent: 0.3em;
+    }
+
+    #sd i {
+      width: 76px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line));
+    }
+
+    #sd i:last-child {
+      background: linear-gradient(270deg, transparent, var(--line));
+    }
+
+    #sd b {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    #sd b:before,
+    #sd b:after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--ink);
+      transform: rotate(45deg);
+    }
+
+    #names {
+      top: 276px;
+      font:
+        400 52px/64px "Pinyon Script",
+        cursive;
+      transition-delay: 0.6s;
+      text-shadow: 0 0 14px rgba(255, 240, 200, 0.25);
+    }
+
+    #names s {
+      text-decoration: none;
+      font-size: 0.6em;
+      margin: 0 0.2em;
+    }
+
+    #date {
+      top: 372px;
+      font:
+        500 23px/30px "Cormorant Garamond",
+        serif;
+      letter-spacing: 0.12em;
+      transition-delay: 1.2s;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="c"></canvas>
+  <div id="stage" role="img" aria-label="Save the date: Nhật Huy và Bích Phương, 25.10.2026">
+    <div class="t" id="sd"><i></i><b>SAVE THE DATE</b><i></i></div>
+    <div class="t" id="names">Nhật Huy <s>&amp;</s> Bích Phương</div>
+    <div class="t" id="date">25.10.2026</div>
+  </div>
+  <script>
+    const cv = document.getElementById("c"),
+      ctx = cv.getContext("2d"),
+      st = document.getElementById("stage");
+    const rnd = (a, b) => a + Math.random() * (b - a),
+      cl = (k) => (k < 0 ? 0 : k > 1 ? 1 : k);
+    const ease = (k) => {
+      k = cl(k);
+      return k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    },
+      eo = (k) => 1 - Math.pow(1 - cl(k), 3);
+    const qb = (a, c, b, s) =>
+      (1 - s) * (1 - s) * a + 2 * (1 - s) * s * c + s * s * b;
+    // Toạ độ thiết kế 1180x652 (lấy từ video). type: 0=sao 4 cánh, 1=sao tuyết 8 cánh, 2=sao 4 cánh lớn
+    const C = [
+      {
+        s: "L",
+        st: [
+          [113, 72, 1],
+          [88, 84, 0],
+          [101, 145, 0],
+          [135, 161, 1],
+          [173, 138, 0],
+          [220, 151, 2],
+          [92, 284, 0],
+          [142, 300, 1],
+          [121, 389, 0],
+        ],
+        ln: [
+          [0, 1],
+          [1, 2],
+          [2, 3],
+          [3, 4],
+          [4, 5],
+          [2, 6],
+          [6, 8],
+          [5, 7],
+          [7, 8],
+        ],
+      },
+      {
+        s: "R",
+        st: [
+          [1115, 328, 1],
+          [1130, 325, 0],
+          [1067, 355, 0],
+          [1037, 362, 1],
+          [1003, 368, 0],
+          [1028, 377, 1],
+          [1065, 398, 0],
+          [1074, 412, 0],
+          [1110, 450, 1],
+          [1108, 481, 0],
+          [1121, 470, 0],
+          [1133, 477, 0],
+          [1134, 497, 1],
+        ],
+        ln: [
+          [1, 0],
+          [0, 2],
+          [2, 3],
+          [3, 4],
+          [3, 5],
+          [5, 6],
+          [6, 7],
+          [7, 8],
+          [8, 9],
+          [8, 10],
+          [10, 11],
+          [11, 12],
+        ],
+      },
+      {
+        f: 1,
+        s: "C",
+        st: [
+          [325, 138],
+          [340, 88],
+          [385, 80],
+        ],
+      },
+      {
+        f: 1,
+        s: "C",
+        st: [
+          [795, 100],
+          [835, 112],
+          [885, 82],
+        ],
+      },
+      {
+        f: 1,
+        s: "L",
+        st: [
+          [170, 512],
+          [185, 550],
+          [235, 552],
+          [265, 530],
+        ],
+      },
+      {
+        f: 1,
+        s: "R",
+        st: [
+          [880, 560],
+          [900, 585],
+          [935, 555],
+        ],
+      },
+    ];
+    let W,
+      H,
+      dpr,
+      u,
+      ox,
+      oy,
+      L,
+      R,
+      bg,
+      bg2,
+      TW = [],
+      S = [],
+      P = [],
+      SH = [],
+      MONO = false;
+    const X = (x, s) =>
+      s === "L"
+        ? L + (x - 85) * u
+        : s === "R"
+          ? W - R - (1135 - x) * u
+          : ox + x * u,
+      Y = (y) => oy + y * u;
+    const glow = document.createElement("canvas");
+    glow.width = glow.height = 64;
+    {
+      const g = glow.getContext("2d"),
+        r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+      r.addColorStop(0, "rgba(255,244,210,.95)");
+      r.addColorStop(0.25, "rgba(255,230,160,.35)");
+      r.addColorStop(1, "rgba(255,220,140,0)");
+      g.fillStyle = r;
+      g.fillRect(0, 0, 64, 64);
+    }
+
+    function buildBg() {
+      const mk = () => {
+        const k = document.createElement("canvas");
+        k.width = W * dpr;
+        k.height = H * dpr;
+        return k;
+      };
+      bg = mk();
+      bg2 = mk();
+      const g = bg.getContext("2d"),
+        g2 = bg2.getContext("2d");
+      g.scale(dpr, dpr);
+      g2.scale(dpr, dpr);
+      for (let i = 0; i < 9; i++) {
+        // đám bụi vàng mờ
+        const cx = rnd(0, W),
+          cy = rnd(0, H);
+        for (let j = 0; j < 46; j++) {
+          const a = rnd(0, 6.28),
+            d = Math.abs(rnd(-1, 1) + rnd(-1, 1)) * 55;
+          g.fillStyle = `rgba(210,170,80,${rnd(0.1, 0.35)})`;
+          g.fillRect(
+            cx + Math.cos(a) * d,
+            cy + Math.sin(a) * d,
+            rnd(0.6, 1.6),
+            rnd(0.6, 1.6),
+          );
+        }
+      }
+      const n = Math.floor((W * H) / 1400);
+      for (let i = 0; i < n; i++) {
+        const gold = Math.random() < 0.22,
+          h = i % 2 ? g : g2; // 2 lớp sao trôi với tốc độ khác nhau
+        h.fillStyle = gold
+          ? `rgba(225,185,90,${rnd(0.25, 0.8)})`
+          : `rgba(235,230,215,${rnd(0.15, 0.6)})`;
+        h.beginPath();
+        h.arc(
+          rnd(0, W),
+          rnd(0, H),
+          rnd(0.4, 1.2) * (gold ? 1.4 : 1),
+          0,
+          6.3,
+        );
+        h.fill();
+      }
+      TW = Array.from({ length: Math.floor(n / 5) }, () => ({
+        x: rnd(0, W),
+        y: rnd(0, H),
+        r: rnd(0.7, 1.6),
+        ph: rnd(0, 6.3),
+        sp: rnd(0.5, 1.6),
+        vx: rnd(-7, -2),
+        vy: rnd(-2, 2),
+        g: Math.random() < 0.3,
+      }));
+    }
+    function build() {
+      S = [];
+      let i = 0;
+      C.forEach((c) => {
+        c.P = c.st.map((p) => [X(p[0], c.s), Y(p[1])]);
+        if (!c.f)
+          c.st.forEach((p, j) =>
+            S.push({
+              x: c.P[j][0],
+              y: c.P[j][1],
+              ty: p[2],
+              c,
+              i: i++,
+            }),
+          );
+      });
+      const n = S.length,
+        cx = X(590),
+        cy = Y(137);
+      S.forEach((s, k) => {
+        const a = (k / n) * 6.283 + rnd(-0.2, 0.2),
+          f = rnd(0.55, 1);
+        s.ex = cx + Math.cos(a) * 105 * u * f;
+        s.ey = cy + Math.sin(a) * 40 * u * f;
+        s.cx = (s.x + s.ex) / 2 + rnd(-130, 130) * u;
+        s.cy = (s.y + s.ey) / 2 + rnd(-150, 60) * u;
+        s.T1 = 3 + k * 0.035;
+        s.Tr = 7.4 + rnd(0, 1.2);
+        s.sx = s.x + (s.c.s === "L" ? -1 : 1) * rnd(380, 520) * u;
+        s.sy = s.y + rnd(-260, -120) * u;
+        s.sp = rnd(1.5, 3);
+        s.ph = rnd(0, 6.3);
+      });
+      P.forEach((p) => {
+        p.tx = X(p.dx);
+        p.ty = Y(p.dy);
+        const s = S[p.o % n];
+        p.sx = s.ex;
+        p.sy = s.ey;
+        p.cx = (p.sx + p.tx) / 2 + p.w1 * u;
+        p.cy = (p.sy + p.ty) / 2 + p.w2 * u;
+      });
+    }
+    function resize() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = innerWidth;
+      H = innerHeight;
+      cv.width = W * dpr;
+      cv.height = H * dpr;
+      u = W < H ? W / 760 : Math.min(W / 1180, H / 652);
+      ox = (W - 1180 * u) / 2;
+      oy = (H - 652 * u) / 2;
+      st.style.transform = `translate(${ox}px,${oy}px) scale(${u})`;
+      L = Math.max(16, ox + 85 * u);
+      R = Math.max(16, ox + 45 * u);
+      buildBg();
+      build();
+    }
+    // Tạo monogram (vô cực + chữ H + tim + chữ P) rồi lấy mẫu điểm ảnh làm đích cho hạt vàng
+    async function makeMono(l1 = "H", l2 = "P", font = "'Great Vibes', cursive", color = "#f7dc86", size = 135, posY = 137, posX = 590) {
+      const init1 = String(l1 || "H").trim().charAt(0).toUpperCase() || "H";
+      const init2 = String(l2 || "P").trim().charAt(0).toUpperCase() || "P";
+      const fontFam = font || "'Great Vibes', cursive";
+      const fontSize = Number(size) || 135;
+      const targetY = Number(posY) || 137;
+      const targetX = Number(posX) || 590;
+
+      try {
+        await Promise.race([
+          document.fonts.load(`${fontSize}px ${fontFam}`, init1 + init2),
+          new Promise((r) => setTimeout(r, 2500)),
+        ]);
+      } catch (e) { }
+      const w = 510,
+        h = 250,
+        o = document.createElement("canvas");
+      o.width = w;
+      o.height = h;
+      const c = o.getContext("2d");
+      c.translate(w / 2, h / 2);
+      c.strokeStyle = c.fillStyle = "#fff";
+      c.lineWidth = 7;
+      c.lineCap = "round";
+      c.beginPath();
+      for (let i = 0; i <= 240; i++) {
+        const t = (i / 240) * 6.2832,
+          d = 1 + Math.sin(t) ** 2,
+          x = (235 * Math.cos(t)) / d,
+          y = (1.35 * 235 * Math.sin(t) * Math.cos(t)) / d;
+        i ? c.lineTo(x, y) : c.moveTo(x, y);
+      }
+      c.closePath();
+      c.stroke();
+      c.font = `${fontSize}px ${fontFam}`;
+      c.textAlign = "center";
+      c.textBaseline = "middle";
+      c.fillText(init1, -118, -8);
+      c.fillText(init2, 122, 18);
+      const hy = -46,
+        s = 15;
+      c.lineWidth = 4;
+      c.beginPath();
+      c.moveTo(0, hy + s * 0.9);
+      c.bezierCurveTo(
+        -s * 1.8,
+        hy - s * 0.2,
+        -s * 0.8,
+        hy - s * 1.5,
+        0,
+        hy - s * 0.5,
+      );
+      c.bezierCurveTo(
+        s * 0.8,
+        hy - s * 1.5,
+        s * 1.8,
+        hy - s * 0.2,
+        0,
+        hy + s * 0.9,
+      );
+      c.stroke();
+      const d = c.getImageData(0, 0, w, h).data,
+        baseCol = color || "#f7dc86",
+        cols = [baseCol, baseCol, "#fff1b8", "#d4a63a"];
+      P = [];
+      for (let y = 0; y < h; y += 3)
+        for (let x = 0; x < w; x += 3)
+          if (d[(y * w + x) * 4 + 3] > 110) {
+            const dx = targetX + (x - w / 2) * 0.5 + rnd(-0.3, 0.3);
+            P.push({
+              dx,
+              dy: targetY + (y - h / 2) * 0.5 + rnd(-0.3, 0.3),
+              o: Math.floor(rnd(0, 22)),
+              w1: rnd(-55, 55),
+              w2: rnd(-55, 55),
+              ts: 4.9 + ((dx - (targetX - 128)) / 256) * 0.9 + rnd(0, 0.25),
+              d: rnd(0.9, 1.4),
+              r: rnd(0.9, 1.9),
+              col: cols[Math.floor(rnd(0, 4))],
+              sp: rnd(2, 6),
+              ph: rnd(0, 6.3),
+              nx: (dx - (targetX - 128)) / 256,
+            });
+          }
+      MONO = true;
+      build();
+    }
+    function star(x, y, r, type, a) {
+      if (a <= 0.01) return;
+      ctx.globalAlpha = a * 0.5;
+      ctx.drawImage(glow, x - r * 2.3, y - r * 2.3, r * 4.6, r * 4.6);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = "#fff7e0";
+      ctx.beginPath();
+      const n = type === 1 ? 8 : 4,
+        Rr = type === 2 ? r * 1.5 : r,
+        ir = type === 1 ? r * 0.42 : r * 0.17;
+      for (let i = 0; i < n * 2; i++) {
+        const an = (i * Math.PI) / n - Math.PI / 2,
+          rr = i % 2 ? ir : type === 1 && (i / 2) % 2 ? r * 0.72 : Rr;
+        ctx.lineTo(x + Math.cos(an) * rr, y + Math.sin(an) * rr);
+      }
+      ctx.closePath();
+      ctx.fill();
+    }
+    function trail(x0, y0, x1, y1, w) {
+      const g = ctx.createLinearGradient(x0, y0, x1, y1);
+      g.addColorStop(0, "rgba(255,225,150,0)");
+      g.addColorStop(1, "rgba(255,240,200,.9)");
+      ctx.strokeStyle = g;
+      ctx.lineWidth = w;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+    }
+    function starState(s, t) {
+      if (t < s.T1) return { x: s.x, y: s.y, a: 1 };
+      if (t < s.T1 + 1.5) {
+        const k = ease((t - s.T1) / 1.5),
+          k2 = ease((t - s.T1) / 1.5 - 0.14);
+        return {
+          x: qb(s.x, s.cx, s.ex, k),
+          y: qb(s.y, s.cy, s.ey, k),
+          px: qb(s.x, s.cx, s.ex, k2),
+          py: qb(s.y, s.cy, s.ey, k2),
+          a: 1,
+          mv: 1,
+        };
+      }
+      if (t < s.Tr)
+        return {
+          x: s.ex,
+          y: s.ey,
+          a: t < 6 ? 1 : Math.max(0, 1 - (t - 6) / 0.8),
+        };
+      if (t < s.Tr + 1.5) {
+        const k = eo((t - s.Tr) / 1.5),
+          k2 = eo((t - s.Tr) / 1.5 - 0.12);
+        return {
+          x: s.sx + (s.x - s.sx) * k,
+          y: s.sy + (s.y - s.sy) * k,
+          px: s.sx + (s.x - s.sx) * k2,
+          py: s.sy + (s.y - s.sy) * k2,
+          a: 1,
+          mv: 1,
+        };
+      }
+      return { x: s.x, y: s.y, a: 1, back: 1 };
+    }
+    let t0 = performance.now(),
+      shown = false,
+      nextSh = 9.6,
+      off = matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? 14
+        : 0;
+    function frame(now) {
+      const t = (now - t0) / 1000 + off;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "#060606";
+      ctx.fillRect(0, 0, W, H);
+      // nền trôi chậm, lặp vô hạn (parallax: lớp gần trôi nhanh hơn lớp xa)
+      const dl = (img, sx, sy) => {
+        const x = (((sx * t) % W) + W) % W,
+          y = (((sy * t) % H) + H) % H;
+        for (const a of [x - W, x])
+          for (const b of [y - H, y]) ctx.drawImage(img, a, b, W, H);
+      };
+      dl(bg, -3, -1);
+      dl(bg2, -8, -2.5);
+      ctx.globalAlpha = 1;
+      if (t > 6.4 && !shown) {
+        shown = true;
+        st.classList.add("show");
+      }
+      for (const q of TW) {
+        const a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * q.sp + q.ph));
+        const qx =
+          ((((q.x + q.vx * t) % W) + W) % W) +
+          Math.sin(t * 0.4 + q.ph) * 6,
+          qy =
+            ((((q.y + q.vy * t) % H) + H) % H) +
+            Math.cos(t * 0.3 + q.ph) * 5;
+        ctx.globalAlpha = a * 0.8;
+        ctx.fillStyle = q.g ? "#e6bf62" : "#f4efe0";
+        ctx.beginPath();
+        ctx.arc(qx, qy, q.r, 0, 6.3);
+        ctx.fill();
+      }
+      // chòm sao mờ màu vàng
+      for (const c of C)
+        if (c.f) {
+          ctx.globalAlpha = 0.3 + 0.1 * Math.sin(t * 0.9 + c.P[0][0]);
+          ctx.strokeStyle = "#c9a34e";
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3, 4]);
+          ctx.beginPath();
+          c.P.forEach((p, i) =>
+            i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]),
+          );
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = "#e0b55a";
+          for (const p of c.P) {
+            ctx.beginPath();
+            ctx.arc(p[0], p[1], 1.8 * Math.max(u, 0.7), 0, 6.3);
+            ctx.fill();
+          }
+        }
+      // đường nối chòm sao chính
+      const la =
+        t < 3
+          ? 0.45
+          : t < 3.4
+            ? 0.45 * (1 - (t - 3) / 0.4)
+            : t < 9.2
+              ? 0
+              : Math.min(0.45, (t - 9.2) * 0.45);
+      if (la > 0) {
+        ctx.globalAlpha = la;
+        ctx.strokeStyle = "#f3e4b8";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 5]);
+        for (const c of C)
+          if (!c.f)
+            for (const [a, b] of c.ln) {
+              ctx.beginPath();
+              ctx.moveTo(c.P[a][0], c.P[a][1]);
+              ctx.lineTo(c.P[b][0], c.P[b][1]);
+              ctx.stroke();
+            }
+        ctx.setLineDash([]);
+      }
+      ctx.globalCompositeOperation = "lighter";
+      // quầng sáng sau monogram
+      if (t > 5.6) {
+        ctx.globalAlpha = Math.min(0.22, (t - 5.6) * 0.1);
+        const gw = 360 * u,
+          gh = 190 * u;
+        ctx.drawImage(glow, X(590) - gw / 2, Y(137) - gh / 2, gw, gh);
+      }
+      // sao của chòm sao
+      const base = 7.5 * u;
+      for (const s of S) {
+        const o = starState(s, t);
+        if (o.mv) {
+          const w = Math.max(1, 1.6 * u);
+          trail(o.px, o.py, o.x, o.y, w);
+        }
+        const tw = 0.85 + 0.15 * Math.sin(t * s.sp + s.ph),
+          r =
+            base *
+            (s.ty === 2 ? 1.1 : s.ty === 1 ? 1.15 : 0.85) *
+            (o.mv ? 1 : tw);
+        const fl = o.back || t < s.T1 ? 3 * u : 0; // sao trong chòm sao lơ lửng nhẹ
+        star(
+          o.x + Math.sin(t * 0.35 + s.ph) * fl,
+          o.y + Math.cos(t * 0.3 + s.ph) * fl,
+          r,
+          s.ty,
+          o.a * (o.back || !o.mv ? 0.8 + 0.2 * tw : 1),
+        );
+      }
+      // hạt vàng tạo monogram
+      if (MONO && t > 4.8) {
+        const sw = t > 7 ? (((t - 7) % 4) / 4) * 1.5 - 0.25 : -9;
+        for (const p of P) {
+          if (t < p.ts) continue;
+          const k = (t - p.ts) / p.d;
+          let x,
+            y,
+            a,
+            r = p.r * u,
+            col = p.col;
+          if (k < 1) {
+            const e = ease(k),
+              e2 = ease(k - 0.08);
+            x = qb(p.sx, p.cx, p.tx, e);
+            y = qb(p.sy, p.cy, p.ty, e);
+            a = Math.min(1, k * 6);
+            ctx.globalAlpha = a * 0.5;
+            ctx.strokeStyle = col;
+            ctx.lineWidth = r;
+            ctx.beginPath();
+            ctx.moveTo(
+              qb(p.sx, p.cx, p.tx, e2),
+              qb(p.sy, p.cy, p.ty, e2),
+            );
+            ctx.lineTo(x, y);
+            ctx.stroke();
+          } else {
+            x = p.tx;
+            y = p.ty;
+            a = 0.6 + 0.4 * Math.sin(t * p.sp + p.ph);
+          }
+          if (Math.abs(p.nx - sw) < 0.04) {
+            a = 1;
+            r *= 1.7;
+            col = "#fffbe8";
+          }
+          ctx.globalAlpha = Math.min(1, a);
+          ctx.fillStyle = col;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, 6.3);
+          ctx.fill();
+        }
+      }
+      // sao băng
+      if (t > nextSh) {
+        nextSh = t + rnd(2.2, 4.5);
+        const l = Math.random() < 0.5,
+          ang = rnd(-0.15, 0.28);
+        SH.push({
+          x: l ? -40 : W + 40,
+          y: rnd(0.08, 0.8) * H,
+          vx: (l ? 1 : -1) * rnd(800, 1100) * Math.max(u, 0.6),
+          vy: Math.tan(ang) * 900,
+          t0: t,
+          life: rnd(1.4, 2.1),
+          r: rnd(7, 10) * Math.max(u, 0.7),
+        });
+      }
+      SH = SH.filter((q) => t - q.t0 < q.life);
+      for (const q of SH) {
+        const ag = t - q.t0,
+          x = q.x + q.vx * ag,
+          y = q.y + q.vy * ag,
+          a = Math.min(1, (q.life - ag) * 2.5);
+        ctx.globalAlpha = a;
+        trail(x - q.vx * 0.38, y - q.vy * 0.38, x, y, 2);
+        star(x, y, q.r, 0, a);
+      }
+      requestAnimationFrame(frame);
+    }
+    function restart() {
+      t0 = performance.now();
+      off = 0;
+      shown = false;
+      st.classList.remove("show");
+      nextSh = 9.6;
+      SH = [];
+      build();
+    }
+    addEventListener("resize", resize);
+    addEventListener("click", restart);
+    resize();
+    makeMono().then(() => {
+      t0 = performance.now();
+      requestAnimationFrame(frame);
+    });
+
+    /* ===== CẦU NỐI ĐỒNG BỘ DỮ LIỆU ĐỘNG (BACKGROUND BRIDGE) ===== */
+    window.__lastInitials = "H-P";
+    function applyData(d) {
+      if (!d) return;
+      window.__currentData = Object.assign({}, window.__currentData, d);
+      if (!d) return;
+      window.__bgData = window.__bgData || {};
+      const groom = d.groomName || d.groom || "Nhật Huy";
+      const bride = d.brideName || d.bride || "Bích Phương";
+      const date = d.weddingDate || d.date || "25.10.2026";
+      let init1 = d.initial1 || d.init1 || "";
+      let init2 = d.initial2 || d.init2 || "";
+      if (!init1 && groom) init1 = groom.trim().charAt(0).toUpperCase();
+      if (!init2 && bride) init2 = bride.trim().charAt(0).toUpperCase();
+      if (!init1) init1 = "H";
+      if (!init2) init2 = "P";
+      const title = d.title || "SAVE THE DATE";
+
+      window.__bgData = { groom, bride, date, init1, init2, title };
+
+      const nm = document.getElementById("names");
+      const dt = document.getElementById("date");
+      const sd = document.getElementById("sd");
+
+      // Cập nhật Style & Vị trí Tên
+      if (nm) {
+        nm.innerHTML = `${groom} <s>&amp;</s> ${bride}`;
+        if (d.namesFontSize) nm.style.fontSize = `${d.namesFontSize}px`;
+        if (d.namesFontFamily) nm.style.fontFamily = d.namesFontFamily;
+        if (d.namesColor) nm.style.color = d.namesColor;
+        if (d.namesPosY !== undefined && d.namesPosY !== "") nm.style.top = `${d.namesPosY}px`;
+        if (d.namesPosX !== undefined && d.namesPosX !== "") {
+          nm.style.transform = `translateX(${d.namesPosX}px)`;
+        } else {
+          nm.style.transform = "";
+        }
+      }
+
+      // Cập nhật Style & Vị trí Ngày cưới
+      if (dt) {
+        dt.textContent = date;
+        if (d.dateFontSize) dt.style.fontSize = `${d.dateFontSize}px`;
+        if (d.dateFontFamily) dt.style.fontFamily = d.dateFontFamily;
+        if (d.dateColor) dt.style.color = d.dateColor;
+        if (d.datePosY !== undefined && d.datePosY !== "") dt.style.top = `${d.datePosY}px`;
+        if (d.datePosX !== undefined && d.datePosX !== "") {
+          dt.style.transform = `translateX(${d.datePosX}px)`;
+        } else {
+          dt.style.transform = "";
+        }
+      }
+
+      // Cập nhật Style & Vị trí Tiêu đề
+      if (sd) {
+        sd.innerHTML = `<i></i><b>${title}</b><i></i>`;
+        if (d.titleFontSize) sd.style.fontSize = `${d.titleFontSize}px`;
+        if (d.titleFontFamily) sd.style.fontFamily = d.titleFontFamily;
+        if (d.titleColor) sd.style.color = d.titleColor;
+        if (d.titlePosY !== undefined && d.titlePosY !== "") sd.style.top = `${d.titlePosY}px`;
+        if (d.titlePosX !== undefined && d.titlePosX !== "") {
+          sd.style.transform = `translateX(${d.titlePosX}px)`;
+        } else {
+          sd.style.transform = "";
+        }
+      }
+
+      // Cập nhật lại hiệu ứng Monogram hạt vàng nếu đổi chữ cái, font, màu, cỡ hoặc vị trí
+      const monoSig = `${init1}-${init2}-${d.monoFontFamily || ""}-${d.monoColor || ""}-${d.monoFontSize || ""}-${d.monoPosY || ""}-${d.monoPosX || ""}`;
+      if (window.__lastMonoSig !== monoSig) {
+        window.__lastMonoSig = monoSig;
+        makeMono(
+          init1,
+          init2,
+          d.monoFontFamily,
+          d.monoColor,
+          d.monoFontSize,
+          d.monoPosY,
+          d.monoPosX
+        );
+      }
+    }
+
+    // Đọc URL Search Params nếu có
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has("groom") || urlParams.has("bride") || urlParams.has("date") || urlParams.has("init1") || urlParams.has("init2") || urlParams.has("title")) {
+        applyData({
+          groomName: urlParams.get("groom") || undefined,
+          brideName: urlParams.get("bride") || undefined,
+          weddingDate: urlParams.get("date") || undefined,
+          initial1: urlParams.get("init1") || undefined,
+          initial2: urlParams.get("init2") || undefined,
+          title: urlParams.get("title") || undefined,
+        });
+      }
+    } catch (e) {
+      console.warn("Could not parse URL params", e);
+    }
+
+    // Lắng nghe message từ trình chỉnh sửa hoặc trang cha
+    window.addEventListener("message", (e) => {
+      if (!e.data || typeof e.data !== "object") return;
+      if (e.data.type === "UPDATE_BACKGROUND_DATA" || e.data.type === "UPDATE_WEDDING_DATA") {
+        applyData(e.data.payload);
+      }
+      if (e.data.type === "RESTART_ANIMATION") {
+        restart();
+      }
+    });
+
+    // Thông báo cho trang cha biết iframe đã sẵn sàng
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: "BACKGROUND_READY" }, "*");
+    }
+  </script>
+
+  <!-- Xuất MP4 theo từng frame chuẩn WebCodecs + Mp4Muxer -->
+  <script src="../vendor/mp4-muxer.js"></script>
+  <script src="../export-video.js"></script>
+  <script>
+    BgVideoExport.init({
+      canvas: cv,
+      duration: 10,
+      fileName: 'save-the-date-vo-cuc',
+      render: (t) => renderScene(t, true),
+      setSize: (w, h) => {
+        dpr = 1;
+        W = w;
+        H = h;
+        cv.width = w;
+        cv.height = h;
+        u = W < H ? W / 760 : Math.min(W / 1180, H / 652);
+        ox = (W - 1180 * u) / 2;
+        oy = (H - 652 * u) / 2;
+        L = Math.max(16, ox + 85 * u);
+        R = Math.max(16, ox + 45 * u);
+        buildBg();
+        build();
+        const d = window.__currentData || {};
+        makeMono(d.initial1 || "H", d.initial2 || "P", d.monoFontFamily, d.monoColor, d.monoFontSize, d.monoPosY, d.monoPosX);
+      },
+      begin: async () => {
+        isExporting = true;
+        await Promise.all([
+          document.fonts.load("52px 'Pinyon Script'"),
+          document.fonts.load("135px 'Great Vibes'"),
+          document.fonts.load("22px 'Cormorant Garamond'"),
+          document.fonts.ready
+        ]).catch(() => {});
+      },
+      end: () => {
+        isExporting = false;
+        resize();
+        t0 = performance.now();
+        requestAnimationFrame(frame);
+      }
+    });
+  </script>
+</body>
+
+</html>
