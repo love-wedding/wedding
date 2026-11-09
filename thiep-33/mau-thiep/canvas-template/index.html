@@ -29,12 +29,30 @@
     <link rel="stylesheet" href="https://assets.ngaychungdoi.com/fonts/webfonts/chillatos/font.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Bona+Nova+SC:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Crimson+Pro&family=Inter:wght@100..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Nuosu+SIL&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" />
     <style>
-      body {
+      html, body {
         margin: 0;
         padding: 0;
+        width: 100%;
         background-color: #eeeeee;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         overflow-x: hidden;
+      }
+      .card-public-root, .canvas-public-view {
+        width: 100%;
+        overflow-x: hidden;
+      }
+      .canvas-public-view__stage--mobile {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      .canvas-public-phone {
+        margin: 0 auto;
+        width: 100%;
+        max-width: var(--canvas-phone-max-width, 500px);
+      }
+      #root-page-container {
+        margin: 0 auto !important;
       }
       .canvas-public-view__stage {
         transition: opacity 0.5s ease;
@@ -133,7 +151,7 @@
 <body>
     <audio loop preload="auto" aria-hidden="true" src="https://assets.ngaychungdoi.com/mp3/3a627e88-dbcc-46bd-8b9d-160e5fe75e14.mp3"></audio>
     <div class="card-public-root">
-        <div class="canvas-public-view min-h-screen bg-[#eeeeee]" style="--canvas-phone-max-width:430px;--card-phone-max-width:430px">
+        <div class="canvas-public-view min-h-screen bg-[#eeeeee]" style="--canvas-phone-max-width:500px;--card-phone-max-width:500px">
             <div class="slr-root" style="position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;overflow:hidden;background:linear-gradient(to bottom right, #364131, #2c3528, #22291f)"><div class="slr-floating-layer" aria-hidden="true"><div class="slr-floating-symbol" style="left:29.0318%;color:rgb(255, 193, 7);font-size:10.4945px;--sway:14.6151px;animation:12.3933s ease-in-out -2.5s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:40.4105%;color:rgb(255, 193, 7);font-size:15.2178px;--sway:0.7711px;animation:17.258s ease-in-out -2.2s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:62.3539%;color:rgb(255, 215, 0);font-size:12.9533px;--sway:-4.5127px;animation:12.2138s ease-in-out -1.9s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:58.5176%;color:rgb(255, 215, 0);font-size:12.0958px;--sway:-7.5454px;animation:14.2745s ease-in-out -1.6s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:21.2178%;color:rgb(255, 193, 7);font-size:15.7111px;--sway:18.7097px;animation:18.2817s ease-in-out -1.3s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:49.4994%;color:rgb(255, 215, 0);font-size:17.687px;--sway:-4.778px;animation:16.9206s ease-in-out -1s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:10.1181%;color:rgb(255, 107, 107);font-size:19.6038px;--sway:2.9281px;animation:20.0456s ease-in-out -0.7s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:19.879%;color:rgb(255, 107, 107);font-size:20.5409px;--sway:-25.5909px;animation:20.0737s ease-in-out -0.4s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:64.8679%;color:rgb(255, 107, 107);font-size:13.509px;--sway:20.9986px;animation:21.7806s ease-in-out -0.1s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:13.423%;color:rgb(255, 107, 107);font-size:22.3905px;--sway:14.1615px;animation:19.6522s ease-in-out 0.2s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:55.6376%;color:rgb(255, 193, 7);font-size:18.5154px;--sway:18.2974px;animation:16.8704s ease-in-out 0.5s infinite ambient-rise">囍</div><div class="slr-floating-symbol" style="left:14.3642%;color:rgb(255, 193, 7);font-size:23.6123px;--sway:0.3592px;animation:18.2179s ease-in-out 0.8s infinite ambient-rise">囍</div></div><div class="slr-content-layer" style="position:relative;z-index:10"><div class="slr-ui-frame slr-ui-frame--responsive" data-slr-theme="vuonxuan-green" style="--slr-font-display:&quot;UNI Chu truyen thong&quot;, &quot;Baskerville&quot;, &quot;Times New Roman&quot;, serif;--slr-card-glow-rgb:105, 122, 98;--slr-open-button-shadow-rgb:93, 106, 87;--slr-guest-badge-bg:rgba(93, 106, 87, 0.1);--slr-text-color:#5d6a57;--slr-open-button-bg:#5d6a57;--slr-open-button-text-color:#ffffff"><div class="slr-ui-seal "><svg class="slr-ui-seal-heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg></div><div class="slr-ui-card-shadow"><div class="slr-ui-card"><img src="https://assets.ngaychungdoi.com/card-assets/opening-effect/opening-cards/themes/nature/flower_top.webp" alt="" aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-top"><img src="https://assets.ngaychungdoi.com/card-assets/opening-effect/opening-cards/themes/nature/flower_paralax.webp" alt="" aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-bottom"><div class="slr-ui-text-wrap"><h1 class="slr-ui-couple-name"><span>Mai Lan </span><span class="slr-ui-couple-and">&amp;</span><span>Tuấn Minh</span></h1><div class="slr-ui-divider"><div class="slr-ui-divider-line slr-ui-divider-line--left"></div><span>❦</span><div class="slr-ui-divider-line slr-ui-divider-line--right"></div></div><div class="slr-ui-date"><span>1 tháng 2, 2026</span></div><div class="slr-ui-invitation"><p class="slr-ui-invitation-label"><span>Kính mời</span></p><div class="slr-ui-guest-badge"><h2>Bạn &amp; người thương</h2></div><p class="slr-ui-invitation-text"><span class="slr-ui-invitation-text-content">đến dự buổi tiệc chung vui cùng gia đình</span></p></div><button type="button" class="slr-ui-open-button"><span>Mở thiệp</span><div class="slr-ui-open-button-shine" aria-hidden="true"></div></button></div></div></div></div></div></div>
             <div class="canvas-public-view__stage canvas-public-view__stage--mobile"><div class="canvas-public-phone"><div id="floating-bgm-banner"><div class="bgm-wrapper"><div class="bgm-banner"><button type="button" class="sound" aria-label="Phát nhạc nền"><span class="no-1 paused"></span><span class="no-2 paused"></span><span class="no-3 paused"></span><span class="no-4 paused"></span></button></div></div></div><div id="root-page-container" style="background-color: rgb(247, 247, 247); width: 500px; height: 5310.47px; position: relative; overflow: hidden;"><div class="relative h-full w-full"><div data-node-id="lx4IwuzDxw" style="position: absolute; top: 264.489px; left: 4.7785px; width: 502.2px; height: 289.425px; z-index: 12; transform: rotate(0deg) scale(1, 1); cursor: default;"><div data-transition-key="lx4IwuzDxw-fade-in-1.6-0-ease-out-false" data-node-id="lx4IwuzDxw" style="transform: none; opacity: 1; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: none; border-radius: 0px; overflow: hidden;"><div class="photo-component" style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;"><div class="photo-bg-wrap" style="background-image: url(&quot;https://img.ngaychungdoi.com/templates/033b3bd7-8b1d-472e-86da-d0e702272d6e.png?crop=96,495,819,472&amp;format=webp&quot;);"></div></div></div></div></div><div data-node-id="l2mZjv5O_e" style="position: absolute; top: 72.0879px; left: -16.85px; width: 545.5px; height: 545.5px; z-index: 0; transform: rotate(0deg) scale(1, 1); cursor: default;"><div data-transition-key="l2mZjv5O_e-fade-in-1.6-0-ease-out-false" data-node-id="l2mZjv5O_e" style="transform: none; opacity: 1; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: none; border-radius: 0px; overflow: hidden;"><div class="photo-component" style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;"><div class="photo-bg-wrap" style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/fd26dce3-7db6-473b-bbf3-657dddad81ae.png&quot;);"></div></div></div></div></div><div data-node-id="Gfh6fZBUdT" style="position: absolute; top: 121.639px; left: 92.9175px; width: 173.924px; height: 260.887px; z-index: 10; transform: rotate(348.905deg) scale(1, 1); cursor: default;"><div data-transition-key="Gfh6fZBUdT-slide-up-1.4-0.7-ease-out-false" data-node-id="Gfh6fZBUdT" style="transition: 1.4s ease-out 0.7s; transform: translateY(50px); opacity: 0; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 5.81395px; background-color: rgb(243, 241, 241); text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: none; border-radius: 0px; overflow: hidden;"><div class="photo-component" style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;"><div class="photo-bg-wrap" style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/b778bc3f-0ffb-4a6f-9c23-2a9d629c9a47.jpg&quot;);"></div></div></div></div></div><div data-node-id="pSEot8hEia" style="position: absolute; top: 97.1106px; left: 255.171px; width: 173.626px; height: 282.301px; z-index: 3; transform: rotate(13.7839deg) scale(1, 1); cursor: default;"><div data-transition-key="pSEot8hEia-slide-up-1.4-0.8-ease-out-false" data-node-id="pSEot8hEia" style="transition: 1.4s ease-out 0.8s; transform: translateY(50px); opacity: 0; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 5.81395px; background-color: rgb(238, 238, 238); text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: none; border-radius: 0px; overflow: hidden;"><div class="photo-component" style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;"><div class="photo-bg-wrap" style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/a3ba2929-caf1-489d-9f10-a055afb96839.jpg&quot;);"></div></div></div></div></div><div data-node-id="rI9u7gpFyx" style="position: absolute; top: 229.91px; left: 100.398px; width: 366.224px; height: 238.684px; z-index: 11; transform: rotate(347.736deg) scale(1, 1); cursor: default;"><div data-transition-key="rI9u7gpFyx-slide-up-1.4-0.9-ease-out-false" data-node-id="rI9u7gpFyx" style="transition: 1.4s ease-out 0.9s; transform: translateY(50px); opacity: 0; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: none; border-radius: 0px; overflow: hidden;"><div class="photo-component" style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;"><div class="photo-bg-wrap" style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/b3371e92-e9ad-427f-a5bd-67737ae1b040.png&quot;);"></div></div></div></div></div><div data-node-id="YmoGhtIh3G" style="position: absolute; top: 147.755px; left: 30.3226px; width: 135.202px; height: 206.804px; z-index: 8; cursor: default; transform: rotate(344.346deg) scale(1, 1);"><div data-transition-key="YmoGhtIh3G-slide-up-1.6-1-ease-out-false" data-node-id="YmoGhtIh3G" style="transition: 1.6s ease-out 1s; transform: translateY(50px); opacity: 0; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;"><div class="material-component"><div class="photo-bg-wrap" style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/bouquet/gm7mq3ru5s7k4o1dt5ymhp.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;"></div></div></div></div></div><div class="text-box-component " data-node-id="yVBwEU9zaz" style="position: absolute; top: 561.3px; left: 12.9px; width: 474px; height: auto; z-index: 20; transform: rotate(0deg); cursor: default; --text-box-border-size: 0px;"><div data-transition-key="yVBwEU9zaz-fade-in-1.6-0-ease-out-false" data-node-id="yVBwEU9zaz" style="transform: none; opacity: 1; width: 100%; height: 100%;"><div style="position: relative; width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: 1; background-color: transparent; padding: 0px; border-radius: 0px;"><div disabled="" contenteditable="false" style="width: 100%; min-width: 20px; font-size: 48px; text-align: center; font-weight: normal; font-style: normal; color: rgb(28, 73, 31); font-family: HoaTay1; line-height: normal; letter-spacing: 0px; text-transform: none; text-decoration: none; outline: none; word-break: break-word; pointer-events: none;">Tuấn Minh&nbsp; &amp; Mai Lan</div></div></div></div><div data-node-id="yA5bCPORcy" style="position: absolute; top: 713.001px; left: 0.14876px; width: 500px; height: 340.406px; z-index: 17; cursor: default; transform: rotate(0deg) scale(1, 1);"><div data-transition-key="yA5bCPORcy-fade-in-1.6-0-ease-out-false" data-node-id="yA5bCPORcy" style="transform: none; opacity: 1; width: 100%; height: 100%;"><div style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;"><div class="material-component"><div id="svg-yA5bCPORcy" class="svg-wrap" style="width: 100%; height: 100%; overflow: hidden; border-radius: 11.6279px; padding: 0px; box-shadow: none;"><style>#svg-yA5bCPORcy svg path{fill:rgba(66, 79, 51, 0.9521047930931825);}</style><div class="svg-wrap__inner"><!--?xml version="1.0" encoding="utf-8"?-->
 <!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -344,7 +362,7 @@ Sự hiện diện của Quý vị là niềm vinh hạnh và hạnh phúc lớn
         const params = new URLSearchParams(window.location.search);
         const guest = params.get('guest') || params.get('to') || params.get('u') || params.get('name');
         if (guest) {
-          document.querySelectorAll('.slr-ui-guest-badge h2, .canvas-guest-name, [data-dynamic-field="guestName"]').forEach(el => {
+          document.querySelectorAll('.slr-ui-guest-badge h2, .canvas-guest-name, [data-dynamic-field="guestName"], [data-node-id="87RNR5GKM4"] div div div').forEach(el => {
             el.textContent = guest;
           });
         }
@@ -355,19 +373,18 @@ Sự hiện diện của Quý vị là niềm vinh hạnh và hạnh phúc lớn
     function updateLayout() {
       const container = document.getElementById('root-page-container');
       const phone = document.querySelector('.canvas-public-phone');
+      const publicView = document.querySelector('.canvas-public-view');
       if (!container) return;
 
-      const windowWidth = window.innerWidth;
-      const baseWidth = 430;
-      const baseHeight = 4567;
+      const windowWidth = document.documentElement.clientWidth || window.innerWidth;
+      const baseWidth = 500;
+      const baseHeight = 5310.47;
 
       let targetWidth = baseWidth;
-      if (windowWidth <= 430) {
+      if (windowWidth <= 500) {
         targetWidth = windowWidth;
-      } else if (windowWidth <= 768) {
-        targetWidth = Math.min(windowWidth, 450);
       } else {
-        targetWidth = 450;
+        targetWidth = 500;
       }
 
       const scale = targetWidth / baseWidth;
@@ -378,6 +395,7 @@ Sự hiện diện của Quý vị là niềm vinh hạnh và hạnh phúc lớn
 
       container.style.width = targetWidth + 'px';
       container.style.height = (baseHeight * scale) + 'px';
+      container.style.margin = '0 auto';
 
       const inner = container.querySelector('.relative.h-full.w-full');
       if (inner) {
@@ -386,6 +404,14 @@ Sự hiện diện của Quý vị là niềm vinh hạnh và hạnh phúc lớn
         inner.style.transform = 'scale(' + scale + ')';
         inner.style.transformOrigin = 'top left';
       }
+
+      const maxWidthPx = targetWidth + 'px';
+      if (publicView) {
+        publicView.style.setProperty('--canvas-phone-max-width', maxWidthPx);
+        publicView.style.setProperty('--card-phone-max-width', maxWidthPx);
+      }
+      document.documentElement.style.setProperty('--canvas-phone-max-width', maxWidthPx);
+      document.documentElement.style.setProperty('--card-phone-max-width', maxWidthPx);
     }
 
     window.addEventListener('resize', updateLayout);
