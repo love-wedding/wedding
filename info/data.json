@@ -246,6 +246,15 @@
       "image": "./images/bg-2.png",
       "video": "https://hilo.id.vn/web/videos/background-1.mp4",
       "type": "mp4"
+    },
+    {
+      "name": "Background chiếu tivi lễ dạm ngõ",
+      "title": "Background chiếu tivi lễ dạm ngõ",
+      "price": "29.000đ",
+      "tag": "",
+      "image": "./images/background/3.png",
+      "video": "https://hilo.id.vn/web/videos/background-1.mp4",
+      "type": "mp4"
     }
   ],
   "birthdayCards": [
