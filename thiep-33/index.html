@@ -200,6 +200,26 @@
       }
     }
   </style>
+  <style>
+    .card-action-modal[hidden] { display: none !important; }
+    .card-action-modal { position: fixed; inset: 0; z-index: 1000000; display: grid; place-items: center; padding: 18px; background: rgba(24, 28, 24, .62); backdrop-filter: blur(3px); }
+    .card-action-modal__panel { position: relative; box-sizing: border-box; width: min(100%, 440px); max-height: min(86vh, 720px); overflow: auto; padding: 28px 24px 24px; border: 1px solid rgba(76, 91, 71, .15); border-radius: 20px; background: #fffdf9; color: #343b31; box-shadow: 0 24px 80px rgba(0,0,0,.24); font-family: Inter, system-ui, sans-serif; }
+    .card-action-modal__close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #f1f1eb; color: #44503f; font-size: 24px; line-height: 1; cursor: pointer; }
+    .card-action-modal__eyebrow { margin: 0 0 7px; color: #79836f; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+    .card-action-modal__title { margin: 0 36px 10px 0; color: #364332; font: 600 27px/1.2 'Cormorant Garamond', Georgia, serif; }
+    .card-action-modal__copy { margin: 0 0 20px; color: #687064; font-size: 14px; line-height: 1.6; }
+    .card-action-modal__field { display: grid; gap: 7px; margin: 14px 0; color: #4f5949; font-size: 13px; font-weight: 600; }
+    .card-action-modal__field input, .card-action-modal__field textarea, .card-action-modal__field select { box-sizing: border-box; width: 100%; min-height: 44px; border: 1px solid #d9ddd3; border-radius: 10px; padding: 10px 12px; background: #fff; color: #31382e; font: 400 15px/1.4 Inter, system-ui, sans-serif; }
+    .card-action-modal__field textarea { min-height: 110px; resize: vertical; }
+    .card-action-modal__choice-row { display: flex; gap: 10px; }
+    .card-action-modal__choice { flex: 1; min-height: 42px; border: 1px solid #d9ddd3; border-radius: 10px; background: #fff; color: #4f5949; cursor: pointer; }
+    .card-action-modal__choice.is-selected, .card-action-modal__submit { border-color: #536348; background: #536348; color: #fff; }
+    .card-action-modal__submit { width: 100%; min-height: 46px; margin-top: 8px; border: 0; border-radius: 999px; font: 600 14px Inter, system-ui, sans-serif; cursor: pointer; }
+    .canvas-qr-box-component__image { cursor: pointer; }
+    .card-action-modal__notice { min-height: 20px; margin: 14px 0 0; color: #7b684b; font-size: 12px; line-height: 1.5; }
+    body.card-action-modal-open { overflow: hidden; }
+    @media (max-width: 480px) { .card-action-modal__panel { padding: 26px 20px 20px; border-radius: 18px; } }
+  </style>
 </head>
 
 <body>
@@ -258,9 +278,9 @@
               </svg></div>
             <div class="slr-ui-card-shadow">
               <div class="slr-ui-card"><img
-                  src="https://assets.ngaychungdoi.com/card-assets/opening-effect/opening-cards/themes/nature/flower_top.webp"
+                  src="images/flower_top.webp"
                   alt="" aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-top"><img
-                  src="https://assets.ngaychungdoi.com/card-assets/opening-effect/opening-cards/themes/nature/flower_paralax.webp"
+                  src="images/flower_paralax.webp"
                   alt="" aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-bottom">
                 <div class="slr-ui-text-wrap">
                   <h1 class="slr-ui-couple-name"><span>Mai Lan </span><span
@@ -322,7 +342,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/fd26dce3-7db6-473b-bbf3-657dddad81ae.png&quot;);">
+                        style="background-image: url(&quot;images/fd26dce3-7db6-473b-bbf3-657dddad81ae.png&quot;);">
                       </div>
                     </div>
                   </div>
@@ -337,7 +357,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/b778bc3f-0ffb-4a6f-9c23-2a9d629c9a47.jpg&quot;);">
+                        style="background-image: url(&quot;images/b778bc3f-0ffb-4a6f-9c23-2a9d629c9a47.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -352,7 +372,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/a3ba2929-caf1-489d-9f10-a055afb96839.jpg&quot;);">
+                        style="background-image: url(&quot;images/a3ba2929-caf1-489d-9f10-a055afb96839.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -367,7 +387,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/b3371e92-e9ad-427f-a5bd-67737ae1b040.png&quot;);">
+                        style="background-image: url(&quot;images/b3371e92-e9ad-427f-a5bd-67737ae1b040.png&quot;);">
                       </div>
                     </div>
                   </div>
@@ -381,7 +401,7 @@
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;">
                     <div class="material-component">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/bouquet/gm7mq3ru5s7k4o1dt5ymhp.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
+                        style="background-image: url(&quot;images/gm7mq3ru5s7k4o1dt5ymhp.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
                       </div>
                     </div>
                   </div>
@@ -516,7 +536,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/974a7ccd-4088-42be-ab42-c84c9d7d123c.jpg&quot;);">
+                        style="background-image: url(&quot;images/974a7ccd-4088-42be-ab42-c84c9d7d123c.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -670,7 +690,7 @@
                 </div>
               </div>
               <div class="text-box-component" data-node-id="87RNR5GKM4"
-                style="position: absolute; top: 1972.45px; left: 12.7151px; width: 487.1px; height: auto; z-index: 34; transform: rotate(0deg); cursor: default;">
+                style="position: absolute; top: 1930.45px; left: 12.7151px; width: 487.1px; height: auto; z-index: 34; transform: rotate(0deg); cursor: default;">
                 <div data-transition-key="87RNR5GKM4-scale-out-1.6-0-ease-out-false" data-node-id="87RNR5GKM4"
                   style="transition: 1.6s ease-out; transform: scale(1.5); opacity: 0; width: 100%; height: 100%;">
                   <div
@@ -726,7 +746,7 @@
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;">
                     <div class="material-component">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/bouquet/4tuaudv8i4cf7xas8rxbah.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
+                        style="background-image: url(&quot;images/4tuaudv8i4cf7xas8rxbah.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
                       </div>
                     </div>
                   </div>
@@ -753,7 +773,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/481dfeaf-262e-4578-ab7d-8f9f00e3fdbb.png&quot;);">
+                        style="background-image: url(&quot;images/481dfeaf-262e-4578-ab7d-8f9f00e3fdbb.png&quot;);">
                       </div>
                     </div>
                   </div>
@@ -790,7 +810,7 @@
                   <div
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px 0px; border-radius: 0px; overflow: hidden;">
                     <div class="photo-component"
-                      style="-webkit-mask-box-image-source: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/018_0w37ctc6eac.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/018_0w37ctc6eac.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
+                      style="-webkit-mask-box-image-source: url(&quot;images/018_0w37ctc6eac.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;images/018_0w37ctc6eac.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
                         style="background-image: url(&quot;https://img.ngaychungdoi.com/templates/dbc83d22-1689-4d88-a0f6-46ccfa8940b2.jpg?crop=17,173,241,516&amp;format=webp&quot;);">
                       </div>
@@ -857,7 +877,7 @@
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;">
                     <div class="material-component">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/love/0mpzufiecwpyvppfpf67so.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
+                        style="background-image: url(&quot;images/0mpzufiecwpyvppfpf67so.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
                       </div>
                     </div>
                   </div>
@@ -1218,7 +1238,7 @@
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;">
                     <div class="material-component">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/bouquet/0ulsh4sx9m8pxmqd5d50puo.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
+                        style="background-image: url(&quot;images/0ulsh4sx9m8pxmqd5d50puo.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
                       </div>
                     </div>
                   </div>
@@ -1233,7 +1253,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/dbc83d22-1689-4d88-a0f6-46ccfa8940b2.jpg&quot;);">
+                        style="background-image: url(&quot;images/dbc83d22-1689-4d88-a0f6-46ccfa8940b2.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -1248,7 +1268,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/b778bc3f-0ffb-4a6f-9c23-2a9d629c9a47.jpg&quot;);">
+                        style="background-image: url(&quot;images/b778bc3f-0ffb-4a6f-9c23-2a9d629c9a47.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -1263,7 +1283,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/c0ec2833-5f9c-47be-8eca-db402e8fe4e4.jpg&quot;);">
+                        style="background-image: url(&quot;images/c0ec2833-5f9c-47be-8eca-db402e8fe4e4.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -1278,7 +1298,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/070dbca4-20c8-4ca7-a094-69a81bc13caa.jpg&quot;);">
+                        style="background-image: url(&quot;images/070dbca4-20c8-4ca7-a094-69a81bc13caa.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -1293,7 +1313,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/862c74c2-dee6-4810-95a8-19c310ba2b9a.jpg&quot;);">
+                        style="background-image: url(&quot;images/862c74c2-dee6-4810-95a8-19c310ba2b9a.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -1308,7 +1328,7 @@
                     <div class="photo-component"
                       style="-webkit-mask-box-image-source: none; -webkit-mask-box-image-slice: 0 fill; mask-image: none; mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/templates/7a6ec418-5ce5-45fa-bf08-a3ddde60d4ed.jpg&quot;);">
+                        style="background-image: url(&quot;images/7a6ec418-5ce5-45fa-bf08-a3ddde60d4ed.jpg&quot;);">
                       </div>
                     </div>
                   </div>
@@ -1379,7 +1399,7 @@
                   <div class="canvas-qr-box-component__inner"
                     style="opacity: 1; background-color: transparent; padding: 0px; border-radius: 0px; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; animation-name: canvas-animation-wobble; animation-duration: 2s; animation-delay: 0s; animation-iteration-count: infinite; animation-timing-function: ease-in-out;">
                     <div class="canvas-qr-box-component__image"
-                      style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/weddingElements/fs5iquxx8v5nv7bv4vslx.png&quot;);">
+                      style="background-image: url(&quot;images/fs5iquxx8v5nv7bv4vslx.png&quot;);">
                     </div>
                   </div>
                 </div>
@@ -1403,7 +1423,7 @@
                   <div
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: none; border-radius: 0px; overflow: hidden;">
                     <div class="photo-component"
-                      style="-webkit-mask-box-image-source: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/061_eheay43znau.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/061_eheay43znau.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
+                      style="-webkit-mask-box-image-source: url(&quot;images/061_eheay43znau.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;images/061_eheay43znau.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
                         style="background-image: url(&quot;https://img.ngaychungdoi.com/templates/be748d52-c2c6-4f9e-b2b3-03fcfc17c8b9.jpg?crop=0,79,863,461&amp;format=webp&quot;);">
                       </div>
@@ -1444,7 +1464,7 @@
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1;">
                     <div class="material-component">
                       <div class="photo-bg-wrap"
-                        style="background-image: url(&quot;https://assets.ngaychungdoi.com/resources/bouquet/em6p9qfqgu5t2twqoyjt1.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
+                        style="background-image: url(&quot;images/em6p9qfqgu5t2twqoyjt1.png&quot;); border-radius: 0px; padding: 0px; box-shadow: none;">
                       </div>
                     </div>
                   </div>
@@ -1477,7 +1497,7 @@
                   <div
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 1; box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 10px 0px; border-radius: 0px; overflow: hidden;">
                     <div class="photo-component"
-                      style="-webkit-mask-box-image-source: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/018_0w37ctc6eac.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/018_0w37ctc6eac.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
+                      style="-webkit-mask-box-image-source: url(&quot;images/018_0w37ctc6eac.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;images/018_0w37ctc6eac.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
                         style="background-image: url(&quot;https://img.ngaychungdoi.com/templates/dbc83d22-1689-4d88-a0f6-46ccfa8940b2.jpg?crop=243,139,268,558&amp;format=webp&quot;);">
                       </div>
@@ -1580,7 +1600,7 @@
                   <div
                     style="position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; box-sizing: border-box; padding: 0px; background-color: transparent; text-shadow: rgba(0, 0, 0, 0) 0px 0px 2px; opacity: 0.26; box-shadow: none; border-radius: 0px; overflow: hidden;">
                     <div class="photo-component"
-                      style="-webkit-mask-box-image-source: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/018_0w37ctc6eac.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;https://assets.ngaychungdoi.com/resources/cropShapes/018_0w37ctc6eac.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
+                      style="-webkit-mask-box-image-source: url(&quot;images/018_0w37ctc6eac.png&quot;); -webkit-mask-box-image-slice: 0 fill; mask-image: url(&quot;images/018_0w37ctc6eac.png&quot;); mask-size: 100% 100%; mask-repeat: no-repeat;">
                       <div class="photo-bg-wrap"
                         style="background-image: url(&quot;https://img.ngaychungdoi.com/templates/71ad693b-d48f-4773-bb67-3894324ee4e4.jpg?crop=0,533,675,667&amp;format=webp&quot;);">
                       </div>
@@ -1614,17 +1634,15 @@
                 class="card-live-message-toolbar__tool-btn card-live-message-toolbar__tool-btn--rsvp"
                 aria-label="Xác nhận tham dự"><img alt="" width="20" height="20"
                   class="card-live-message-toolbar__rsvp-icon" aria-hidden="true"
-                  src="https://ngaychungdoi.com/assets/i-rsvp.svg"></button></div>
+                  src="images/i-rsvp.svg"></button></div>
           </div>
-          <div id="canvas-phone-popup-layer">
-            <div class="popup-stack"></div>
-          </div>
-          <div class="canvas-public-view-chrome">
+          <div id="canvas-phone-popup-layer"><div class="popup-stack"></div></div>
+          <!-- <div class="canvas-public-view-chrome">
             <div class="canvas-toolbar-toggle-button canvas-toolbar-toggle-has-thumbnail" role="button" tabindex="0"
               aria-label="Đóng thanh công cụ">
               <div class="canvas-toolbar-toggle-pill"><img alt="Thiệp cưới 18" title="Thiệp cưới 18" loading="lazy"
                   width="36" height="36" decoding="async" class="canvas-toolbar-toggle-thumbnail"
-                  src="https://img.ngaychungdoi.com/templates/f6d34159-61ce-4a24-acb9-e7731ed8f8d1.png?resize=width:100"><svg
+                  src="images/f6d34159-61ce-4a24-acb9-e7731ed8f8d1_952310334.webp"><svg
                   xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                   class="canvas-toolbar-toggle-icon" aria-hidden="true">
@@ -1632,11 +1650,11 @@
                   <path d="m6 6 12 12"></path>
                 </svg></div>
             </div>
-          </div>
-          <div class="canvas-public-watermark">
+          </div> -->
+          <!-- <div class="canvas-public-watermark">
             <div class="canvas-public-watermark-content"><span style="font-size: 12px; letter-spacing: 1px;">Made with<a
                   href="https://ngaychungdoi.com" class="canvas-public-watermark-link">Ngày Chung Đôi</a></span></div>
-          </div>
+          </div> -->
         </div><audio loop="" preload="auto" aria-hidden="true"
           src="https://assets.ngaychungdoi.com/mp3/3a627e88-dbcc-46bd-8b9d-160e5fe75e14.mp3"></audio>
       </div>
@@ -1883,6 +1901,87 @@
       } else {
         init();
       }
+    })();
+  </script>
+  <div class="card-action-modal" id="card-action-modal" hidden>
+    <section class="card-action-modal__panel" role="dialog" aria-modal="true" aria-labelledby="card-action-modal-title">
+      <button class="card-action-modal__close" type="button" aria-label="Đóng">×</button>
+      <p class="card-action-modal__eyebrow" data-modal-eyebrow></p>
+      <h2 class="card-action-modal__title" id="card-action-modal-title" data-modal-title></h2>
+      <div data-modal-body></div>
+    </section>
+  </div>
+  <script>
+    (() => {
+      const modal = document.getElementById('card-action-modal');
+      if (!modal) return;
+      const title = modal.querySelector('[data-modal-title]');
+      const eyebrow = modal.querySelector('[data-modal-eyebrow]');
+      const body = modal.querySelector('[data-modal-body]');
+      const closeButton = modal.querySelector('.card-action-modal__close');
+      let lastTrigger = null;
+
+      const views = {
+        rsvp: {
+          eyebrow: 'R.S.V.P.', title: 'Gửi xác nhận',
+          copy: 'Vui lòng cho cô dâu chú rể biết bạn có thể tham dự ngày vui không nhé.',
+          content: '<label class="card-action-modal__field">Họ tên<input name="guestName" autocomplete="name" placeholder="Nhập họ tên"></label><div class="card-action-modal__field"><span>Bạn sẽ tham dự chứ?</span><div class="card-action-modal__choice-row"><button type="button" class="card-action-modal__choice" data-choice="yes">Mình sẽ đến</button><button type="button" class="card-action-modal__choice" data-choice="no">Rất tiếc, mình bận</button></div></div><label class="card-action-modal__field">Số người tham dự<input name="guestCount" type="number" min="1" max="20" value="1"></label><button class="card-action-modal__submit" type="button" data-submit>Gửi xác nhận</button><p class="card-action-modal__notice" aria-live="polite">Bản thiệp local chưa kết nối máy chủ gửi xác nhận.</p>'
+        },
+        gift: {
+          eyebrow: 'Mừng ngày vui', title: 'Gửi quà mừng',
+          copy: 'Cảm ơn bạn đã nghĩ đến cô dâu chú rể. Thiệp hiện chưa có thông tin tài khoản hoặc mã QR chuyển khoản để hiển thị.'
+        },
+        wish: {
+          eyebrow: 'Lời chúc', title: 'Gửi lời chúc',
+          copy: 'Để lại vài lời yêu thương dành cho cô dâu chú rể nhé.',
+          content: '<label class="card-action-modal__field">Tên của bạn<input name="wishName" autocomplete="name" placeholder="Nhập tên"></label><label class="card-action-modal__field">Lời chúc<textarea name="wishMessage" placeholder="Viết lời chúc..."></textarea></label><button class="card-action-modal__submit" type="button" data-submit>Gửi lời chúc</button><p class="card-action-modal__notice" aria-live="polite">Bản thiệp local chưa kết nối máy chủ lưu lời chúc.</p>'
+        }
+      };
+
+      function openModal(kind, trigger) {
+        const view = views[kind];
+        if (!view) return;
+        lastTrigger = trigger || document.activeElement;
+        eyebrow.textContent = view.eyebrow;
+        title.textContent = view.title;
+        body.innerHTML = `<p class="card-action-modal__copy">${view.copy}</p>${view.content || ''}`;
+        modal.hidden = false;
+        document.body.classList.add('card-action-modal-open');
+        closeButton.focus();
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        document.body.classList.remove('card-action-modal-open');
+        lastTrigger?.focus?.();
+      }
+
+      document.querySelectorAll('.plugin-rsvp-button, .card-live-message-toolbar__tool-btn--rsvp').forEach(button => {
+        button.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); openModal('rsvp', button); });
+      });
+      document.querySelectorAll('.card-live-message-toolbar__tool-btn--gift').forEach(button => {
+        button.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); openModal('gift', button); });
+      });
+      document.querySelectorAll('.canvas-qr-box-component__image, .canvas-qr-box-component').forEach(box => {
+        box.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); openModal('gift', box); });
+      });
+      document.querySelectorAll('.card-live-message-toolbar__message-btn').forEach(button => {
+        button.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); openModal('wish', button); });
+      });
+      closeButton.addEventListener('click', closeModal);
+      modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+      document.addEventListener('keydown', event => { if (!modal.hidden && event.key === 'Escape') closeModal(); });
+      modal.addEventListener('click', event => {
+        const choice = event.target.closest('[data-choice]');
+        if (choice) {
+          modal.querySelectorAll('[data-choice]').forEach(button => button.classList.toggle('is-selected', button === choice));
+          return;
+        }
+        if (event.target.closest('[data-submit]')) {
+          const notice = modal.querySelector('.card-action-modal__notice');
+          if (notice) notice.textContent = 'Không gửi được từ bản local vì thiệp chưa kết nối máy chủ. Các thông tin bạn nhập chưa được lưu.';
+        }
+      });
     })();
   </script>
 
