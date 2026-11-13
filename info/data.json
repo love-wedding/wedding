@@ -1,6 +1,15 @@
 {
   "weddingCards": [
     {
+      "id": "thiep-33",
+      "name": "Thiệp 33 - Phong Thư Tình Yêu",
+      "title": "Phong Thư Tình Yêu Tone Xanh",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-33.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-33/"
+    },
+    {
       "id": "thiep-20",
       "name": "Thiệp 20 - Biển Xanh Tinh Khôi",
       "title": "Biển Xanh Tinh Khôi",
@@ -180,6 +189,7 @@
       "image": "./images/thiep-21.png",
       "url": "https://love-wedding.github.io/wedding/thiep-21/"
     }
+    
   ],
   "invitationCards": [
     {
