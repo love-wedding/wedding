@@ -10,6 +10,15 @@
       "url": "https://love-wedding.github.io/wedding/thiep-33/"
     },
     {
+      "id": "thiep-34",
+      "name": "Thiệp 34 - Phong Thư Hẹn Ước",
+      "title": "Phong Thư Hẹn Ước Tone Đỏ",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-34.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-34/"
+    },
+    {
       "id": "thiep-20",
       "name": "Thiệp 20 - Biển Xanh Tinh Khôi",
       "title": "Biển Xanh Tinh Khôi",
@@ -17,6 +26,15 @@
       "tag": "new",
       "image": "./images/thiep-20.png",
       "url": "https://love-wedding.github.io/wedding/thiep-20/"
+    },
+       {
+      "id": "thiep-6",
+      "name": "Thiệp 06 - Tấm Vé Tình Yêu",
+      "title": "Tấm Vé Tình Yêu",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-6.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-6/"
     },
     {
       "id": "thiep-22",
@@ -63,15 +81,7 @@
       "image": "./images/thiep-5.png",
       "url": "https://love-wedding.github.io/wedding/thiep-5/"
     },
-    {
-      "id": "thiep-6",
-      "name": "Thiệp 06 - Tấm Vé Tình Yêu",
-      "title": "Tấm Vé Tình Yêu",
-      "price": "139.000đ",
-      "tag": "new",
-      "image": "./images/thiep-6.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-6/"
-    },
+ 
     {
       "id": "thiep-7",
       "name": "Thiệp 07 - Hồng Hỷ Giao Duyên",
@@ -240,6 +250,24 @@
       "type": "mp4"
     },
     {
+      "name": "04 - Slide Cưới Chiếu màn led hiện đại",
+      "title": "Slide Cưới Chiếu màn led hiện đại",
+      "price": "159.000đ",
+      "tag": "",
+      "image": "./images/video-04.png",
+      "video": "https://pub-d039de07b97343248667d4f325a6ee7d.r2.dev/video-slide-wedding/snaptik.vn_7707249729700400402.mp4",
+      "type": "mp4"
+    },
+    {
+      "name": "01 - Background chiếu led đám cưới sao rơi",
+      "title": "Background chiếu led đám cưới sao rơi",
+      "price": "39.000đ",
+      "tag": "",
+      "image": "./images/background/bg-sao-roi-01.png",
+      "video": "https://pub-d039de07b97343248667d4f325a6ee7d.r2.dev/video-slide-wedding/background-sao-roi.mp4",
+      "type": "mp4"
+    },
+    {
       "name": "Background chiếu led 1",
       "title": "Background Chiếu Led Không Gian 1",
       "price": "49.000đ",
@@ -264,6 +292,15 @@
       "tag": "",
       "image": "./images/background/3.png",
       "video": "https://hilo.id.vn/web/videos/background-1.mp4",
+      "type": "mp4"
+    },
+    {
+      "name": "Background chiếu tivi lễ dạm ngõ",
+      "title": "Background chiếu tivi lễ dạm ngõ",
+      "price": "29.000đ",
+      "tag": "",
+      "image": "./images/background/4.png",
+      "video": "https://pub-d039de07b97343248667d4f325a6ee7d.r2.dev/video-slide-wedding/background LỄ DẠM NGÕ - 02.mp4",
       "type": "mp4"
     }
   ],
