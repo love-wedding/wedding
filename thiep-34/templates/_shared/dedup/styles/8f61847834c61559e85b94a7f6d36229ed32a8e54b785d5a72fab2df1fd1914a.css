@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/483933f4b53ebd3fd7a11a4eb9fab73ca7fffe77ebcb05a015d27324028b38d3.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/afb8986a68a0d5189122bd11ed236bd4087abb2b4415b5df1e2bc2579f5d1241.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/17f571fc0ecdaa21872b3af351742fbcd0abd64464b7143f86c5d69e5f543d67.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/9f7e3c163e7bc1bfaa9ffa8d797cea10a6ede7f6745d4aab12480e7f1818cc15.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/24ffadc3cd172e73f8205c11b3136baf8daec40b97855eb710c8c5074747eb1b.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/26950a300be25c16196278f7df632147f7c4fce63681d325f63c9c30daaf566b.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/8e33101ba7e73cd44aa39e60eb3ea3b4912bac6fe155275a2e23cf1b7f6ed315.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/84f3d3275dfb159dd311c61828fd754a82ec31c377120518e2cd3e7d34394e96.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/637639da93fdd9178e52662cce4bd5a59a544eb60677bb6ef9f89bc472607e5d.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/c535bb158e8cfc3c27654f73aa68a87732899e7d9b10d8496b68605a56d947a7.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/247f052d2f5b84a5bbe7831c3b08a71ca391ff54f1dfb9be88a3d3da569e3a38.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/f0123e28dc0c4cac86559d1ffe587dded6ec57a4819956f56fcf6ad31d696eed.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Pattaya';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/2552c86f2362c37cbd2c7df1f30c0728695d9e8ebad3d66ac6d3425ed891bd61.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/6021680663c58b344d8404c289c755aadc662a02189ffe4f5ca79378f9e97840.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/1609a54fa3ad1abc8d0037132f73700333241ea0b65672079998e352f151dea7.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/adefc53e7b3d483f1fa5e85edd82b7689ca79db25a1f6786bd7949cdcfeec601.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/396e242e054f351378358eca1302b6a1a34c8fc59a3d848c49deb49dc4a4ef87.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/dece7c71bbe61710787f0839c722c65e87355dd2eb4a823e6b5488121ff81e4b.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/4d984240cefb093a74300bcae4b5dbd49f700e0af501eaaa079c56aa64142d2f.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://songhy.online/templates/_shared/dedup/fonts/35757eaa996b3359022f47f164a67ee9eac04971af24c5b8fbd4b89e844ff190.ttf) format('truetype');
+}
