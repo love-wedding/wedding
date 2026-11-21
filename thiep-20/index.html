@@ -21,6 +21,8 @@
     <link rel="icon"
         href="https://content.pancake.vn/web-media-263/s50x50/fwebp/s50x50/fwebp/fa/11/df/62/9c6cf12e5b8aa27c7a7249b32de596df168b77df38f83417719bac25-w:1200-h:1800-l:126547-t:image/jpeg.jpg"
         sizes="16x16" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style type="text/css">
         * {
@@ -9704,6 +9706,134 @@ https://maps.app.goo.gl/6cLvxjsnC4fLQZL29
 
 
 
+<script>
+        (function () {
+            "use strict";
+
+            const GOOGLE_SCRIPT_URL =
+                "https://script.google.com/macros/s/AKfycbwkq6fIm9HMl6QyQ-DoWp-5zFM95foa7k8R20yPpq3JFIZI7tqblW7rWekJEZyhowHM-Q/exec";
+            const FORM_ID = "qm643fs2";
+            const BUTTON_ID = "w-qha5rilg";
+            const BLOCK_KEYWORD = "create_form_data";
+
+            let isSending = false;
+
+            /* ===== 1. CHẶN REQUEST TỚI create_form_data (fetch + XHR) ===== */
+            const originalFetch = window.fetch;
+            window.fetch = function (input, init) {
+                const url = typeof input === "string" ? input : (input && input.url) || "";
+                if (url.indexOf(BLOCK_KEYWORD) !== -1) {
+                    return Promise.resolve(new Response("{}", { status: 200 }));
+                }
+                return originalFetch.apply(this, arguments);
+            };
+
+            const originalOpen = XMLHttpRequest.prototype.open;
+            const originalSend = XMLHttpRequest.prototype.send;
+            XMLHttpRequest.prototype.open = function (method, url) {
+                this.__blocked = typeof url === "string" && url.indexOf(BLOCK_KEYWORD) !== -1;
+                return originalOpen.apply(this, arguments);
+            };
+            XMLHttpRequest.prototype.send = function () {
+                if (this.__blocked) return;
+                return originalSend.apply(this, arguments);
+            };
+
+            /* ===== 2. XỬ LÝ GỬI FORM ===== */
+            async function handleSubmit() {
+                if (isSending) return;
+
+                const form = document.getElementById(FORM_ID);
+                if (!form) return;
+
+                const guest = form.querySelector('[name="guest"]').value.trim();
+                const relation = form.querySelector('[name="text_input_1"]').value.trim();
+                const wish = form.querySelector('[name="text_input_2"]').value.trim();
+                const attend = form.querySelector('[name="select_1"]').value;
+
+                if (!guest) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Thiếu thông tin",
+                        text: "Bạn vui lòng nhập tên của mình nhé!",
+                        confirmButtonColor: "#000"
+                    });
+                    return;
+                }
+                if (!attend) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Thiếu thông tin",
+                        text: "Bạn vui lòng chọn có tham dự hay không nhé!",
+                        confirmButtonColor: "#000"
+                    });
+                    return;
+                }
+
+                isSending = true;
+                Swal.fire({
+                    title: "Đang gửi...",
+                    text: "Vui lòng chờ trong giây lát",
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => Swal.showLoading()
+                });
+
+                // Key khớp với Apps Script: full_name, relation, message, attend
+                const body = new URLSearchParams();
+                body.append("full_name", guest);
+                body.append("relation", relation);
+                body.append("message", wish);
+                body.append("attend", attend);
+
+                try {
+                    // no-cors: Apps Script không trả CORS header nên response là opaque
+                    await originalFetch(GOOGLE_SCRIPT_URL, {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: body.toString()
+                    });
+
+                    form.reset();
+                    await Swal.fire({
+                        icon: "success",
+                        title: "Cảm ơn bạn!",
+                        html: "Cảm ơn Quý Khách đã phản hồi,<br>rất hân hạnh được đón tiếp!",
+                        confirmButtonText: "Đóng",
+                        confirmButtonColor: "#000"
+                    });
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gửi thất bại",
+                        text: "Có lỗi xảy ra, bạn vui lòng thử lại sau nhé!",
+                        confirmButtonColor: "#000"
+                    });
+                } finally {
+                    isSending = false;
+                }
+            }
+
+            /* ===== 3. CHẶN HANDLER CŨ CỦA WEBCAKE (capture phase) ===== */
+            document.addEventListener("submit", function (e) {
+                if (e.target && e.target.id === FORM_ID) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    handleSubmit();
+                }
+            }, true);
+
+            document.addEventListener("click", function (e) {
+                if (e.target.closest && e.target.closest("#" + BUTTON_ID)) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    handleSubmit();
+                }
+            }, true);
+        })();
+    </script>
 
 
     <script type="text/javascript" src="./main-v2.js"></script>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * LOVE WEDDING - LUXURY WEDDING SHOWCASE
  * Features:
  * - Dynamic data fetch & filter from data.json
@@ -241,9 +241,6 @@ function renderCatalog() {
                         <span class="card-price-pill">${item.price || '139.000đ'}</span>
                     </div>
                     <div class="card-actions-row">
-                        <button type="button" class="btn-card-edit" onclick="openWeddingEditor('${item.id}', '${(item.name || '').replace(/'/g, "\\'")}', '${item.url || ''}')" title="Tự thiết kế & chỉnh sửa mẫu này trực tiếp">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> Tự sửa thiệp
-                        </button>
                         <a href="${itemUrl}" target="_blank" rel="noopener noreferrer" class="btn-card-view" title="Xem bản mẫu gốc">
                             <i class="fa-regular fa-eye"></i> Demo
                         </a>
@@ -581,4 +578,5 @@ function initPetalsCanvas() {
 
     animate();
 }
+
 

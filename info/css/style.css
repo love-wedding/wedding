@@ -1930,7 +1930,8 @@ button {
 
     .cards-grid.grid-invitation,
     .cards-grid.grid-birthday {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
     }
 
     .features-grid {
@@ -2111,11 +2112,48 @@ button {
 
 @media (max-width: 520px) {
     .cards-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .cards-grid.grid-invitation,
+    .cards-grid.grid-birthday {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
     }
 
     .card-media {
-        height: 380px;
+        height: auto;
+        aspect-ratio: 3 / 4;
+    }
+
+    .card-details {
+        padding: 10px 9px;
+    }
+
+    .card-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .card-name {
+        width: 100%;
+        min-width: 0;
+        font-size: 0.88rem;
+        line-height: 1.3;
+        overflow-wrap: break-word;
+    }
+
+    .card-price-pill {
+        font-size: 0.72rem;
+        padding: 3px 7px;
+    }
+
+    .cards-grid.grid-video .card-media,
+    .cards-grid.grid-invitation .card-media,
+    .cards-grid.grid-birthday .card-media {
+        aspect-ratio: 16 / 9;
     }
 
     .hero-title {
