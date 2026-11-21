@@ -1,0 +1,618 @@
+/* =============================================
+   STORY-DESIGN.CSS — Thiết kế giao diện thay thế cho section SEC-Story
+   (mục "Love Story" — nội dung ảnh + chữ tuỳ template)
+
+   Được nạp KHÔNG ĐIỀU KIỆN ở cả php/edit.php và php/view.php để tránh
+   lệch code giữa 2 trang (chỉ 1 nguồn CSS duy nhất, không inject bằng JS
+   vì không có tham số động theo người dùng).
+
+   QUAN TRỌNG: khi đổi sang thiết kế 2/3/4, cấu trúc con gốc của SEC-Story bị
+   xoá và dựng lại bằng khung HTML sạch tự định nghĩa (xem _storySlotSkeleton
+   trong assets/js/edit_funtion.js, và hàm PHP tương ứng ở edit.php/view.php)
+   — mỗi khe luôn mang class .wbls-el + .wbls-img (ảnh) hoặc
+   .wbls-text (chữ), nên CSS ở đây áp trực tiếp lên các class đó, KHÔNG
+   cần đoán cấu trúc gốc của từng template nữa.
+
+   LƯU Ý VỀ .ladi-image: base CSS của MỌI template (không đổi được) định nghĩa
+   `.ladi-image{position:absolute;width:100%;height:100%}` — nghĩa là phần tử
+   NGAY-CHA-TRỰC-TIẾP (.wbls-img) bắt buộc phải có position:relative + 1
+   chiều cao cụ thể để làm "khung chứa" cho lớp ảnh bên trong định vị đúng,
+   nếu không ảnh sẽ phình to theo tổ tiên position:relative gần nhất (có thể
+   là cả SEC-Story) và vỡ layout.
+
+   Thiết kế 1 ("Dòng thời gian"): đường kẻ dọc ở giữa chạy suốt chiều dài phần Love Story, mỗi
+   hàng gồm 1 ảnh vuông + 1 đoạn chữ nằm 2 bên đường kẻ, hàng sau đổi bên so với hàng trước (xem
+   _storyTimelineInner ở assets/js/edit_funtion.js và _wbStoryTimelineInner ở php/story_design.php).
+   ============================================= */
+
+.SEC-Story.wbls-design-1,
+.SEC-Story.wbls-design-2,
+.SEC-Story.wbls-design-3,
+.SEC-Story.wbls-design-4 {
+    height: auto !important;
+}
+
+/* padding-bottom bình thường (bằng cạnh trên) — file này (story-design.css) nạp CHUNG cho cả trang
+   chỉnh sửa lẫn trang khách xem đã xuất bản (view.php), nhưng các nút "🎨 Thay đổi giao diện"/"Thêm
+   câu chuyện"/"Xoá câu chuyện" CHỈ tồn tại ở trang chỉnh sửa (edit_funtion.js không chạy trên
+   view.php) — nếu chừa sẵn khoảng trống lớn ở đây cho các nút đó thì khách xem thiệp sẽ thấy 1
+   khoảng trống thừa vô lý ở cuối mục Love Story (không có gì lấp vào chỗ đó). Khoảng trống riêng
+   cho các nút edit-only được thêm Ở FILE edit_funtion.css (chỉ nạp ở trang chỉnh sửa) thay vì ở
+   đây, xem rule cùng selector bên đó. */
+.SEC-Story.wbls-design-1>.ladi-container,
+.SEC-Story.wbls-design-2>.ladi-container,
+.SEC-Story.wbls-design-3>.ladi-container,
+.SEC-Story.wbls-design-4>.ladi-container {
+    position: static !important;
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100%;
+    padding: 48px 20px;
+    gap: 22px;
+}
+
+/* QUAN TRỌNG: .ladi-section-background là position:absolute (CSS gốc mọi template, không đổi
+   được) — theo đúng quy tắc vẽ (painting order) của CSS, phần tử position:absolute LUÔN được vẽ
+   ĐÈ LÊN phần tử position:static cùng cấp, bất kể thứ tự trong HTML. Vì .ladi-container ở trên bị
+   ép position:static (bắt buộc, để height:auto hoạt động đúng theo nội dung flex), nền của section
+   giờ nổi lên trên toàn bộ nội dung. Bình thường vô hại vì base CSS cho .ladi-section-background
+   pointer-events:none — nhưng fixPointerEvents() (edit.js) quét toàn trang và ép pointer-events:
+   auto!important lên MỌI phần tử đang pointer-events:none (không phân biệt cố ý hay không), khiến
+   lớp nền này bắt hết click nhắm vào ảnh/chữ bên dưới (đã xác nhận qua HTML thực tế người dùng gửi:
+   .ladi-section-background có inline style pointer-events:auto!important). Ép z-index âm để nền
+   luôn ở lớp vẽ SAU (dưới) mọi nội dung trong section, bất kể pointer-events của nó bị đổi thế nào. */
+.SEC-Story.wbls-design-1>.ladi-section-background,
+.SEC-Story.wbls-design-2>.ladi-section-background,
+.SEC-Story.wbls-design-3>.ladi-section-background,
+.SEC-Story.wbls-design-4>.ladi-section-background {
+    z-index: -1 !important;
+}
+
+/* transform/animation:none — LadiPage có 1 hệ animation-khi-cuộn-vào-khung-hình gán CSS RIÊNG THEO
+   TỪNG ID (vd "#PARAGRAPH121.ladi-animation > .ladi-paragraph{transform:...}") ngay trong <style>
+   gốc của template, với giá trị transform tính theo vị trí tuyệt đối CŨ của phần tử đó. Các slot ở
+   đây tái dùng nguyên ID gốc (để không mất dữ liệu) nhưng đặt trong bố cục flex hoàn toàn khác — cứ
+   để hệ animation gán class .ladi-animation lên chúng (không kiểm soát được, JS của LadiPage tự
+   quét), transform cũ sẽ đẩy phần tử lệch khỏi đúng vị trí flex. Ép về none để vô hiệu hoá triệt
+   để, bất kể rule riêng theo ID có specificity cao đến đâu. */
+.wbls-el {
+    position: static !important;
+    margin: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.wbls-el * {
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Ảnh: cần position:relative + chiều cao cụ thể để làm khung chứa cho
+   .ladi-image (position:absolute;width/height:100% — xem ghi chú ở đầu file).
+   overflow:hidden + border-radius đặt ở ĐÂY (khung ngoài, không bị cắt) để bo
+   góc + đổ bóng hiển thị đúng; box-shadow không đặt trên .ladi-image-background
+   vì lớp đó bị .ladi-image cha nó overflow:hidden cắt mất bóng. */
+.wbls-img {
+    position: relative !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 340px;
+    height: 260px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+}
+
+/* position:relative !important (không phải static như .wbls-el gốc) để hint "Ấn vào để sửa
+   chữ" (edit-text.css: .ClientEditText::after/.no-text::before, dùng position:absolute;top/
+   left:50%) định vị đúng theo chính ô chữ này — nếu để static, trình duyệt phải neo theo tổ tiên
+   position khác static gần nhất (.wbls-row, bao trọn cả cột ảnh lẫn chữ) nên hint bị lệch ra
+   giữa hàng. BẮT BUỘC !important: phần tử này luôn mang cả 2 class .wbls-el (position:static
+   !important, định nghĩa TRƯỚC ở trên) lẫn .wbls-text — !important luôn thắng non-important dù
+   xuất hiện SAU trong file hay có specificity cao hơn, nên thiếu !important ở đây thì rule này
+   không có tác dụng gì (đã xảy ra ở lần sửa trước, khiến hint vẫn lệch dù CSS "trông đúng"). */
+/* min-height: khi chưa nhập chữ, .ladi-paragraph rỗng cao ~0px → cả khối .wbls-text (và
+   .wbls-reveal-text bọc ngoài nó) co lại thành 1 dải mỏng — vùng bấm được thực tế chỉ còn đúng
+   nhãn hint nhỏ, bấm hụt ra ngoài 1 chút là trúng khoảng trống (gap) của .ladi-container, hiển thị
+   như đang "chọn" .ladi-container thay vì ô chữ. Đặt sàn chiều cao chung cho MỌI thiết kế (không
+   chỉ riêng "Dòng thời gian" đã sửa trước đó) để luôn có đủ vùng bấm hợp lý; chữ thật dài hơn mức
+   này vẫn tự cao lên bình thường. */
+.wbls-text {
+    position: relative !important;
+    width: 100%;
+    min-height: 64px;
+}
+
+.wbls-text .ladi-headline,
+.wbls-text .ladi-paragraph {
+    text-align: center !important;
+    /* Không !important — ID gốc đã bị đổi (thêm tiền tố WBLS_) nên CSS riêng-theo-ID cũ của
+       template (nếu có) không còn khớp được nữa, chữ mặc định rơi về màu đen/mặc định trình duyệt.
+       Đặt màu nền chung ở đây; nếu người dùng tự chọn màu khác qua trình chỉnh sửa (lưu inline style
+       qua restoreTextStyles), inline style luôn thắng rule ngoài không !important nên vẫn đổi được
+       bình thường — không khoá cứng màu. */
+    color: #4f4f4f;
+}
+
+/* Tiêu đề (h1.ladi-headline) to + đậm hơn hẳn đoạn văn thường để nổi bật rõ ràng, áp dụng chung cho
+   MỌI thiết kế (1-4) — riêng thiết kế 3 có rule riêng bên dưới (giữ phong cách chữ hoa/label, chỉ
+   tăng size, không dùng cỡ chung này). !important vì cần thắng font-size riêng-theo-ID cũ của
+   template (specificity cao, số lượng lớn, không kiểm soát được từng cái). */
+.wbls-text .ladi-headline {
+    font-size: 26px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+}
+
+/* ── Thiết kế 1: "Dòng thời gian" — đường kẻ giữa, ảnh vuông/chữ xen kẽ 2 bên mỗi hàng ── */
+.SEC-Story.wbls-design-1 .wbls-timeline-title {
+    text-align: center;
+    margin-bottom: 6px;
+    width: 100%;
+}
+
+/* min-height cho tiêu đề rỗng — cùng lý do với .wbls-row-text .wbls-text (xem ghi chú ở
+   dưới): <h1 class="ladi-headline"> rỗng cao ~0px → hint "Ấn vào để sửa chữ" (top:50% của chính ô
+   này) bị dồn sát xuống đúng ranh giới giữa khối tiêu đề và hàng đầu tiên, trông như đè lên card
+   ảnh/chữ ngay bên dưới thay vì nằm gọn trong khối tiêu đề. */
+.SEC-Story.wbls-design-1 .wbls-timeline-title .wbls-text {
+    min-height: 60px;
+}
+
+.SEC-Story.wbls-design-1 .wbls-timeline {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+
+/* Đường kẻ dọc chạy suốt chiều dài timeline, mờ dần ở 2 đầu cho mềm mắt. */
+.SEC-Story.wbls-design-1 .wbls-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, #c8954a 6%, #c8954a 94%, transparent);
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+/* align-items:flex-start (KHÔNG dùng center) — 2 cột trong 1 hàng thường lệch chiều cao rất nhiều
+   (chữ dài nhiều dòng >> ảnh vuông cố định theo bề rộng cột); center sẽ đẩy ảnh trôi xuống giữa 1
+   khối rất cao, trông như ảnh "tụt" sang hàng dưới. Chấm tròn vì vậy neo theo TÂM CỦA ẢNH
+   (.wbls-row-img::after) chứ không phải tâm cả hàng, xem bên dưới. */
+.SEC-Story.wbls-design-1 .wbls-row {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 26px;
+    z-index: 1;
+}
+
+.SEC-Story.wbls-design-1 .wbls-row-img,
+.SEC-Story.wbls-design-1 .wbls-row-text {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.SEC-Story.wbls-design-1 .wbls-row-img {
+    position: relative;
+}
+
+/* Chấm tròn ghim theo tâm ẢNH + đúng cạnh giáp đường kẻ giữa — hàng ảnh-trái (.wbls-row-img
+   là con đầu) neo cạnh phải của ảnh; hàng ảnh-phải (con thứ 2) neo cạnh trái. Suy trực tiếp từ thứ
+   tự DOM bằng :first-child/:last-child, không cần thêm class riêng cho từng hàng. */
+.SEC-Story.wbls-design-1 .wbls-row-img::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #c8954a;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+    z-index: 2;
+}
+
+.SEC-Story.wbls-design-1 .wbls-row-img:first-child::after {
+    left: 100%;
+    margin-left: 13px;
+    transform: translate(-50%, -50%);
+}
+
+.SEC-Story.wbls-design-1 .wbls-row-img:last-child::after {
+    right: 100%;
+    margin-right: 13px;
+    transform: translate(50%, -50%);
+}
+
+/* Hàng lẻ 1 bên (số ảnh/chữ không khớp nhau) — bên còn lại căn giữa thay vì để trống. */
+.SEC-Story.wbls-design-1 .wbls-row.wbls-row-onlyimg,
+.SEC-Story.wbls-design-1 .wbls-row.wbls-row-onlytext {
+    justify-content: center;
+}
+
+.SEC-Story.wbls-design-1 .wbls-row.wbls-row-onlyimg .wbls-row-img,
+.SEC-Story.wbls-design-1 .wbls-row.wbls-row-onlytext .wbls-row-text {
+    flex: 0 1 46%;
+}
+
+/* Hàng chỉ có chữ (không có .wbls-row-img để neo chấm tròn) — tự vẽ chấm tròn theo tâm hàng. */
+.SEC-Story.wbls-design-1 .wbls-row.wbls-row-onlytext::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 14px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #c8954a;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .18);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.SEC-Story.wbls-design-1 .wbls-row-img .wbls-img {
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    height: auto !important;
+    border-radius: 14px !important;
+}
+
+/* min-height: khi chưa nhập chữ, .ladi-paragraph rỗng cao ~0px → .wbls-text co lại gần như
+   0px theo (align-items:flex-start ở .wbls-row không kéo giãn theo cột ảnh như stretch) — hint
+   "Ấn vào để sửa chữ" (::before, position:absolute;top:50%, neo theo .wbls-text nhờ
+   position:relative ở rule .wbls-text chung) vì vậy bị dồn sát mép trên thay vì nằm giữa ô như
+   mong đợi. Đặt sàn chiều cao để hint có chỗ căn giữa hợp lý; chữ thật dài hơn mức này vẫn tự cao
+   lên bình thường (không giới hạn max-height). */
+.SEC-Story.wbls-design-1 .wbls-row-text .wbls-text {
+    max-width: 100%;
+    min-height: 80px;
+}
+
+.SEC-Story.wbls-design-1 .wbls-row-text .ladi-paragraph {
+    font-size: 13.5px !important;
+}
+
+/* =============================================
+   .wbls-reveal — hiệu ứng hiện dần/3D khi cuộn tới, dùng chung cho thiết kế 2/3/4 (KHÔNG dùng cho
+   thiết kế 1 "Dòng thời gian" — cấu trúc đó không có lớp bọc này). Bọc NGOÀI .wbls-el (tổ tiên,
+   không phải chính nó/con nó) nên không bị rule .wbls-el{transform/animation:none!important} chặn
+   (xem giải thích ở _storyRevealWrap trong edit_funtion.js).
+
+   AN TOÀN LÀ TRÊN HẾT: MẶC ĐỊNH (không có class phụ nào) = TRẠNG THÁI CUỐI, đã hiện đầy đủ + đúng
+   vị trí + bấm được ngay — hoàn toàn KHÔNG phụ thuộc JS có chạy được hay không (từng bị lỗi "không
+   bấm được vào chữ" vì bản trước làm ngược lại: mặc định ẨN, chờ JS mới hiện — nếu JS lỗi/chậm/
+   phần tử tạo ra ngoài luồng applyStoryDesign thì kẹt luôn ở trạng thái ẨN). JS (_storyInitReveal/
+   view.js) chỉ THÊM class "wbls-pre" NGAY LÚC KHỞI TẠO để tạm chuyển sang trạng thái "trước khi
+   hiện" (cho hiệu ứng cuộn-tới-mới-hiện), rồi TỰ GỠ RA khi cuộn tới hoặc sau tối đa 1.2s — hiệu ứng
+   chỉ là lớp TĂNG CƯỜNG, không phải điều kiện để nội dung hiển thị/bấm được. */
+.wbls-reveal {
+    opacity: 1;
+    transition: opacity .7s ease, transform .7s cubic-bezier(.22, .61, .36, 1);
+}
+
+.wbls-reveal.wbls-pre {
+    opacity: 0;
+}
+
+/* ── Thiết kế 2: "Nhật ký ảnh" (Scrapbook) — ảnh dạng polaroid, mỗi ảnh/chữ nghiêng 1 góc riêng
+   (biến --wbls-tilt set inline theo từng phần tử, xem _storyTiltAngle ở edit_funtion.js — 8 giá
+   trị khác nhau xen dấu +/-, KHÔNG lặp lại đơn điệu như chỉ 2 giá trị xen kẽ), cho cảm giác "ảnh
+   rải trên bàn" tự nhiên hơn. ── */
+.SEC-Story.wbls-design-2>.ladi-container {
+    gap: 30px;
+}
+
+.SEC-Story.wbls-design-2 .wbls-reveal-img {
+    --wbls-tilt: -6deg;
+    background: #fff;
+    padding: 12px 12px 32px;
+    border-radius: 5px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, .22);
+    width: 240px;
+    max-width: 74%;
+    transform: rotate(var(--wbls-tilt));
+}
+
+.SEC-Story.wbls-design-2 .wbls-reveal-img.wbls-pre {
+    transform: translateY(30px) rotate(calc(var(--wbls-tilt) * 1.6)) scale(.9);
+}
+
+.SEC-Story.wbls-design-2 .wbls-reveal-img .wbls-img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;
+    max-width: 100%;
+    border-radius: 2px !important;
+    box-shadow: none !important;
+}
+
+.SEC-Story.wbls-design-2 .wbls-reveal-text {
+    --wbls-tilt: -2deg;
+    max-width: 300px;
+    transform: rotate(var(--wbls-tilt));
+    width: 100%;
+}
+
+.SEC-Story.wbls-design-2 .wbls-reveal-text.wbls-pre {
+    transform: translateY(22px) rotate(calc(var(--wbls-tilt) * 1.6));
+}
+
+.SEC-Story.wbls-design-2 .wbls-text .ladi-paragraph,
+.SEC-Story.wbls-design-2 .wbls-text .ladi-headline {
+    font-style: italic;
+}
+
+/* =============================================
+   .wbls-door — hiệu ứng "cửa mở": 2 ảnh đứng cạnh nhau như 2 cánh cửa ĐÓNG; cuộn tới thì mở ra
+   (rotateY quanh cạnh ngoài của từng cánh) lộ nội dung chữ giấu phía sau; cuộn qua khỏi khung hình
+   thì đóng lại (xem _storyDoorInner ở edit_funtion.js — theo dõi liên tục, không giống .wbls-reveal
+   chỉ hiện 1 lần). Dùng cho thiết kế 3 "Tạp chí" và 4 "Thẻ nổi", chỉ khác phần trang trí bên dưới.
+   ============================================= */
+.wbls-door {
+    position: relative;
+    width: 100%;
+}
+
+.wbls-door-panels {
+    position: relative;
+    display: flex;
+    perspective: 1400px;
+    z-index: 1;
+}
+
+.wbls-door-panel {
+    flex: 1 1 50%;
+    min-width: 0;
+    transform-style: preserve-3d;
+    transition: transform 1.6s cubic-bezier(.25, .8, .3, 1);
+}
+
+.wbls-door-left {
+    transform-origin: left center;
+}
+
+.wbls-door-right {
+    transform-origin: right center;
+}
+
+.wbls-door.open .wbls-door-left {
+    transform: rotateY(-108deg);
+}
+
+.wbls-door.open .wbls-door-right {
+    transform: rotateY(108deg);
+}
+
+/* Nội dung giấu phía sau 2 cánh cửa — cùng khung với .wbls-door-panels (position:relative ở
+   .wbls-door làm điểm neo absolute), z-index thấp hơn để 2 cánh cửa ĐÓNG che kín hoàn toàn. */
+.wbls-door-content {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity .7s ease;
+}
+
+.wbls-door.open .wbls-door-content {
+    opacity: 1;
+    z-index: 2;
+    /* Trễ hơn ~1/3 thời gian mở cửa (1.6s ở .wbls-door-panel) — chữ chỉ hiện sau khi cửa đã hé ra
+       một phần, không hiện chồng lên lúc 2 cánh còn đang che gần kín. */
+    transition: opacity .7s ease .55s;
+}
+
+/* Cửa mở xong (đã xoay xa) không cần đè lên vùng bấm nữa — hạ xuống dưới nội dung để chắc chắn bấm
+   đúng vào chữ, không bị lớp cánh cửa (dù đã xoay) chặn trúng ở góc xoay lớn/perspective mạnh. */
+.wbls-door.open .wbls-door-panels {
+    z-index: 0;
+}
+
+/* ── Thiết kế 3: "Tạp chí" (Editorial) — 2 ảnh ghép thành 1 "trang gấp đôi" khi đóng (bo góc chỉ ở
+   2 mép ngoài), mở ra lộ nội dung chữ dạng trích dẫn (không có dấu ngoặc kép trang trí — đã bỏ vì
+   độ đặc trưng CSS của nó (3 class) cao hơn ".ClientEditText.no-text::before" (2 class, edit-text.css)
+   nên luôn thắng, che mất hint "Ấn vào để sửa chữ" mỗi khi ô chữ còn trống). ── */
+/* .wbls-door dùng chung width:100% (story-design.css, phần "cửa mở") — trên desktop
+   .ladi-container rất rộng nên cửa kéo dài sát 2 mép, LỆCH hẳn so với phần chữ/tiêu đề bên dưới vốn
+   đã bị chặn max-width (420px) và tự canh giữa — trông như "2 ảnh không cân ở giữa". Chặn max-width
+   + margin:auto RIÊNG cho thiết kế 3 (không đụng .wbls-door dùng chung, không ảnh hưởng thiết kế 4). */
+.SEC-Story.wbls-design-3 .wbls-door {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.SEC-Story.wbls-design-3 .wbls-door-panel .wbls-img {
+    height: 260px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.SEC-Story.wbls-design-3 .wbls-door-left .wbls-img {
+    border-radius: 10px 0 0 10px !important;
+}
+
+.SEC-Story.wbls-design-3 .wbls-door-right .wbls-img {
+    border-radius: 0 10px 10px 0 !important;
+}
+
+.SEC-Story.wbls-design-3 .wbls-door-panels {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .24);
+    border-radius: 10px;
+}
+
+.SEC-Story.wbls-design-3 .wbls-text {
+    width: 100% !important;
+    padding-top: 26px;
+}
+
+.SEC-Story.wbls-design-3 .wbls-text .ladi-paragraph {
+    font-size: 14.5px !important;
+    font-style: italic;
+    line-height: 1.6 !important;
+    opacity: .92;
+    /* KHÔNG dùng width theo vw (viewport) — không liên quan gì đến độ rộng khung chứa thật
+       (.wbls-text/.wbls-door-content, đã bị .wbls-door giới hạn max-width:600px ở trên để canh
+       giữa trên desktop). 80vw trên màn hình rộng (desktop) lớn hơn hẳn khung 600px đó → chữ vỡ
+       tràn ra ngoài, bị cắt bởi overflow của trang → trông như "chữ lệch sang phải". Chỉ hiện rõ
+       sau khi nhập chữ thật (ô trống không có gì để tràn). */
+    width: 100%;
+}
+
+.SEC-Story.wbls-design-3 .wbls-text .ladi-headline {
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+    font-size: 19px !important;
+}
+
+/* Ảnh/chữ lẻ không đủ ghép cửa (xem _storyDoorGroupHtml) — KHÁC với ảnh/chữ trong .wbls-door-content
+   (được đặt position:absolute;inset:0 nên có width xác định từ .wbls-door cha), khối .wbls-reveal-img/
+   .wbls-reveal-text ở đây là con thường (không absolute) của .ladi-container (display:flex), nên PHẢI
+   có width riêng — nếu không, .wbls-img con nó (width:100%!important nhưng không có nội dung trong
+   luồng để tự co giãn theo) sẽ co về 0px vì width:100% không có mốc % rõ ràng để tính, làm ảnh biến
+   mất hoàn toàn (mất mốc này gây đúng lỗi "mất ảnh" khi số ảnh lẻ ra do thêm/xoá câu chuyện). */
+.SEC-Story.wbls-design-3 .wbls-reveal-img {
+    width: 100%;
+    max-width: 400px;
+}
+
+.SEC-Story.wbls-design-3 .wbls-reveal-text {
+    width: 100%;
+    max-width: 420px;
+}
+
+.SEC-Story.wbls-design-3 .wbls-reveal-img.wbls-pre {
+    transform: scale(.92) translateY(16px);
+}
+
+.SEC-Story.wbls-design-3 .wbls-reveal-img .wbls-img {
+    height: 260px !important;
+    border-radius: 10px !important;
+}
+
+/* =============================================
+   .wbls-slide — hiệu ứng "trượt ảnh" của thiết kế 4 "Thẻ nổi": mỗi câu chuyện đúng 1 ảnh (KHÁC
+   thiết kế 3, ghép cặp 2 ảnh/hiệu ứng cửa 3D) — ảnh nằm đè lên 1 thẻ chữ nền trắng, cuộn tới giữa
+   màn hình thì ảnh trượt ngang (translateX) sang 1 bên lộ thẻ chữ ra, cuộn qua khỏi khung hình thì
+   ảnh trượt về che lại (theo dõi liên tục, xem _storyInitReveal ở edit_funtion.js / view.js — cùng
+   cơ chế toggle class "open" như .wbls-door, chỉ khác chuyển động translateX thay vì rotateY).
+   Hàng CHẴN (0, 2, 4...) trượt sang TRÁI, hàng LẺ trượt sang PHẢI — đối chiều với hàng liền kề cho
+   cảm giác sinh động, không đơn điệu 1 hướng (xem _storySlideRowHtml ở edit_funtion.js).
+   ============================================= */
+.SEC-Story.wbls-design-4>.ladi-container {
+    gap: 30px;
+}
+
+.wbls-slide {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 22px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, .22);
+}
+
+/* position:relative (không phải absolute) — ảnh vẫn nằm trong luồng bình thường, chỉ DỊCH CHUYỂN
+   bằng transform (không ảnh hưởng kích thước .wbls-slide cha, vốn lấy chiều cao từ chính ảnh này) —
+   giống cách .wbls-door-panel dùng transform cho hiệu ứng xoay, không dùng position để di chuyển. */
+.wbls-slide-img {
+    position: relative;
+    z-index: 1;
+    transition: transform 1.6s cubic-bezier(.25, .8, .3, 1);
+}
+
+.wbls-slide-img .wbls-img {
+    height: 280px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.wbls-slide-left.open .wbls-slide-img {
+    transform: translateX(-100%);
+}
+
+.wbls-slide-right.open .wbls-slide-img {
+    transform: translateX(100%);
+}
+
+/* Thẻ chữ giấu phía dưới ảnh — cùng khung với .wbls-slide-img (inset:0, neo theo .wbls-slide cha
+   position:relative), z-index thấp hơn để ảnh ĐÓNG che kín hoàn toàn. */
+.wbls-slide-content {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity .7s ease;
+}
+
+.wbls-slide.open .wbls-slide-content {
+    opacity: 1;
+    z-index: 2;
+    transition: opacity .7s ease .55s;
+}
+
+.wbls-slide.open .wbls-slide-img {
+    z-index: 0;
+}
+
+.SEC-Story.wbls-design-4 .wbls-text {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px 20px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .16);
+    max-width: 92%;
+}
+
+.SEC-Story.wbls-design-4 .wbls-text .ladi-paragraph {
+    font-style: italic !important;
+}
+
+/* Tiêu đề (dùng .wbls-reveal-text như các thiết kế khác, không thuộc .wbls-slide) — cần width riêng
+   cùng lý do với thiết kế 3 (xem ghi chú ở trên): là con thường (không absolute) của .ladi-container. */
+.SEC-Story.wbls-design-4 .wbls-reveal-text {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* Tiêu đề KHÔNG dùng kiểu "thẻ trắng" như chữ câu chuyện (rule .wbls-design-4 .wbls-text ở trên) —
+   1 tiêu đề to/đậm nằm trong khung bo góc nhỏ trông không hợp, đồng thời chính max-width:92% KHÔNG
+   có margin:auto đi kèm là nguyên nhân khiến tiêu đề bị lệch trái: .wbls-text ở đây là con BÌNH
+   THƯỜNG (không phải flex item) của .wbls-reveal-text — khác với chữ câu chuyện, .wbls-text của nó
+   nằm trong .wbls-slide-content (display:flex;justify-content:center) nên tự canh giữa được, còn
+   .wbls-reveal-text (bọc tiêu đề) không phải flex container, .wbls-text con nó co lại dưới 100% mà
+   không có margin:auto sẽ dạt về mép trái theo luồng block bình thường. Nhận diện tiêu đề qua tổ
+   tiên .wbls-reveal-text (chỉ headline dùng đường này ở thiết kế 4) để reset lại, không cần
+   margin:auto vì bỏ luôn max-width<100% là hết lệch. */
+.SEC-Story.wbls-design-4 .wbls-reveal-text .wbls-text {
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    max-width: 100%;
+}

@@ -1,0 +1,33 @@
+
+/* Giới hạn chiều cao nội dung lời chúc */
+.MessageBox-item-message {
+    max-height: 130px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 8px;
+    margin-bottom: 0;
+
+    /* Giữ nguyên kiểu chữ và tự xuống dòng */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+
+    /* Cuộn mượt trên điện thoại */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+/* Tùy chỉnh thanh cuộn */
+.MessageBox-item-message::-webkit-scrollbar {
+    width: 4px;
+}
+
+.MessageBox-item-message::-webkit-scrollbar-track {
+    background: rgba(120, 110, 75, 0.12);
+    border-radius: 10px;
+}
+
+.MessageBox-item-message::-webkit-scrollbar-thumb {
+    background: rgba(120, 110, 75, 0.5);
+    border-radius: 10px;
+}
