@@ -19,6 +19,15 @@
       "url": "https://love-wedding.github.io/wedding/thiep-20/"
     },
     {
+      "id": "thiep-35",
+      "name": "Thiệp 35 -Trúc Ngọc – Vintage Wedding",
+      "title": "Thiệp Trúc Ngọc – Vintage Wedding",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-35.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-35/"
+    },
+    {
       "id": "thiep-6",
       "name": "Thiệp 06 - Tấm Vé Tình Yêu",
       "title": "Tấm Vé Tình Yêu",
@@ -28,22 +37,22 @@
       "url": "https://love-wedding.github.io/wedding/thiep-6/"
     },
     {
-      "id": "thiep-22",
-      "name": "Thiệp 22 - Hỷ Sự Duyên Nồng",
-      "title": "Hỷ Sự Duyên Nồng",
+      "id": "thiep-7",
+      "name": "Thiệp 07 - Hồng Hỷ Giao Duyên",
+      "title": "Hồng Hỷ Giao Duyên",
       "price": "139.000đ",
       "tag": "new",
-      "image": "./images/thiep-22.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-22/"
+      "image": "./images/thiep-7.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-7/"
     },
     {
-      "id": "thiep-23",
-      "name": "Thiệp 23 - Thước Phim Kỷ Niệm",
-      "title": "Thước Phim Kỷ Niệm",
+      "id": "thiep-9",
+      "name": "Thiệp 09 - Thư Hoa Dập Nổi",
+      "title": "Thư Hoa Dập Nổi",
       "price": "139.000đ",
       "tag": "new",
-      "image": "./images/thiep-23.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-23/"
+      "image": "./images/thiep-9.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-9/"
     },
     {
       "id": "thiep-2",
@@ -73,15 +82,6 @@
       "url": "https://love-wedding.github.io/wedding/thiep-5/"
     },
     {
-      "id": "thiep-7",
-      "name": "Thiệp 07 - Hồng Hỷ Giao Duyên",
-      "title": "Hồng Hỷ Giao Duyên",
-      "price": "139.000đ",
-      "tag": "new",
-      "image": "./images/thiep-7.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-7/"
-    },
-    {
       "id": "thiep-8",
       "name": "Thiệp 08 - Xanh Rêu Quý Phái",
       "title": "Xanh Rêu Quý Phái",
@@ -91,15 +91,6 @@
       "url": "https://love-wedding.github.io/wedding/thiep-8/"
     },
     {
-      "id": "thiep-9",
-      "name": "Thiệp 09 - Thư Hoa Dập Nổi",
-      "title": "Thư Hoa Dập Nổi",
-      "price": "139.000đ",
-      "tag": "new",
-      "image": "./images/thiep-9.png",
-      "url": "https://love-wedding.github.io/wedding/thiep-9/"
-    },
-    {
       "id": "thiep-10",
       "name": "Thiệp 10 - Cánh Cửa Hạnh Phúc",
       "title": "Cánh Cửa Hạnh Phúc",
@@ -107,6 +98,24 @@
       "tag": "new",
       "image": "./images/thiep-10.png",
       "url": "https://love-wedding.github.io/wedding/thiep-10/"
+    },
+    {
+      "id": "thiep-22",
+      "name": "Thiệp 22 - Hỷ Sự Duyên Nồng",
+      "title": "Hỷ Sự Duyên Nồng",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-22.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-22/"
+    },
+    {
+      "id": "thiep-23",
+      "name": "Thiệp 23 - Thước Phim Kỷ Niệm",
+      "title": "Thước Phim Kỷ Niệm",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-23.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-23/"
     },
     {
       "id": "thiep-1",
@@ -248,7 +257,7 @@
       "type": "mp4"
     },
     {
-      "name": "01 - Background chiếu led đám cưới sao rơi",
+      "name": "01 - Background chiếu led đám cưới sao rơi (Free khi làm thiệp cưới)",
       "title": "Background chiếu led đám cưới sao rơi",
       "price": "39.000đ",
       "tag": "",
