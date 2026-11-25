@@ -19,6 +19,15 @@
       "url": "https://love-wedding.github.io/wedding/thiep-20/"
     },
     {
+      "id": "thiep-36",
+      "name": "Thiệp 36 - Khu Vườn Hạnh Phúc",
+      "title": "Khu Vườn Hạnh Phúc",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-36.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-36/"
+    },
+    {
       "id": "thiep-35",
       "name": "Thiệp 35 -Trúc Ngọc – Vintage Wedding",
       "title": "Thiệp Trúc Ngọc – Vintage Wedding",
@@ -197,6 +206,15 @@
       "tag": "new",
       "image": "./images/thiep-21.png",
       "url": "https://love-wedding.github.io/wedding/thiep-21/"
+    },
+    {
+      "id": "thiep-34",
+      "name": "Thiệp 34 - Phong Thư Tình Yêu (đang phát triển)",
+      "title": "Phong Thư Tình Yêu Tone Xanh",
+      "price": "139.000đ",
+      "tag": "new",
+      "image": "./images/thiep-33.png",
+      "url": "https://love-wedding.github.io/wedding/thiep-34/"
     }
   ],
   "invitationCards": [

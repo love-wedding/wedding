@@ -1,0 +1,799 @@
+/* [1]. Timeline
+[2].Bật tắt scroll 
+[3]. Hiệu ứng mở cửa hiện google map
+*/
+
+
+
+/* [1]. Timeline */
+/* chạy slide của timeLine */
+.timelineSlide {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.timelineSlide .slider-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.timelineSlide .slide-item {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+/* [2].Bật tắt scroll */
+body.no-scroll {
+    overflow: hidden;
+}
+
+
+
+
+/* [3]. Hiệu ứng mở cửa hiện google map*/
+.OpenDoorEffect {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ảnh gốc */
+.OpenDoorEffect .ladi-image-background {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.OpenDoorEffect {
+    border-radius: 40px !important;
+}
+
+/* khi cửa hoạt động thì ẩn ảnh gốc */
+.OpenDoorEffect.active .ladi-image-background {
+    opacity: 0;
+}
+
+/* cửa: full-size TRÙNG KHÍT khung ảnh gốc (không phải box 50% width như trước) rồi mới cắt
+   nửa trái/phải bằng clip-path — để background-size:cover tính đúng theo tỉ lệ khung GỐC
+   (giống hệt .ladi-image-background), không tính riêng theo khung nửa-width (aspect ratio
+   khác hẳn khung gốc khi ảnh không cùng tỉ lệ khung, gây lệch zoom giữa 2 nửa → mất 1 phần ở
+   giữa khi ghép lại lúc đóng cửa). background-image/size/position thực tế do cuaAnh() gán
+   inline (đồng bộ từ .ladi-image-background, giữ nguyên zoom/pan đã chỉnh qua ClientEditImage).
+   pointer-events:none LUÔN LUÔN (không chỉ lúc .open) — cửa chỉ được mở/đóng qua nút bấm
+   riêng (xem cuaAnh()), không phải bằng cách click vào chính ảnh; nếu không sẽ che mất, chặn
+   click vào ảnh của công cụ chỉnh sửa ClientEditImage ở trang edit sau khi cửa đã tạo 1 lần. */
+.OpenDoorEffect .door {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 1s ease;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* cửa trái: chỉ hiện nửa trái của tấm ảnh full-size, che nửa phải */
+.OpenDoorEffect .door.left {
+    clip-path: inset(0 50% 0 0);
+}
+
+/* cửa phải: chỉ hiện nửa phải */
+.OpenDoorEffect .door.right {
+    clip-path: inset(0 0 0 50%);
+}
+
+/* mở cửa: trượt đúng bằng 1 khung hình (100%) là đủ ra khỏi vùng nhìn thấy, vì mỗi cửa giờ
+   đã full-size (trước đây phải trượt 101% vì box chỉ 50% width) */
+.OpenDoorEffect.open .door.left {
+    transform: translateX(-100%);
+}
+
+.OpenDoorEffect.open .door.right {
+    transform: translateX(100%);
+}
+
+/* khi mở cửa thì click xuyên qua cả div */
+.OpenDoorEffect.open {
+    pointer-events: none;
+}
+
+
+
+
+/* Hiệu ứng song nước và pháo hoa cho QR code mừng cưới */
+.water {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /*background: #F3E8E3;*/
+    overflow: hidden;
+    /*animation: backgroundAnimation 9s ease-in-out infinite;*/
+}
+
+/*@keyframes backgroundAnimation {*/
+/*      0% {*/
+/*        opacity: 1;*/
+/*      }*/
+/*      20% {*/
+/*        opacity: 0;*/
+/*      }*/
+/*      80% {*/
+/*        opacity: 0;*/
+/*      }*/
+/*      0% {*/
+/*        opacity: 1;*/
+/*      }*/
+/*}*/
+
+/* chữ Click */
+.hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 28px;
+    color: rgba(0, 0, 0, 0.4);
+    animation: fadeInOut 9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* hiệu ứng mờ dần */
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ripple */
+.ripple {
+    position: absolute;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    filter: blur(1px);
+    border-radius: 50%;
+    transform: scale(0);
+    animation: rippleEffect 4s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(6);
+        opacity: 0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== QR Container ===== */
+.QRcodeMungCuoi {
+    position: relative;
+    overflow: visible;
+}
+
+/* QR hiển thị */
+.QRMungCuoi {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== Ẩn tiêu đề ===== */
+.QRTitle.hide {
+    animation: hideQR 2s ease-in-out forwards;
+}
+
+@keyframes hideQR {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* ===== Bo tròn box ===== */
+.QRTitle .borderBox {
+    animation: borderBox 2s ease-in-out forwards;
+}
+
+@keyframes borderBox {
+    0% {
+        border-radius: 0px;
+    }
+
+    100% {
+        border-radius: 500px;
+    }
+}
+
+/* ===== Spark (pháo hoa) ===== */
+.spark {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+
+    background: radial-gradient(circle,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.6) 40%,
+            rgba(255, 255, 255, 0) 70%);
+
+    box-shadow:
+        0 0 8px rgba(255, 255, 255, 0.8),
+        0 0 16px rgba(255, 255, 255, 0.6),
+        0 0 24px rgba(255, 255, 255, 0.4);
+
+    animation: bloom 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Animation pháo hoa */
+@keyframes bloom {
+    0% {
+        transform: translate(0, 0) scale(0.3);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--x), var(--y)) scale(2.5);
+        opacity: 0;
+    }
+}
+
+/* ===== Fade QR ===== */
+.QR-fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+/* ===== Ripple nước ===== */
+.water {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: rippleEffect 4s linear forwards;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+
+
+
+
+
+
+:root {
+    --time: 1200ms;
+    --ease: cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+body.BGlock-scroll {
+    overflow: hidden;
+}
+
+#BGcurtain {
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+}
+
+/* ===== PANEL ===== */
+.BGpanel {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+
+    transition: transform var(--time) var(--ease);
+    overflow: hidden;
+}
+
+/* ===== BACKGROUND (REAL SPLIT) ===== */
+.BGpanel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: var(--bg);
+    background-size: 200% 100%;
+    /* QUAN TRỌNG */
+}
+
+/* LEFT: lấy nửa trái */
+.BGleft::before {
+    background-position: left center;
+}
+
+/* RIGHT: lấy nửa phải */
+.BGright::before {
+    background-position: right center;
+}
+
+/* ===== IMAGE ===== */
+.BGpanel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image: var(--img);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* khớp ảnh */
+.BGleft::after {
+    background-position: right center;
+}
+
+.BGright::after {
+    background-position: left center;
+}
+
+/* ===== POSITION ===== */
+.BGleft {
+    left: 0px;
+}
+
+.BGright {
+    right: 0px;
+}
+
+/* ===== OPEN ===== */
+#BGcurtain.BGopen .BGleft {
+    transform: translateX(-100%);
+}
+
+#BGcurtain.BGopen .BGright {
+    transform: translateX(100%);
+}
+
+
+
+
+
+/* =============================================
+   [7]. edit_countDown — Đồng hồ đếm ngược
+   Viền gradient, cấu hình bố cục bằng data-cd-style trong template:
+     (không có) = dọc | horizontal | minimal
+   ============================================= */
+
+/* CSS variables — JS hoặc inline style ghi đè */
+.edit_countDown {
+    --cd-border-w: 3px;
+    --cd-border-c1: #AC7134;
+    --cd-border-c2: #F8E6B5;
+    --cd-border-angle: 180deg;
+    --cd-radius: 16px;
+    --cd-shadow: rgba(172, 113, 52, 0.3);
+}
+
+/* Base — border-radius + overflow:hidden để clip cả background lẫn viền ::after */
+.edit_countDown .ladi-box,
+.edit_countDown .ladi-html-code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--cd-radius, 16px);
+    box-shadow: 0 4px 20px var(--cd-shadow, rgba(172, 113, 52, 0.3));
+}
+
+/* Gradient border ring nằm trong ladi-box để overflow:hidden clip đúng góc */
+.edit_countDown .ladi-box::after,
+.edit_countDown .ladi-html-code::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--cd-radius, 16px);
+    padding: var(--cd-border-w, 3px);
+    background: linear-gradient(var(--cd-border-angle, 180deg), var(--cd-border-c1, #AC7134), var(--cd-border-c2, #F8E6B5));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.countdown-number {
+    font-weight: bold;
+    line-height: 1;
+}
+
+.countdown-label {
+    opacity: 0.8;
+}
+
+.countdown-sep {
+    display: none;
+    font-weight: bold;
+    opacity: 0.5;
+    align-self: flex-start;
+    flex-shrink: 0;
+}
+
+/* ── Dọc (mặc định) ── */
+.edit_countDown:not([data-cd-style]) .ladi-box,
+.edit_countDown:not([data-cd-style]) .ladi-html-code,
+.edit_countDown[data-cd-style="vertical"] .ladi-box,
+.edit_countDown[data-cd-style="vertical"] .ladi-html-code {
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.edit_countDown:not([data-cd-style]) .countdown-number,
+.edit_countDown[data-cd-style="vertical"] .countdown-number {
+    font-size: var(--cd-num-fs, 300%);
+}
+
+.edit_countDown:not([data-cd-style]) .countdown-label,
+.edit_countDown[data-cd-style="vertical"] .countdown-label {
+    font-size: var(--cd-label-fs, 200%);
+}
+
+/* ── Ngang ── */
+.edit_countDown[data-cd-style="horizontal"] .ladi-box,
+.edit_countDown[data-cd-style="horizontal"] .ladi-html-code {
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 4%;
+    padding: 4%;
+}
+
+.edit_countDown[data-cd-style="horizontal"] .countdown-item {
+    flex: 1;
+}
+
+.edit_countDown[data-cd-style="horizontal"] .countdown-number {
+    font-size: var(--cd-num-fs, 220%);
+}
+
+.edit_countDown[data-cd-style="horizontal"] .countdown-label {
+    font-size: var(--cd-label-fs, 90%);
+    opacity: 0.75;
+}
+
+/* ── Tối giản ── */
+.edit_countDown[data-cd-style="minimal"] .ladi-box,
+.edit_countDown[data-cd-style="minimal"] .ladi-html-code {
+    flex-direction: row;
+    justify-content: center;
+    gap: 2%;
+}
+
+.edit_countDown[data-cd-style="minimal"] .countdown-sep {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 5%;
+    font-size: 230%;
+}
+
+.edit_countDown[data-cd-style="minimal"] .countdown-number {
+    font-size: var(--cd-num-fs, 230%);
+}
+
+.edit_countDown[data-cd-style="minimal"] .countdown-label {
+    font-size: var(--cd-label-fs, 80%);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ── Hình dạng ô đếm (data-cd-item-shape) ── */
+.edit_countDown {
+    --cd-item-size: 80px;
+}
+
+/* .countdown-shape: khi không có shape → trong suốt, con chảy tự nhiên */
+.edit_countDown:not([data-cd-item-shape]) .countdown-shape {
+    display: contents;
+}
+
+/* .countdown-shape: khi có shape → hộp cố định kích thước, căn giữa số */
+.edit_countDown[data-cd-item-shape] .countdown-item {
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Khi dùng hình dạng ô: giảm gap về 0 tránh tràn khi phóng to */
+.edit_countDown[data-cd-item-shape] .ladi-box,
+.edit_countDown[data-cd-item-shape] .ladi-html-code {
+    gap: 0;
+}
+
+.edit_countDown[data-cd-item-shape] .countdown-shape {
+    position: relative;
+    width: var(--cd-item-size, 80px);
+    height: var(--cd-item-size, 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Circle */
+.edit_countDown[data-cd-item-shape="circle"] .countdown-shape {
+    background: var(--cd-item-bg, rgba(172, 113, 52, 0.12));
+    border-radius: 50%;
+}
+
+/* Square bo nhẹ */
+.edit_countDown[data-cd-item-shape="square"] .countdown-shape {
+    background: var(--cd-item-bg, rgba(172, 113, 52, 0.12));
+    border-radius: 12%;
+}
+
+/* SVG fill (heart / star / flower) — kích thước phủ đầy .countdown-shape */
+.cd-shape-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    fill: var(--cd-item-bg, rgba(172, 113, 52, 0.12));
+    pointer-events: none;
+}
+
+/* Số nổi trên SVG */
+.edit_countDown[data-cd-item-shape] .countdown-number {
+    position: relative;
+    z-index: 1;
+    font-size: var(--cd-num-fs, calc(var(--cd-item-size, 80px) * 0.32));
+    line-height: 1;
+}
+
+/* Chữ nhãn ở ngoài shape, bên dưới */
+.edit_countDown[data-cd-item-shape] .countdown-label {
+    font-size: var(--cd-label-fs, calc(var(--cd-item-size, 80px) * 0.14));
+    margin-top: 4px;
+}
+
+/* Animation xuất hiện từ từ cho countdown items */
+.cd-item-enter {
+    animation-name: cdItemFadeIn !important;
+    animation-duration: 0.45s !important;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation-fill-mode: both !important;
+}
+
+@keyframes cdItemFadeIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* Mobile overrides for countdown */
+@media (max-width: 768px) {
+    .edit_countDown[data-cd-item-shape] .countdown-shape {
+        width:  var(--cd-item-size-m, var(--cd-item-size, 80px));
+        height: var(--cd-item-size-m, var(--cd-item-size, 80px));
+    }
+    .edit_countDown[data-cd-item-shape] .countdown-number {
+        font-size: var(--cd-num-fs-m, var(--cd-num-fs, calc(var(--cd-item-size-m, var(--cd-item-size, 80px)) * 0.32)));
+    }
+    .edit_countDown[data-cd-item-shape] .countdown-label {
+        font-size: var(--cd-label-fs-m, var(--cd-label-fs, calc(var(--cd-item-size-m, var(--cd-item-size, 80px)) * 0.14)));
+    }
+    .edit_countDown:not([data-cd-item-shape]) .countdown-number {
+        font-size: var(--cd-num-fs-m, var(--cd-num-fs, 300%));
+    }
+    .edit_countDown:not([data-cd-item-shape]) .countdown-label {
+        font-size: var(--cd-label-fs-m, var(--cd-label-fs, 200%));
+    }
+}
+
+/* ── Scroll-enter glow ring (dùng chung edit + view mode) ── */
+.wb-glow-ring {
+    pointer-events: none;
+    border: 3px solid rgba(200, 149, 74, 0.9);
+    border-radius: 6px;
+    box-shadow: 0 0 20px rgba(200, 149, 74, 0.55), inset 0 0 12px rgba(200, 149, 74, 0.12);
+    animation: wbGlowRing 2s ease-out forwards;
+}
+
+@keyframes wbGlowRing {
+    0%   { opacity: 0; transform: scale(1.05); }
+    12%  { opacity: 1;  transform: scale(1); }
+    65%  { opacity: 0.9; transform: scale(1); }
+    100% { opacity: 0;  transform: scale(1.02); }
+}
+
+/* Fix: row 6 height collapse khi tháng có 6 hàng + cho phép fireworks overflow ra ngoài ô */
+#calendar-body,
+#calendar-wrapper,
+.calendar-body,
+.calendar-wrapper {
+    overflow: visible !important;
+    grid-template-rows: none !important;
+    grid-auto-rows: auto !important;
+}
+
+/* Calendar day cells stagger — delay được set bởi JS, KHÔNG dùng shorthand !important để tránh override delay */
+.cal-day-enter {
+    animation-name: calDayFadeIn !important;
+    animation-duration: 0.45s !important;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation-fill-mode: both !important;
+}
+
+@keyframes calDayFadeIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+/* Ô selected: spring vào + lắc lư */
+.cal-selected-burst-enter {
+    animation-name: calSelectedEnterMain !important;
+    animation-duration: 1.3s !important;
+    animation-timing-function: ease-out !important;
+    animation-fill-mode: both !important;
+    position: relative;
+    z-index: 3;
+}
+
+/* Ô empty luôn mờ */
+.calendar-day.empty {
+    opacity: 0.35 !important;
+}
+
+/* Animation riêng cho empty: kết thúc ở opacity 0.35 để không có bước nhảy */
+.cal-empty-enter {
+    animation-name: calEmptyFadeIn !important;
+    animation-duration: 0.45s !important;
+    animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    animation-fill-mode: both !important;
+}
+
+@keyframes calEmptyFadeIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 0.35; }
+}
+
+/* Chữ trong ô selected nổi bật và to hơn */
+.calendar-day.selected {
+    font-size: 1.3em !important;
+    font-weight: 700 !important;
+}
+
+/* Pháo sáng: 8 tia gold/white bắn ra 8 hướng qua pseudo-element */
+.cal-selected-burst-enter::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 6px; height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10;
+    animation-name: calFireworksPE;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+    animation-delay: var(--cal-delay, 0ms);
+}
+
+@keyframes calSelectedEnterMain {
+    0%   { transform: scale(0);    opacity: 0; }
+    38%  { transform: scale(1.55); opacity: 1; }
+    55%  { transform: scale(0.85);             }
+    70%  { transform: scale(1.12);             }
+    84%  { transform: scale(0.97);             }
+    100% { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes calFireworksPE {
+    0%   { opacity: 0; box-shadow: none; }
+    32%  { opacity: 1; box-shadow: 0 0 10px 6px rgba(255,250,210,0.95); }
+    42%  {
+        box-shadow:
+            0     -6px  4px 1px rgba(255,250,200,1),
+            5px   -5px  4px 1px rgba(255,240,180,1),
+            6px    0    4px 1px rgba(255,250,200,1),
+            5px    5px  4px 1px rgba(255,240,180,1),
+            0      6px  4px 1px rgba(255,250,200,1),
+            -5px   5px  4px 1px rgba(255,240,180,1),
+            -6px   0    4px 1px rgba(255,250,200,1),
+            -5px  -5px  4px 1px rgba(255,240,180,1);
+    }
+    68%  {
+        opacity: 0.85;
+        box-shadow:
+            0     -32px 3px 0 rgba(255,250,200,0.7),
+            23px  -23px 3px 0 rgba(255,240,180,0.7),
+            32px   0    3px 0 rgba(255,250,200,0.7),
+            23px   23px 3px 0 rgba(255,240,180,0.7),
+            0      32px 3px 0 rgba(255,250,200,0.7),
+            -23px  23px 3px 0 rgba(255,240,180,0.7),
+            -32px  0    3px 0 rgba(255,250,200,0.7),
+            -23px -23px 3px 0 rgba(255,240,180,0.7);
+    }
+    100% {
+        opacity: 0;
+        box-shadow:
+            0     -54px 2px 0 rgba(255,250,200,0),
+            38px  -38px 2px 0 rgba(255,240,180,0),
+            54px   0    2px 0 rgba(255,250,200,0),
+            38px   38px 2px 0 rgba(255,240,180,0),
+            0      54px 2px 0 rgba(255,250,200,0),
+            -38px  38px 2px 0 rgba(255,240,180,0),
+            -54px  0    2px 0 rgba(255,250,200,0),
+            -38px -38px 2px 0 rgba(255,240,180,0);
+    }
+}
+
+/* Nhấp nhô vĩnh viễn sau khi selected hiện xong */
+.cal-selected-bob {
+    animation-name: calSelectedBob;
+    animation-duration: 1.4s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+}
+
+@keyframes calSelectedBob {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50%      { transform: translateY(-4px) scale(1.05); }
+}
+
+/* Stagger fade-up cho các phần tử con bên trong section khi scroll tới */
+.wb-scroll-item {
+    animation-name: wbScrollItem !important;
+    animation-duration: 0.9s !important;
+    animation-timing-function: ease-out !important;
+    animation-fill-mode: both !important;
+}
+
+@keyframes wbScrollItem {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

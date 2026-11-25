@@ -5,6 +5,26 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Thiệp cưới 18 - Ngày Chung Đôi</title>
+
+
+  <!-- <meta name="description"
+    content="Trân trọng kính mời quý khách đến tham dự lễ vu quy của Mai Phương & Vương Phong vào ngày 12.12.2026." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Thiệp cưới Mai Phương - Vương Phong" />
+  <meta property="og:description"
+    content="Trân trọng kính mời quý khách đến tham dự lễ vu quy của Mai Phương & Vương Phong vào ngày 12.12.2026." />
+  <meta property="og:image" content="https://love-wedding.github.io/maiphuong-vuongphong/images/background.jpg" />
+  <meta property="og:image:secure_url"
+    content="https://love-wedding.github.io/maiphuong-vuongphong/images/background.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:alt" content="Thiệp cưới Mai Phương - Vương Phong" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Thiệp cưới Mai Phương - Vương Phong" />
+  <meta name="twitter:description"
+    content="Trân trọng kính mời quý khách đến tham dự lễ vu quy của Phạm Đảm & Vương Phong vào ngày 12.12.2026." />
+  <meta name="twitter:image" content="https://love-wedding.github.io/maiphuong-vuongphong/images/background.jpg" /> -->
+
   <link rel="stylesheet" href="./next/static/chunks/01k8hlbglj02r.css" />
   <link rel="stylesheet" href="./next/static/chunks/0eh9ui4q3__-t.css" />
   <link rel="stylesheet" href="./next/static/chunks/1553ht1jz5u.q.css" />
@@ -1830,17 +1850,24 @@
       }
 
       // 5. URL Guest name
-      function applyGuestName() {
-        try {
-          const params = new URLSearchParams(window.location.search);
-          const guest = params.get('guest') || params.get('to') || params.get('u') || params.get('name');
-          if (guest) {
-            document.querySelectorAll('.slr-ui-guest-badge h2, .canvas-guest-name, [data-dynamic-field="guestName"], [data-node-id="87RNR5GKM4"] div div div').forEach(el => {
-              el.textContent = guest;
-            });
-          }
-        } catch (err) { }
+function applyGuestName() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const guest = params.get('guest') || params.get('to') || params.get('u') || params.get('name');
+    if (guest) {
+      // Badge ở màn hình phong bì và các field khác: gán bình thường
+      document.querySelectorAll('.slr-ui-guest-badge h2, .canvas-guest-name, [data-dynamic-field="guestName"]').forEach(el => {
+        el.textContent = guest;
+      });
+
+      // Khối "Quý Khách" dùng white-space: pre-line nên cần giữ dòng trống ở đầu
+      const guestBox = document.querySelector('.text-box-component[data-node-id="87RNR5GKM4"] > div > div > div');
+      if (guestBox) {
+        guestBox.textContent = '\n' + guest;
       }
+    }
+  } catch (err) { }
+}
 
       // 6. Layout resize
       function updateLayout() {
@@ -1925,7 +1952,7 @@
         rsvp: {
           eyebrow: 'R.S.V.P.', title: 'Gửi xác nhận',
           copy: 'Vui lòng cho cô dâu chú rể biết bạn có thể tham dự ngày vui không nhé.',
-          content: '<label class="card-action-modal__field">Họ tên<input name="guestName" autocomplete="name" placeholder="Nhập họ tên"></label><div class="card-action-modal__field"><span>Bạn sẽ tham dự chứ?</span><div class="card-action-modal__choice-row"><button type="button" class="card-action-modal__choice" data-choice="yes">Mình sẽ đến</button><button type="button" class="card-action-modal__choice" data-choice="no">Rất tiếc, mình bận</button></div></div><label class="card-action-modal__field">Số người tham dự<input name="guestCount" type="number" min="1" max="20" value="1"></label><button class="card-action-modal__submit" type="button" data-submit>Gửi xác nhận</button><p class="card-action-modal__notice" aria-live="polite">Bản thiệp local chưa kết nối máy chủ gửi xác nhận.</p>'
+          content: '<form data-rsvp-form><label class="card-action-modal__field">Họ tên<input name="full_name" autocomplete="name" placeholder="Nhập họ tên" required></label><label class="card-action-modal__field">Bạn là<input name="relation" placeholder="Ví dụ: Bạn cô dâu, đồng nghiệp..."></label><label class="card-action-modal__field">Lời nhắn<textarea name="message" placeholder="Lời chúc hoặc lời nhắn gửi cô dâu chú rể..."></textarea></label><label class="card-action-modal__field">Xác nhận tham dự<select name="attend" required><option value="">-- Chọn câu trả lời --</option><option value="Có, mình sẽ tham dự">Có, mình sẽ tham dự</option><option value="Xin lỗi, mình không thể tham dự">Xin lỗi, mình không thể tham dự</option></select></label><button class="card-action-modal__submit" type="submit" data-submit>Gửi xác nhận</button><p class="card-action-modal__notice" aria-live="polite"></p></form>'
         },
         gift: {
           eyebrow: 'Mừng ngày vui', title: 'Gửi quà mừng',
@@ -1971,15 +1998,33 @@
       closeButton.addEventListener('click', closeModal);
       modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
       document.addEventListener('keydown', event => { if (!modal.hidden && event.key === 'Escape') closeModal(); });
-      modal.addEventListener('click', event => {
-        const choice = event.target.closest('[data-choice]');
-        if (choice) {
-          modal.querySelectorAll('[data-choice]').forEach(button => button.classList.toggle('is-selected', button === choice));
-          return;
-        }
-        if (event.target.closest('[data-submit]')) {
-          const notice = modal.querySelector('.card-action-modal__notice');
-          if (notice) notice.textContent = 'Không gửi được từ bản local vì thiệp chưa kết nối máy chủ. Các thông tin bạn nhập chưa được lưu.';
+      const rsvpEndpoint = 'https://script.google.com/macros/s/AKfycby9jH-fxmk6kG2XeIGIREji73hLFvFUrcGV2KlN-awEKy-dEwOIfSQrOZXBts5GNrmC/exec';
+      modal.addEventListener('submit', async event => {
+        const form = event.target.closest('[data-rsvp-form]');
+        if (!form) return;
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        const submitButton = form.querySelector('[data-submit]');
+        const notice = form.querySelector('.card-action-modal__notice');
+        submitButton.disabled = true;
+        submitButton.textContent = 'Đang gửi...';
+        notice.textContent = '';
+
+        try {
+          // FormData is received by Apps Script as e.parameter, matching doPost(e).
+          await fetch(rsvpEndpoint, {
+            method: 'POST',
+            body: new FormData(form),
+            mode: 'no-cors'
+          });
+          notice.textContent = 'Cảm ơn bạn! Xác nhận đã được gửi.';
+          form.reset();
+        } catch (error) {
+          notice.textContent = 'Chưa gửi được xác nhận. Vui lòng kiểm tra kết nối mạng và thử lại.';
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Gửi xác nhận';
         }
       });
     })();

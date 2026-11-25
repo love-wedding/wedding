@@ -1,0 +1,4 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+s.27biggroup.com	TRUE	/	FALSE	1999999999	PHPSESSID	926f729179a5640c41de92ceb9c86f01
+

@@ -1,0 +1,11 @@
+.active-edit {
+    outline: 2px dashed red;
+}
+
+.visible_mode_hide {
+    display: none;
+}
+
+.sec-row-info {
+    line-height: 1.5;
+}
