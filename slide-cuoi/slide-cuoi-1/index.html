@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Slide Cưới Màn Hình LED 16:9 - Anh Tú & Diệu Nhi</title>
+    
+    <!-- Google Fonts for Exact Luxury Wedding Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Tenor+Sans&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Background Audio (Extracted from Download.mp4) -->
+    <audio id="wedding-audio" loop preload="auto">
+        <source src="music.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Main 16:9 Stage Viewport Container -->
+    <div id="screen-wrapper">
+        <div id="stage-viewport" class="aspect-16-9">
+            
+            <!-- Opening Flash from White (matches frame 001 of video) -->
+            <div id="white-flash" class="white-flash-overlay"></div>
+
+            <!-- Dynamic Slides Container -->
+            <div id="slides-container">
+                <!-- Injected dynamically by JavaScript -->
+            </div>
+
+            <!-- Center Radiant Light Beam (matches video light pillar) -->
+            <div id="lighting-beam" class="lighting-beam"></div>
+            
+            <!-- Subtle Stage Vignette -->
+            <div id="lighting-vignette" class="lighting-vignette"></div>
+
+            <!-- Canvas for Floating Golden Bokeh & Sparkle Dust -->
+            <canvas id="particles-canvas"></canvas>
+
+            <!-- Slide Progress Bar at Top -->
+            <div id="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+
+            <!-- Sleek Non-Intrusive Audio & Presentation Prompt Pill -->
+            <div id="audio-prompt-pill" class="audio-prompt-pill">
+                <button id="btn-pill-play" class="btn-pill-play">
+                    <span class="pill-pulse-ring"></span>
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <span>CHẠM ĐỂ PHÁT NHẠC & CHIẾU LED (PHÍM F: TOÀN MÀN HÌNH)</span>
+                </button>
+            </div>
+
+            <!-- Professional Stage Control Bar (Auto-hides on idle) -->
+            <div id="stage-controls" class="stage-controls">
+                <div class="controls-left">
+                    <button id="btn-prev" class="ctrl-btn" title="Slide trước (←)">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 18l-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <button id="btn-play-pause" class="ctrl-btn" title="Phát / Dừng (Space)">
+                        <svg id="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                        </svg>
+                        <svg id="icon-play" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    <button id="btn-next" class="ctrl-btn" title="Slide tiếp (→)">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 18l6-6-6-6"/>
+                        </svg>
+                    </button>
+                    <span id="slide-counter" class="slide-counter">01 / 08</span>
+                </div>
+
+                <div class="controls-center">
+                    <div id="indicators-wrapper" class="indicators-wrapper">
+                        <!-- Dots populated by JS -->
+                    </div>
+                </div>
+
+                <div class="controls-right">
+                    <!-- Music Volume & Toggle -->
+                    <button id="btn-mute" class="ctrl-btn" title="Bật/Tắt âm thanh (M)">
+                        <svg id="icon-vol-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+                        </svg>
+                        <svg id="icon-vol-off" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/>
+                        </svg>
+                    </button>
+                    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.9" title="Âm lượng nhạc">
+
+                    <!-- Settings Button -->
+                    <button id="btn-settings" class="ctrl-btn" title="Cài đặt thông tin (S)">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                        </svg>
+                    </button>
+
+                    <!-- Fullscreen Toggle -->
+                    <button id="btn-fullscreen" class="ctrl-btn" title="Toàn màn hình chiếu LED (F)">
+                        <svg id="icon-fs-enter" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/>
+                        </svg>
+                        <svg id="icon-fs-exit" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 14h6m0 0v6m0-6l-7 7m17-11h-6m0 0V4m0 6l7-7M4 10h6m0 0V4m0 6L3 3m17 11h-6m0 0v6m0-6l7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Settings / Customization Modal -->
+            <div id="settings-modal" class="settings-modal">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h2>Tuỳ Chỉnh Thông Tin Slide Cưới</h2>
+                        <button id="btn-close-modal" class="btn-close">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Tên Chú Rể (Groom):</label>
+                            <input type="text" id="cfg-groom" value="ANH TÚ">
+                        </div>
+                        <div class="form-group">
+                            <label>Tên Cô Dâu (Bride):</label>
+                            <input type="text" id="cfg-bride" value="DIỆU NHI">
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày Cưới (Wedding Date):</label>
+                            <input type="text" id="cfg-date" value="06.06.2026">
+                        </div>
+                        <div class="form-group">
+                            <label>Khẩu hiệu / Tiêu đề Slide 1:</label>
+                            <input type="text" id="cfg-title" value="WE'RE GETTING MARRIED">
+                        </div>
+                        <div class="form-group">
+                            <label>Ảnh Nền Slide Mở Đầu (Slide 1):</label>
+                            <select id="cfg-intro-bg">
+                                <option value="images/7a6ec418-5ce5-45fa-bf08-a3ddde60d4ed.jpg" selected>Ảnh Cặp Đôi Đi Dạo Sân Cỏ (Khuyên dùng - Chuẩn bố cục)</option>
+                                <option value="images/070dbca4-20c8-4ca7-a094-69a81bc13caa.jpg">Ảnh Đứng Toàn Thân Khăn Voan Dài</option>
+                                <option value="images/dbc83d22-1689-4d88-a0f6-46ccfa8940b2.jpg">Ảnh Nắm Tay Cười Rạng Rỡ</option>
+                                <option value="images/862c74c2-dee6-4810-95a8-19c310ba2b9a.jpg">Ảnh Ngang Voan Bay Ngoại Cảnh</option>
+                                <option value="images/974a7ccd-4088-42be-ab42-c84c9d7d123c.jpg">Ảnh Studio Trang Trọng</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Thời gian mỗi slide:</label>
+                            <select id="cfg-duration">
+                                <option value="5000">5 giây</option>
+                                <option value="7000" selected>7 giây (Chuẩn đám cưới)</option>
+                                <option value="9000">9 giây (Chậm rãi, sang trọng)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Chế độ ảnh dọc 16:9 các slide sau:</label>
+                            <select id="cfg-layout-mode">
+                                <option value="ambient" selected>Nền mờ viền LED + Ảnh sắc nét (Khuyên dùng)</option>
+                                <option value="cover">Tràn viền toàn bộ màn hình (Ken Burns)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btn-save-settings" class="btn-save">Lưu Và Cập Nhật Ngay</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Application Script -->
+    <script src="js/app.js"></script>
+</body>
+</html>

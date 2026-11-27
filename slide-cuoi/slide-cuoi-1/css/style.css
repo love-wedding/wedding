@@ -1,0 +1,941 @@
+/* ==========================================================================
+   LUXURY WEDDING LED SLIDE - 16:9 WIDESCREEN
+   Recreated 100% exactly from Download.mp4
+   ========================================================================== */
+
+:root {
+    --gold-primary: #d4af37;
+    --gold-light: #f7e7ce;
+    --gold-glow: rgba(255, 235, 180, 0.6);
+    --gold-dim: rgba(212, 175, 55, 0.4);
+    --cream-white: #fdfbf7;
+    --stage-dark: #07090b;
+    --transition-time: 1.8s;
+    --font-script: 'Great Vibes', 'Alex Brush', 'Pinyon Script', cursive;
+    --font-serif: 'Cinzel', 'Playfair Display', 'Cormorant Garamond', 'Times New Roman', serif;
+    --font-sans: 'Montserrat', 'Tenor Sans', 'Segoe UI', Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--stage-dark);
+    color: var(--cream-white);
+    font-family: var(--font-sans);
+    overflow: hidden;
+    position: relative;
+}
+
+/* Auto-hide mouse cursor during presentation on stage */
+#stage-viewport.cursor-hidden {
+    cursor: none;
+}
+#stage-viewport.cursor-hidden * {
+    cursor: none !important;
+}
+
+/* ==========================================================================
+   16:9 STAGE VIEWPORT & AUTO-LETTERBOX SCALING
+   ========================================================================== */
+#screen-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Locked strictly to 16:9 */
+#stage-viewport {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 177.78vh; /* 16/9 = 1.77778 */
+    max-height: 56.25vw; /* 9/16 = 0.5625 */
+    aspect-ratio: 16 / 9;
+    background-color: #0d1117;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.95);
+}
+
+/* Fullscreen mode fills viewport cleanly */
+:fullscreen #stage-viewport,
+:-webkit-full-screen #stage-viewport {
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100vw;
+    height: 56.25vw;
+}
+
+/* ==========================================================================
+   OPENING WHITE FLASH (Exact to video sample frame 001)
+   ========================================================================== */
+.white-flash-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    z-index: 25;
+    pointer-events: none;
+    animation: flashFadeOut 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes flashFadeOut {
+    0% { opacity: 0.95; }
+    30% { opacity: 0.85; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+/* ==========================================================================
+   SLIDES CONTAINER & TRANSITIONS
+   ========================================================================== */
+#slides-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-time) cubic-bezier(0.4, 0, 0.2, 1),
+                visibility var(--transition-time) cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-item.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 2;
+}
+
+.slide-item.previous {
+    opacity: 0;
+    visibility: visible;
+    z-index: 1;
+}
+
+/* ==========================================================================
+   IMAGE LAYERS: AMBIENT BLUR BACKDROP + HIGH-DEF FOREGROUND
+   ========================================================================== */
+.slide-bg-ambient {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    object-fit: cover;
+    filter: blur(28px) brightness(0.65) saturate(1.2);
+    transform: scale(1.1);
+    z-index: 1;
+    will-change: transform;
+}
+
+.slide-main-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Mode Cover: fills 16:9 with smooth Ken Burns */
+.slide-main-wrapper.mode-cover .slide-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mode Ambient: vertical image sits crisp in center with soft drop shadow */
+.slide-main-wrapper.mode-ambient .slide-main-image {
+    height: 94%;
+    width: auto;
+    max-width: 85%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7), 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* Horizontal image fits majestically */
+.slide-main-wrapper.mode-horizontal .slide-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Duo Mode: 2 portraits side-by-side */
+.slide-duo-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 3% 5%;
+    z-index: 2;
+}
+
+.slide-duo-col {
+    position: relative;
+    height: 90%;
+    width: 38%;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.slide-duo-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+}
+
+.slide-duo-center {
+    width: 20%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    z-index: 3;
+}
+
+/* ==========================================================================
+   KEN BURNS CINEMATIC PAN & ZOOM ANIMATIONS
+   Silky 60fps GPU acceleration
+   ========================================================================== */
+.ken-burns-in {
+    animation: kenBurnsZoomIn 14s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.ken-burns-out {
+    animation: kenBurnsZoomOut 14s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.ken-burns-pan-left {
+    animation: kenBurnsPanLeft 14s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.ken-burns-pan-right {
+    animation: kenBurnsPanRight 14s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes kenBurnsZoomIn {
+    0% { transform: scale(1.0) translate3d(0, 0, 0); }
+    100% { transform: scale(1.07) translate3d(0, -1%, 0); }
+}
+
+@keyframes kenBurnsZoomOut {
+    0% { transform: scale(1.08) translate3d(0, -1%, 0); }
+    100% { transform: scale(1.0) translate3d(0, 0, 0); }
+}
+
+@keyframes kenBurnsPanLeft {
+    0% { transform: scale(1.05) translate3d(1.5%, 0, 0); }
+    100% { transform: scale(1.07) translate3d(-1.5%, 0, 0); }
+}
+
+@keyframes kenBurnsPanRight {
+    0% { transform: scale(1.05) translate3d(-1.5%, 0, 0); }
+    100% { transform: scale(1.07) translate3d(1.5%, 0, 0); }
+}
+
+/* ==========================================================================
+   STAGE LIGHTING: EXACT VOLUMETRIC LIGHT BEAM & VIGNETTE
+   (Matches Download.mp4 center lighting beam between couple)
+   ========================================================================== */
+.lighting-beam {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 42%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.82;
+    background: radial-gradient(ellipse at 50% 50%, 
+                rgba(255, 252, 242, 0.72) 0%, 
+                rgba(255, 246, 222, 0.48) 35%, 
+                rgba(255, 238, 195, 0.16) 65%, 
+                transparent 85%);
+    mix-blend-mode: screen;
+    filter: blur(26px);
+    transition: opacity 1.5s ease;
+    animation: beamBreathe 5s ease-in-out infinite alternate;
+}
+
+@keyframes beamBreathe {
+    0% { opacity: 0.76; transform: translateX(-50%) scaleX(0.97); }
+    100% { opacity: 0.88; transform: translateX(-50%) scaleX(1.03); }
+}
+
+.intro-light-sheen {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+                transparent 0%, 
+                rgba(255, 253, 245, 0.35) 15%, 
+                rgba(255, 250, 235, 0.55) 50%, 
+                rgba(255, 253, 245, 0.35) 85%, 
+                transparent 100%);
+    filter: blur(18px);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.lighting-beam.dimmed {
+    opacity: 0.15;
+}
+
+.lighting-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4;
+    background: radial-gradient(circle at center, transparent 60%, rgba(0, 0, 0, 0.45) 90%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+#particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* ==========================================================================
+   EXACT SLIDE 1 INTRO TYPOGRAPHY & LAYOUT (100% identical to video)
+   ========================================================================== */
+.slide-main-wrapper.mode-intro .slide-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+}
+
+.intro-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    width: 90%;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.intro-tagline {
+    font-family: var(--font-sans);
+    font-size: clamp(0.72rem, 1.15vw, 1.15rem);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #2b332b;
+    margin-bottom: clamp(6px, 1.5vh, 18px);
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.95), 0 0 4px rgba(255, 255, 255, 0.9);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: introFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.intro-script-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: clamp(2px, 0.8vh, 10px) 0 clamp(8px, 1.5vh, 18px);
+    opacity: 0;
+    transform: scale(0.96);
+    animation: introScaleUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+
+.intro-script-save {
+    font-family: 'Great Vibes', 'Alex Brush', cursive;
+    font-size: clamp(3.8rem, 6.6vw, 6.8rem);
+    font-weight: 400;
+    color: #1a221b;
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.95)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+.intro-script-the {
+    font-family: 'Great Vibes', 'Alex Brush', cursive;
+    font-size: clamp(2rem, 3.2vw, 3.4rem);
+    font-style: italic;
+    color: #242c25;
+    line-height: 1;
+    margin-top: -8px;
+    margin-bottom: -10px;
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.95));
+}
+
+.intro-script-date {
+    font-family: 'Great Vibes', 'Alex Brush', cursive;
+    font-size: clamp(4rem, 7.0vw, 7.4rem);
+    font-weight: 400;
+    color: #1a221b;
+    line-height: 0.85;
+    letter-spacing: 0.02em;
+    filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.95)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+}
+
+.intro-couple-names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: clamp(6px, 1.2vh, 16px);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: introFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.0s forwards;
+}
+
+.name-groom, .name-bride {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.3vw, 2.4rem);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #222822;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.95), 0 0 4px rgba(255, 255, 255, 0.9);
+    line-height: 1.15;
+}
+
+.name-ampersand {
+    font-family: var(--font-serif);
+    font-size: clamp(1.15rem, 1.8vw, 1.9rem);
+    font-style: italic;
+    color: #353f36;
+    margin: clamp(2px, 0.4vh, 6px) 0;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.95);
+}
+
+.intro-date {
+    font-family: var(--font-serif);
+    font-size: clamp(0.88rem, 1.3vw, 1.35rem);
+    letter-spacing: 0.28em;
+    color: #303831;
+    margin-top: clamp(10px, 1.8vh, 22px);
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.95);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: introFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+}
+
+@keyframes introFadeUp {
+    0% { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes introScaleUp {
+    0% { opacity: 0; transform: scale(0.94); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================================================
+   EDITORIAL OVERLAYS FOR SUBSEQUENT SLIDES
+   ========================================================================== */
+.editorial-bottom-left {
+    position: absolute;
+    bottom: 8%;
+    left: 6%;
+    z-index: 10;
+    text-align: left;
+    max-width: 450px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: introFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.editorial-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 1.8vw, 1.8rem);
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+    margin-bottom: 4px;
+}
+
+.editorial-subtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(0.6rem, 0.8vw, 0.85rem);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    margin-bottom: 4px;
+}
+
+.editorial-tag {
+    font-family: var(--font-sans);
+    font-size: clamp(0.55rem, 0.7vw, 0.75rem);
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+    opacity: 0.85;
+}
+
+.editorial-top-right {
+    position: absolute;
+    top: 8%;
+    right: 6%;
+    z-index: 10;
+    text-align: right;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: introFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+}
+
+.script-accent {
+    font-family: var(--font-script);
+    font-size: clamp(2.4rem, 4.5vw, 4.5rem);
+    color: var(--gold-light);
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8);
+    line-height: 1;
+    display: block;
+}
+
+.script-sub {
+    font-family: var(--font-sans);
+    font-size: clamp(0.65rem, 0.9vw, 0.95rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.quote-bottom-center {
+    position: absolute;
+    bottom: 6%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    width: 80%;
+    opacity: 0;
+    animation: introFadeUp 1.4s ease 0.7s forwards;
+}
+
+.quote-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(0.9rem, 1.4vw, 1.45rem);
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.85);
+}
+
+.quote-sub {
+    font-family: var(--font-sans);
+    font-size: clamp(0.6rem, 0.8vw, 0.8rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 6px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.studio-watermark {
+    position: absolute;
+    bottom: 4%;
+    left: 4%;
+    z-index: 9;
+    font-family: var(--font-sans);
+    font-size: clamp(0.55rem, 0.75vw, 0.8rem);
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.55);
+    text-transform: uppercase;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Outro Slide */
+.outro-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    width: 90%;
+    max-width: 850px;
+    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.55) 0%, transparent 70%);
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.outro-tag {
+    font-family: var(--font-sans);
+    font-size: clamp(0.75rem, 1.1vw, 1.1rem);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 12px;
+}
+
+.outro-thankyou {
+    font-family: var(--font-script);
+    font-size: clamp(3.2rem, 6.5vw, 6.5rem);
+    color: #ffffff;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 2px 15px rgba(0, 0, 0, 0.9);
+    line-height: 1;
+    margin-bottom: 15px;
+}
+
+.outro-names {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 2.5vw, 2.5rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+}
+
+.outro-sub {
+    font-family: var(--font-sans);
+    font-size: clamp(0.85rem, 1.2vw, 1.25rem);
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 15px;
+}
+
+/* ==========================================================================
+   TOP PROGRESS BAR
+   ========================================================================== */
+#progress-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.15);
+    z-index: 20;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-primary), #fff3cc, var(--gold-primary));
+    box-shadow: 0 0 10px var(--gold-glow);
+    transition: width 0.3s linear;
+}
+
+/* ==========================================================================
+   AUDIO PROMPT PILL (Non-intrusive, disappears once playing)
+   ========================================================================== */
+.audio-prompt-pill {
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 35;
+    pointer-events: auto;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.audio-prompt-pill.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, 15px);
+}
+
+.btn-pill-play {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(18, 22, 26, 0.88);
+    border: 1px solid rgba(212, 175, 55, 0.6);
+    color: #f7e7ce;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-family: var(--font-sans);
+    font-size: clamp(0.72rem, 0.9vw, 0.88rem);
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    cursor: pointer;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.3);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+.btn-pill-play:hover {
+    background: rgba(212, 175, 55, 0.95);
+    color: #0d1117;
+    transform: scale(1.03);
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+}
+
+.pill-pulse-ring {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid rgba(212, 175, 55, 0.5);
+    border-radius: 32px;
+    animation: ringPulse 2s infinite ease-out;
+    pointer-events: none;
+}
+
+@keyframes ringPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.08, 1.25); opacity: 0; }
+}
+
+/* ==========================================================================
+   STAGE CONTROL BAR (Auto-hiding)
+   ========================================================================== */
+.stage-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px 24px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.stage-controls.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.controls-left, .controls-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ctrl-btn:hover {
+    background: rgba(212, 175, 55, 0.35);
+    border-color: var(--gold-primary);
+    transform: scale(1.08);
+}
+
+.slide-counter {
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 6px;
+}
+
+.indicators-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator-dot.active {
+    width: 22px;
+    border-radius: 10px;
+    background: var(--gold-primary);
+    box-shadow: 0 0 8px var(--gold-glow);
+}
+
+#volume-slider {
+    width: 75px;
+    accent-color: var(--gold-primary);
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   SETTINGS MODAL
+   ========================================================================== */
+.settings-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.settings-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: #141920;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 520px;
+    padding: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+}
+
+.btn-close {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 6px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus, .form-group select:focus {
+    border-color: var(--gold-primary);
+}
+
+.form-group select option {
+    background: #141920;
+    color: #fff;
+}
+
+.modal-footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-save {
+    background: var(--gold-primary);
+    color: #000;
+    border: none;
+    padding: 10px 22px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-save:hover {
+    background: #e6be41;
+}
