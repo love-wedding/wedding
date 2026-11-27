@@ -24,7 +24,8 @@
     -webkit-user-select: none;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     background-color: var(--stage-dark);
@@ -38,6 +39,7 @@ html, body {
 #stage-viewport.cursor-hidden {
     cursor: none;
 }
+
 #stage-viewport.cursor-hidden * {
     cursor: none !important;
 }
@@ -61,8 +63,10 @@ html, body {
     position: relative;
     width: 100%;
     height: 100%;
-    max-width: 177.78vh; /* 16/9 = 1.77778 */
-    max-height: 56.25vw; /* 9/16 = 0.5625 */
+    max-width: 177.78vh;
+    /* 16/9 = 1.77778 */
+    max-height: 56.25vw;
+    /* 9/16 = 0.5625 */
     aspect-ratio: 16 / 9;
     background-color: #0d1117;
     overflow: hidden;
@@ -94,9 +98,18 @@ html, body {
 }
 
 @keyframes flashFadeOut {
-    0% { opacity: 0.95; }
-    30% { opacity: 0.85; }
-    100% { opacity: 0; visibility: hidden; }
+    0% {
+        opacity: 0.95;
+    }
+
+    30% {
+        opacity: 0.85;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
 }
 
 /* ==========================================================================
@@ -120,7 +133,7 @@ html, body {
     opacity: 0;
     visibility: hidden;
     transition: opacity var(--transition-time) cubic-bezier(0.4, 0, 0.2, 1),
-                visibility var(--transition-time) cubic-bezier(0.4, 0, 0.2, 1);
+        visibility var(--transition-time) cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
     overflow: hidden;
     display: flex;
@@ -252,23 +265,43 @@ html, body {
 }
 
 @keyframes kenBurnsZoomIn {
-    0% { transform: scale(1.0) translate3d(0, 0, 0); }
-    100% { transform: scale(1.07) translate3d(0, -1%, 0); }
+    0% {
+        transform: scale(1.0) translate3d(0, 0, 0);
+    }
+
+    100% {
+        transform: scale(1.07) translate3d(0, -1%, 0);
+    }
 }
 
 @keyframes kenBurnsZoomOut {
-    0% { transform: scale(1.08) translate3d(0, -1%, 0); }
-    100% { transform: scale(1.0) translate3d(0, 0, 0); }
+    0% {
+        transform: scale(1.08) translate3d(0, -1%, 0);
+    }
+
+    100% {
+        transform: scale(1.0) translate3d(0, 0, 0);
+    }
 }
 
 @keyframes kenBurnsPanLeft {
-    0% { transform: scale(1.05) translate3d(1.5%, 0, 0); }
-    100% { transform: scale(1.07) translate3d(-1.5%, 0, 0); }
+    0% {
+        transform: scale(1.05) translate3d(1.5%, 0, 0);
+    }
+
+    100% {
+        transform: scale(1.07) translate3d(-1.5%, 0, 0);
+    }
 }
 
 @keyframes kenBurnsPanRight {
-    0% { transform: scale(1.05) translate3d(-1.5%, 0, 0); }
-    100% { transform: scale(1.07) translate3d(1.5%, 0, 0); }
+    0% {
+        transform: scale(1.05) translate3d(-1.5%, 0, 0);
+    }
+
+    100% {
+        transform: scale(1.07) translate3d(1.5%, 0, 0);
+    }
 }
 
 /* ==========================================================================
@@ -285,11 +318,11 @@ html, body {
     pointer-events: none;
     z-index: 3;
     opacity: 0.82;
-    background: radial-gradient(ellipse at 50% 50%, 
-                rgba(255, 252, 242, 0.72) 0%, 
-                rgba(255, 246, 222, 0.48) 35%, 
-                rgba(255, 238, 195, 0.16) 65%, 
-                transparent 85%);
+    background: radial-gradient(ellipse at 50% 50%,
+            rgba(255, 252, 242, 0.72) 0%,
+            rgba(255, 246, 222, 0.48) 35%,
+            rgba(255, 238, 195, 0.16) 65%,
+            transparent 85%);
     mix-blend-mode: screen;
     filter: blur(26px);
     transition: opacity 1.5s ease;
@@ -297,8 +330,15 @@ html, body {
 }
 
 @keyframes beamBreathe {
-    0% { opacity: 0.76; transform: translateX(-50%) scaleX(0.97); }
-    100% { opacity: 0.88; transform: translateX(-50%) scaleX(1.03); }
+    0% {
+        opacity: 0.76;
+        transform: translateX(-50%) scaleX(0.97);
+    }
+
+    100% {
+        opacity: 0.88;
+        transform: translateX(-50%) scaleX(1.03);
+    }
 }
 
 .intro-light-sheen {
@@ -308,12 +348,12 @@ html, body {
     transform: translateX(-50%);
     width: 36%;
     height: 100%;
-    background: linear-gradient(180deg, 
-                transparent 0%, 
-                rgba(255, 253, 245, 0.35) 15%, 
-                rgba(255, 250, 235, 0.55) 50%, 
-                rgba(255, 253, 245, 0.35) 85%, 
-                transparent 100%);
+    background: linear-gradient(180deg,
+            transparent 0%,
+            rgba(255, 253, 245, 0.35) 15%,
+            rgba(255, 250, 235, 0.55) 50%,
+            rgba(255, 253, 245, 0.35) 85%,
+            transparent 100%);
     filter: blur(18px);
     pointer-events: none;
     z-index: 2;
@@ -438,7 +478,8 @@ html, body {
     animation: introFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 1.0s forwards;
 }
 
-.name-groom, .name-bride {
+.name-groom,
+.name-bride {
     font-family: var(--font-serif);
     font-size: clamp(1.25rem, 2.3vw, 2.4rem);
     font-weight: 500;
@@ -471,13 +512,27 @@ html, body {
 }
 
 @keyframes introFadeUp {
-    0% { opacity: 0; transform: translateY(14px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes introScaleUp {
-    0% { opacity: 0; transform: scale(0.94); }
-    100% { opacity: 1; transform: scale(1); }
+    0% {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* ==========================================================================
@@ -729,8 +784,15 @@ html, body {
 }
 
 @keyframes ringPulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.08, 1.25); opacity: 0; }
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.08, 1.25);
+        opacity: 0;
+    }
 }
 
 /* ==========================================================================
@@ -759,7 +821,8 @@ html, body {
     transform: translateY(0);
 }
 
-.controls-left, .controls-right {
+.controls-left,
+.controls-right {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -896,7 +959,8 @@ html, body {
     margin-bottom: 6px;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 10px 14px;
     background: rgba(255, 255, 255, 0.06);
@@ -909,7 +973,8 @@ html, body {
     transition: border-color 0.2s;
 }
 
-.form-group input:focus, .form-group select:focus {
+.form-group input:focus,
+.form-group select:focus {
     border-color: var(--gold-primary);
 }
 
@@ -938,4 +1003,9 @@ html, body {
 
 .btn-save:hover {
     background: #e6be41;
+}
+
+
+.lighting-beam {
+    display: none !important;
 }
