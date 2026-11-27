@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thiết kế phòng 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#15181d;--panel:#1d2127;--line:#2e343c;--tx:#e9e6df;--mut:#9aa0a8;--ac:#f2b84b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 'Be Vietnam Pro',system-ui,sans-serif}
+#app{display:grid;grid-template-columns:310px 1fr;height:100%}
+aside{background:var(--panel);border-right:1px solid var(--line);overflow-y:auto;padding:14px}
+h1{font-size:17px;margin:0 0 2px}h2{font-size:13px;margin:16px 0 8px;color:var(--ac)}
+p.s{margin:0;color:var(--mut);font-size:12px}
+#cv{position:relative;min-height:0}canvas{display:block;width:100%;height:100%;touch-action:none}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--mut);flex:1;min-width:70px}
+input[type=number],input[type=text]{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--tx);border-radius:6px;padding:6px}
+input[type=color]{width:100%;height:30px;border:1px solid var(--line);border-radius:6px;background:var(--bg);padding:2px}
+input[type=range]{width:100%;accent-color:var(--ac)}
+button{background:var(--bg);color:var(--tx);border:1px solid var(--line);border-radius:7px;padding:7px 10px;font:inherit;cursor:pointer}
+button:hover{border-color:var(--ac)}button:focus-visible,input:focus-visible{outline:2px solid var(--ac);outline-offset:1px}
+button.p{background:var(--ac);color:#1b1405;border-color:var(--ac);font-weight:600}button.d{color:#ff8a7a}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#sel{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--bg)}
+#hint{position:absolute;left:12px;bottom:12px;background:#000a;padding:6px 10px;border-radius:8px;font-size:12px;color:var(--mut);pointer-events:none}
+#views{position:absolute;right:12px;top:12px;display:flex;gap:6px}
+#views button{background:#15181dcc}
+#tabs{position:absolute;left:12px;top:12px;display:flex;gap:6px;max-width:calc(100% - 340px);overflow-x:auto}
+#tabs button{background:#15181dcc;white-space:nowrap}#tabs button.p{background:var(--ac);color:#1b1405}
+@media(max-width:760px){#tabs{max-width:calc(100% - 24px)}#views{top:auto;bottom:12px}#hint{display:none}}
+@media(max-width:760px){#app{grid-template-columns:1fr;grid-template-rows:1fr 44vh}aside{border-right:0;border-top:1px solid var(--line);order:2}}
+</style></head><body>
+<div id="app">
+<aside>
+<h1>Phòng của tôi</h1><p class="s">Kéo đồ vật để di chuyển. Chuột phải/hai ngón để xoay góc nhìn.</p>
+<h2>Phòng đang thiết kế</h2>
+<div class="row"><label>Tên phòng<input id="rn" type="text"></label></div>
+<div class="row" style="margin-top:8px"><button id="radd">+ Phòng mới</button><button id="rdup">Nhân đôi</button><button id="rdel" class="d">Xóa phòng</button></div>
+<h2>Kích thước phòng (m)</h2>
+<div class="row"><label>Rộng<input id="W" type="number" step=".01" value="3.49"></label><label>Dài<input id="D" type="number" step=".01" value="3.12"></label><label>Cao<input id="H" type="number" step=".01" value="2.8"></label></div>
+<div class="row" style="margin-top:8px"><label>Màu tường<input id="wc" type="color" value="#e6e0b8"></label><label>Màu sàn<input id="fc" type="color" value="#d9cfb4"></label></div>
+<h2>Đang chọn</h2>
+<div id="sel"><p class="s" id="none">Bấm vào một món đồ trong phòng để chỉnh sửa.</p>
+<div id="ctl" hidden>
+<b id="nm"></b> <span class="s" id="dim"></span>
+<div class="row" style="margin:8px 0"><label>Màu<input id="col" type="color" value="#c9935a"></label><label>Kích cỡ <input id="sc" type="range" min="50" max="160" value="100"></label></div>
+<div class="row"><button id="rot">Xoay 90°</button><button id="dup">Nhân đôi</button><button id="del" class="d">Xóa</button></div>
+</div></div>
+<h2>Thêm đồ</h2>
+<div class="grid" id="cat"></div>
+<h2>Lưu thiết kế</h2>
+<div class="row"><button class="p" id="save">Lưu</button><button id="reset">Bố cục ban đầu</button></div>
+<p class="s" id="msg" style="margin-top:6px"></p>
+</aside>
+<div id="cv"><div id="tabs"></div><div id="views"><button data-v="a">Góc 3D</button><button data-v="t">Từ trên xuống</button><button data-v="i">Trong phòng</button></div><div id="hint">R: xoay · Delete: xóa</div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const cv=$('#cv');
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+cv.prepend(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x15181d);
+const cam=new THREE.PerspectiveCamera(50,1,.1,50);
+const ctl=new THREE.OrbitControls(cam,renderer.domElement);ctl.enableDamping=true;ctl.maxPolarAngle=Math.PI/2.02;
+scene.add(new THREE.HemisphereLight(0xfff4e0,0x554433,.75));
+const sun=new THREE.DirectionalLight(0xffffff,.7);sun.position.set(-3,6,3);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
+Object.assign(sun.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:1,far:15});scene.add(sun);
+const lamp=new THREE.PointLight(0xffd9a0,.5,8);scene.add(lamp);
+
+/* ---------- helpers ---------- */
+const M=(c,r=.8)=>new THREE.MeshStandardMaterial({color:c,roughness:r});
+function bx(g,w,h,d,c,x,y,z,main){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(c));m.position.set(x,y,z);m.castShadow=m.receiveShadow=true;if(main)m.userData.main=1;g.add(m);return m}
+function cy(g,rt,rb,h,c,x,y,z,main){const m=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,18),M(c));m.position.set(x,y,z);m.castShadow=true;if(main)m.userData.main=1;g.add(m);return m}
+function sp(g,r,c,x,y,z,sx=1,sy=1,sz=1,main){const m=new THREE.Mesh(new THREE.SphereGeometry(r,16,12),M(c));m.position.set(x,y,z);m.scale.set(sx,sy,sz);m.castShadow=true;if(main)m.userData.main=1;g.add(m);return m}
+
+const B={
+bed(g){bx(g,1.4,.28,2,0x5b3a29,0,.14,0);bx(g,1.4,.75,.06,0x5b3a29,0,.4,-1);bx(g,1.36,.16,1.94,0xb8b8bc,0,.36,0);
+ bx(g,1.38,.1,1.2,0x7d8087,0,.47,.35,1);bx(g,.5,.1,.35,0xc8892e,-.3,.5,-.78);bx(g,.5,.1,.35,0x8a1f2f,.3,.5,-.78);sp(g,.28,0x8d9096,.25,.58,.1,.8,.6,1.9)},
+desk(g){const c=0xc9935a;bx(g,1.5,.04,.6,c,0,.74,0,1);bx(g,.55,.04,1.1,c,-1.025,.74,.25,1);
+ [[-.7,-.25],[.7,-.25],[.7,.25],[-1.25,.75],[-.8,.75],[-1.25,-.25]].forEach(p=>bx(g,.04,.72,.04,0x7a5a3a,p[0],.36,p[1]));
+ bx(g,.58,.33,.03,0x0d0d10,.15,1.06,-.2);bx(g,.04,.18,.04,0x222,.15,.86,-.2);
+ bx(g,.5,.005,.26,0x1d2a4f,.2,.765,.1);bx(g,.36,.02,.12,0x9fd6dd,.15,.78,.1);bx(g,.34,.01,.24,0x222,.62,.77,-.05);
+ const s=bx(g,.34,.22,.01,0x111,.62,.88,-.17);s.rotation.x=-.25;
+ cy(g,.05,.06,.02,0xf4f4f4,-.6,.77,-.2);cy(g,.01,.01,.45,0xf4f4f4,-.6,1,-.2);sp(g,.07,0xffffff,-.55,1.25,-.1)},
+chair(g){bx(g,.48,.07,.48,0x25272b,0,.47,0,1);bx(g,.46,.6,.07,0x25272b,0,.82,.22,1);cy(g,.03,.03,.4,0x555,0,.25,0);cy(g,.25,.25,.04,0x333,0,.03,0)},
+wardrobe(g){bx(g,.9,1.9,.55,0x6b3a22,0,.95,0,1);bx(g,.42,1.2,.02,0x7f4528,-.22,1.3,.285,1);bx(g,.42,1.2,.02,0x7f4528,.22,1.3,.285,1);
+ bx(g,.86,.22,.02,0x7f4528,0,.2,.285,1);bx(g,.86,.22,.02,0x7f4528,0,.46,.285,1);[-.04,.04].forEach(x=>bx(g,.02,.14,.02,0xddd,x,1.2,.31));
+ bx(g,.4,.35,.3,0xd9a0b8,-.2,1.99,0);bx(g,.3,.25,.3,0xa8c8d8,.2,1.95,0)},
+shelf(g){const c=0x7a5230;bx(g,.04,1.6,.3,c,-.4,.8,0);bx(g,.04,1.6,.3,c,.4,.8,0);bx(g,.8,1.6,.02,c,0,.8,-.14);
+ const cols=[0xc0553b,0x3b6ea0,0xd9b44a,0x4f8a5b,0x8a5a9e,0xe8e0d0];
+ for(let i=0;i<5;i++){bx(g,.8,.03,.3,c,0,.02+i*.4,0);if(i<4)for(let j=0;j<5;j++)bx(g,.09,.26+((i+j)%3)*.04,.2,cols[(i*3+j)%6],-.3+j*.14,.17+i*.4+((i+j)%3)*.02,0)}},
+plant(g){cy(g,.18,.13,.28,0xf0f0f0,0,.14,0);[[0,.6,0,.3],[.12,.8,.05,.22],[-.12,.7,-.08,.24],[.05,.95,-.05,.2],[-.1,.9,.1,.18],[.15,.6,-.1,.18]].forEach(p=>sp(g,p[3],0x2e7d3a,p[0],p[1],p[2],1,1.1,1,1))},
+rug(g){bx(g,1.3,.025,.9,0x9eb3bd,0,.013,0,1)},
+table(g){bx(g,.5,.04,.4,0xc9935a,0,.5,0,1);[[-.22,-.17],[.22,-.17],[-.22,.17],[.22,.17]].forEach(p=>bx(g,.03,.5,.03,0x7a5a3a,p[0],.25,p[1]))},
+box(g){bx(g,.45,.3,.35,0xb98b55,0,.15,0,1);bx(g,.38,.25,.3,0xc9a068,.03,.425,0,1)},
+sofa(g){bx(g,1.8,.4,.85,0x5d6b7a,0,.2,0,1);bx(g,1.8,.45,.2,0x5d6b7a,0,.6,-.33,1);bx(g,.2,.3,.85,0x5d6b7a,-.9,.5,0,1);bx(g,.2,.3,.85,0x5d6b7a,.9,.5,0,1)},
+tv(g){bx(g,1.4,.45,.4,0x3b2c22,0,.225,0,1);bx(g,1,.6,.04,0x0b0b0d,0,.78,0);bx(g,.12,.06,.1,0x222,0,.48,0)},
+dining(g){bx(g,1.4,.04,.8,0xb98355,0,.75,0,1);[[-.62,-.33],[.62,-.33],[-.62,.33],[.62,.33]].forEach(p=>bx(g,.05,.73,.05,0x7a5a3a,p[0],.365,p[1]))},
+fridge(g){bx(g,.6,1.7,.65,0xdcdfe3,0,.85,0,1);bx(g,.58,.02,.02,0x777,0,1.15,.33);bx(g,.02,.35,.03,0x888,.22,1.4,.34);bx(g,.02,.5,.03,0x888,.22,.8,.34)},
+counter(g){bx(g,1.8,.85,.6,0xe8e4dc,0,.425,0,1);bx(g,1.82,.04,.62,0x4a4f55,0,.87,0);cy(g,.12,.12,.02,0xaaaaaa,-.4,.89,0);cy(g,.12,.12,.02,0xaaaaaa,-.1,.89,0)},
+toilet(g){cy(g,.2,.17,.4,0xfafafa,0,.2,.1,1);bx(g,.38,.4,.18,0xfafafa,0,.5,-.2,1)},
+sink(g){bx(g,.6,.8,.45,0xd8d2c4,0,.4,0,1);bx(g,.62,.05,.47,0xfafafa,0,.82,0);bx(g,.03,.15,.03,0xaaa,0,.93,-.15)},
+hanger(g){bx(g,.9,.04,.04,0x222,0,1.9,0);bx(g,.3,.8,.05,0x7fb3a5,-.3,1.45,.05,1);bx(g,.3,.9,.07,0x1b1b1f,0,1.4,.1,1);bx(g,.25,.8,.05,0xe8e8ee,.3,1.45,.05,1)}
+};
+const NAMES={bed:'Giường',desk:'Bàn làm việc chữ L',chair:'Ghế',wardrobe:'Tủ quần áo',shelf:'Kệ sách',plant:'Cây cảnh',rug:'Thảm',table:'Bàn nhỏ',box:'Thùng carton',hanger:'Móc áo & ba lô',sofa:'Sofa',tv:'Kệ tivi',dining:'Bàn ăn',fridge:'Tủ lạnh',counter:'Bếp & tủ bếp',toilet:'Bồn cầu',sink:'Lavabo'};
+
+/* ---------- room ---------- */
+let room,W=3.49,D=3.12,H=2.8,wallCol=0xe6e0b8,floorCol=0xd9cfb4;
+function tileTex(c){const k=document.createElement('canvas');k.width=k.height=128;const x=k.getContext('2d');x.fillStyle=c;x.fillRect(0,0,128,128);
+ x.strokeStyle='rgba(120,100,70,.45)';x.lineWidth=3;x.strokeRect(1,1,126,126);x.strokeStyle='rgba(150,120,80,.5)';x.lineWidth=2;
+ x.beginPath();x.moveTo(64,14);x.lineTo(114,64);x.lineTo(64,114);x.lineTo(14,64);x.closePath();x.stroke();
+ const t=new THREE.CanvasTexture(k);t.wrapS=t.wrapT=THREE.RepeatWrapping;return t}
+function buildRoom(){
+ if(room)scene.remove(room);room=new THREE.Group();
+ const t=tileTex('#'+floorCol.toString(16).padStart(6,'0'));t.repeat.set(W/.4,D/.4);
+ const f=new THREE.Mesh(new THREE.PlaneGeometry(W,D),new THREE.MeshStandardMaterial({map:t,roughness:.6}));f.rotation.x=-Math.PI/2;f.receiveShadow=true;room.add(f);
+ const wm=new THREE.MeshStandardMaterial({color:wallCol,roughness:.95});
+ [[W,0,-D/2,0],[W,0,D/2,Math.PI],[D,-W/2,0,Math.PI/2],[D,W/2,0,-Math.PI/2]].forEach(([w,x,z,r])=>{
+  const m=new THREE.Mesh(new THREE.PlaneGeometry(w,H),wm);m.position.set(x,H/2,z);m.rotation.y=r;m.receiveShadow=true;room.add(m);
+  const cap=new THREE.Mesh(new THREE.BoxGeometry(w+.1,.05,.1),M(0x3a3f47));cap.position.set(x,H,z);cap.rotation.y=r;room.add(cap);
+  const bb=new THREE.Mesh(new THREE.BoxGeometry(w,.1,.02),M(0xf2efe6));bb.position.set(x+Math.sin(r)*.01,.05,z+Math.cos(r)*.01);bb.rotation.y=r;room.add(bb)});
+ // cửa (tường trái, gần góc)
+ const door=new THREE.Group();bx(door,.05,2.05,.95,0x8a3524,0,1.03,0);
+ for(let i=0;i<2;i++)for(let j=0;j<4;j++)bx(door,.06,.28,.17,0xcfd3d6,0,1.45+i*.3,-.33+j*.22);
+ bx(door,.08,.06,.06,0xc9c9c9,0,1,.38);door.position.set(-W/2+.03,0,-D/2+.65);room.add(door);
+ // cửa sổ (tường phải) + song sắt xanh
+ const win=new THREE.Group();const gl=new THREE.Mesh(new THREE.PlaneGeometry(1,1.1),new THREE.MeshBasicMaterial({color:0x9fb8c8}));gl.rotation.y=-Math.PI/2;gl.position.x=-.005;win.add(gl);
+ bx(win,.06,.06,1.1,0x5c3a28,0,2.1,0);bx(win,.06,.06,1.1,0x5c3a28,0,1,0);bx(win,.06,1.1,.06,0x5c3a28,0,1.55,.53);bx(win,.06,1.1,.06,0x5c3a28,0,1.55,-.53);
+ for(let i=-2;i<=2;i++)bx(win,.03,1.1,.03,0x4d9a78,-.03,1.55,i*.2);bx(win,.03,.03,1,0x4d9a78,-.03,1.3,0);bx(win,.03,.03,1,0x4d9a78,-.03,1.8,0);
+ win.position.set(W/2-.02,0,-.25);room.add(win);
+ scene.add(room);lamp.position.set(0,H-.2,0);
+}
+
+/* ---------- items ---------- */
+const items=[];let sel=null;
+const box=new THREE.BoxHelper(new THREE.Object3D(),0xf2b84b);box.visible=false;scene.add(box);
+function addItem(t,x,z,deg=0,col=null,sc=1){
+ const g=new THREE.Group();B[t](g);g.userData={t,col,sc};g.position.set(x,0,z);g.rotation.y=deg*Math.PI/180;g.scale.setScalar(sc);
+ if(col)tint(g);scene.add(g);items.push(g);return g}
+function tint(g){g.traverse(m=>{if(m.userData.main)m.material.color.set(g.userData.col)})}
+function select(g){sel=g;box.visible=!!g;$('#none').hidden=!!g;$('#ctl').hidden=!g;if(!g)return;
+ $('#nm').textContent=NAMES[g.userData.t];$('#sc').value=g.userData.sc*100;
+ let m;g.traverse(o=>{if(!m&&o.userData.main)m=o});$('#col').value=g.userData.col||('#'+(m?m.material.color.getHexString():'888888'));info()}
+function info(){if(!sel)return;const s=new THREE.Box3().setFromObject(sel).getSize(new THREE.Vector3());
+ $('#dim').textContent=`${Math.round(s.x*100)}×${Math.round(s.z*100)}×${Math.round(s.y*100)} cm`;box.setFromObject(sel)}
+function clamp(g){const b=new THREE.Box3().setFromObject(g);
+ if(b.min.x<-W/2)g.position.x+=-W/2-b.min.x;if(b.max.x>W/2)g.position.x-=b.max.x-W/2;
+ if(b.min.z<-D/2)g.position.z+=-D/2-b.min.z;if(b.max.z>D/2)g.position.z-=b.max.z-D/2}
+const LAYOUT=[['rug',-.3,-.2,0],['desk',.85,-1.26,0],['chair',.85,-.65,0],['hanger',-.7,-1.5,0],['wardrobe',W/2-.28,.85,-90],['bed',-.55,.86,90],['plant',1.45,-.3,0],['box',.75,.15,10]];
+function layout(list){items.splice(0).forEach(g=>scene.remove(g));select(null);list.forEach(a=>addItem(...a));}
+function snap(v){return Math.round(v/.05)*.05}
+
+/* ---------- interaction ---------- */
+const ray=new THREE.Raycaster(),mp=new THREE.Vector2(),plane=new THREE.Plane(new THREE.Vector3(0,1,0),0);
+let drag=null;
+function setMouse(e){const r=renderer.domElement.getBoundingClientRect();mp.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mp,cam)}
+renderer.domElement.addEventListener('pointerdown',e=>{setMouse(e);const h=ray.intersectObjects(items,true)[0];
+ if(!h){select(null);return}
+ let g=h.object;while(!items.includes(g))g=g.parent;select(g);
+ const p=new THREE.Vector3();ray.ray.intersectPlane(plane,p);drag={g,off:p.sub(g.position)};ctl.enabled=false});
+addEventListener('pointermove',e=>{if(!drag)return;setMouse(e);const p=new THREE.Vector3();if(!ray.ray.intersectPlane(plane,p))return;
+ p.sub(drag.off);drag.g.position.set(snap(p.x),0,snap(p.z));clamp(drag.g);info()});
+addEventListener('pointerup',()=>{drag=null;ctl.enabled=true});
+addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='r'||e.key==='R')rot();if((e.key==='Delete'||e.key==='Backspace')&&sel)del()});
+function rot(){if(!sel)return;sel.rotation.y+=Math.PI/2;clamp(sel);info()}
+function del(){if(!sel)return;scene.remove(sel);items.splice(items.indexOf(sel),1);select(null)}
+$('#rot').onclick=rot;$('#del').onclick=del;
+$('#dup').onclick=()=>{if(!sel)return;const u=sel.userData,g=addItem(u.t,sel.position.x+.2,sel.position.z+.2,sel.rotation.y*180/Math.PI,u.col,u.sc);clamp(g);select(g)};
+$('#col').oninput=e=>{if(!sel)return;sel.userData.col=e.target.value;tint(sel)};
+$('#sc').oninput=e=>{if(!sel)return;sel.userData.sc=e.target.value/100;sel.scale.setScalar(sel.userData.sc);clamp(sel);info()};
+Object.keys(NAMES).forEach(t=>{const b=document.createElement('button');b.textContent='+ '+NAMES[t];b.onclick=()=>{const g=addItem(t,0,0);select(g)};$('#cat').append(b)});
+
+function dims(){W=Math.max(1.5,+$('#W').value||3.49);D=Math.max(1.5,+$('#D').value||3.12);H=Math.max(2,+$('#H').value||2.8);buildRoom();items.forEach(clamp);info()}
+['W','D','H'].forEach(i=>$('#'+i).onchange=dims);
+$('#wc').oninput=e=>{wallCol=parseInt(e.target.value.slice(1),16);buildRoom()};
+$('#fc').oninput=e=>{floorCol=parseInt(e.target.value.slice(1),16);buildRoom()};
+
+/* ---------- save ---------- */
+const KEY='phong3d-v2';
+$('#save').onclick=()=>{try{localStorage.setItem(KEY,JSON.stringify({W,D,H,wallCol,floorCol,it:items.map(g=>[g.userData.t,+g.position.x.toFixed(2),+g.position.z.toFixed(2),Math.round(g.rotation.y*180/Math.PI),g.userData.col,g.userData.sc])}));$('#msg').textContent='Đã lưu trong trình duyệt này.'}catch(e){$('#msg').textContent='Không lưu được trên trình duyệt này.'}};
+$('#reset').onclick=()=>{layout(LAYOUT);$('#msg').textContent='Đã quay về bố cục ban đầu.'};
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(!s)return false;({W,D,H,wallCol,floorCol}=s);
+ $('#W').value=W;$('#D').value=D;$('#H').value=H;$('#wc').value='#'+wallCol.toString(16).padStart(6,'0');$('#fc').value='#'+floorCol.toString(16).padStart(6,'0');buildRoom();layout(s.it);return true}catch(e){return false}}
+
+/* ---------- views ---------- */
+const V={a:[[4.2,3.8,4.6],[0,.8,0]],t:[[0,7,.01],[0,0,0]],i:[[-1.5,1.7,1.35],[.9,.9,-.8]]};
+let gp=null,gt=null;
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const v=V[b.dataset.v];gp=new THREE.Vector3(...v[0]);gt=new THREE.Vector3(...v[1])});
+ctl.addEventListener('start',()=>{gp=null});
+function resize(){const r=cv.getBoundingClientRect();renderer.setSize(r.width,r.height);cam.aspect=r.width/r.height;cam.updateProjectionMatrix()}
+addEventListener('resize',resize);
+/* ---------- nhiều phòng ---------- */
+let rooms=[],cur=0;const clone=o=>JSON.parse(JSON.stringify(o));
+function snapshot(){return{name:$('#rn').value||'Phòng',W,D,H,wallCol,floorCol,it:items.map(g=>[g.userData.t,+g.position.x.toFixed(2),+g.position.z.toFixed(2),Math.round(g.rotation.y*180/Math.PI),g.userData.col,g.userData.sc])}}
+const hex=n=>'#'+n.toString(16).padStart(6,'0');
+function show(r){W=r.W;D=r.D;H=r.H;wallCol=r.wallCol;floorCol=r.floorCol;$('#W').value=W;$('#D').value=D;$('#H').value=H;$('#wc').value=hex(wallCol);$('#fc').value=hex(floorCol);$('#rn').value=r.name;buildRoom();layout(r.it);drawTabs();document.querySelector('[data-v=a]').click()}
+function drawTabs(){const t=$('#tabs');t.innerHTML='';rooms.forEach((r,i)=>{const b=document.createElement('button');b.textContent=r.name;if(i===cur)b.className='p';b.onclick=()=>go(i);t.append(b)});const p=document.createElement('button');p.textContent='+';p.title='Thêm phòng';p.onclick=()=>$('#radd').click();t.append(p)}
+function go(i){if(i===cur)return;rooms[cur]=snapshot();cur=i;show(rooms[cur])}
+$('#rn').oninput=()=>{rooms[cur].name=$('#rn').value||'Phòng';drawTabs()};
+$('#radd').onclick=()=>{rooms[cur]=snapshot();rooms.push({name:'Phòng '+(rooms.length+1),W:3,D:3,H:2.8,wallCol:0xe8e4d8,floorCol:0xd9cfb4,it:[]});cur=rooms.length-1;show(rooms[cur])};
+$('#rdup').onclick=()=>{rooms[cur]=snapshot();const c=clone(rooms[cur]);c.name+=' (bản sao)';rooms.push(c);cur=rooms.length-1;show(c)};
+$('#rdel').onclick=()=>{if(rooms.length<2){$('#msg').textContent='Cần giữ ít nhất 1 phòng.';return}rooms.splice(cur,1);cur=Math.max(0,cur-1);show(rooms[cur])};
+$('#save').onclick=()=>{rooms[cur]=snapshot();try{localStorage.setItem(KEY,JSON.stringify({cur,rooms}));$('#msg').textContent='Đã lưu '+rooms.length+' phòng trong trình duyệt này.'}catch(e){$('#msg').textContent='Không lưu được trên trình duyệt này.'}};
+$('#reset').onclick=()=>{rooms=[{name:'Phòng ngủ',W:3.49,D:3.12,H:2.8,wallCol:0xe6e0b8,floorCol:0xd9cfb4,it:LAYOUT}];cur=0;show(rooms[0]);$('#msg').textContent='Đã quay về 1 phòng ngủ ban đầu.'};
+function initRooms(){let s=null;try{s=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+ if(s&&s.rooms&&s.rooms.length){rooms=s.rooms;cur=Math.min(s.cur||0,rooms.length-1)}else{rooms=[{name:'Phòng ngủ',W:3.49,D:3.12,H:2.8,wallCol:0xe6e0b8,floorCol:0xd9cfb4,it:LAYOUT}];cur=0}
+ show(rooms[cur])}
+buildRoom();initRooms();resize();
+cam.position.set(...V.a[0]);ctl.target.set(...V.a[1]);
+(function loop(){requestAnimationFrame(loop);
+ if(gp){cam.position.lerp(gp,.08);ctl.target.lerp(gt,.08);if(cam.position.distanceTo(gp)<.02)gp=null}
+ ctl.update();if(sel&&box.visible)box.update();renderer.render(scene,cam)})();
+</script></body></html>

@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Arcittya Begatri';
+  src: url('arcittya-begatri.woff2') format('woff2'),
+       url('arcittya-begatri.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}

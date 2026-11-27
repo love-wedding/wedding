@@ -221,24 +221,155 @@
     }
   </style>
   <style>
-    .card-action-modal[hidden] { display: none !important; }
-    .card-action-modal { position: fixed; inset: 0; z-index: 1000000; display: grid; place-items: center; padding: 18px; background: rgba(24, 28, 24, .62); backdrop-filter: blur(3px); }
-    .card-action-modal__panel { position: relative; box-sizing: border-box; width: min(100%, 440px); max-height: min(86vh, 720px); overflow: auto; padding: 28px 24px 24px; border: 1px solid rgba(76, 91, 71, .15); border-radius: 20px; background: #fffdf9; color: #343b31; box-shadow: 0 24px 80px rgba(0,0,0,.24); font-family: Inter, system-ui, sans-serif; }
-    .card-action-modal__close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #f1f1eb; color: #44503f; font-size: 24px; line-height: 1; cursor: pointer; }
-    .card-action-modal__eyebrow { margin: 0 0 7px; color: #79836f; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
-    .card-action-modal__title { margin: 0 36px 10px 0; color: #364332; font: 600 27px/1.2 'Cormorant Garamond', Georgia, serif; }
-    .card-action-modal__copy { margin: 0 0 20px; color: #687064; font-size: 14px; line-height: 1.6; }
-    .card-action-modal__field { display: grid; gap: 7px; margin: 14px 0; color: #4f5949; font-size: 13px; font-weight: 600; }
-    .card-action-modal__field input, .card-action-modal__field textarea, .card-action-modal__field select { box-sizing: border-box; width: 100%; min-height: 44px; border: 1px solid #d9ddd3; border-radius: 10px; padding: 10px 12px; background: #fff; color: #31382e; font: 400 15px/1.4 Inter, system-ui, sans-serif; }
-    .card-action-modal__field textarea { min-height: 110px; resize: vertical; }
-    .card-action-modal__choice-row { display: flex; gap: 10px; }
-    .card-action-modal__choice { flex: 1; min-height: 42px; border: 1px solid #d9ddd3; border-radius: 10px; background: #fff; color: #4f5949; cursor: pointer; }
-    .card-action-modal__choice.is-selected, .card-action-modal__submit { border-color: #536348; background: #536348; color: #fff; }
-    .card-action-modal__submit { width: 100%; min-height: 46px; margin-top: 8px; border: 0; border-radius: 999px; font: 600 14px Inter, system-ui, sans-serif; cursor: pointer; }
-    .canvas-qr-box-component__image { cursor: pointer; }
-    .card-action-modal__notice { min-height: 20px; margin: 14px 0 0; color: #7b684b; font-size: 12px; line-height: 1.5; }
-    body.card-action-modal-open { overflow: hidden; }
-    @media (max-width: 480px) { .card-action-modal__panel { padding: 26px 20px 20px; border-radius: 18px; } }
+    .card-action-modal[hidden] {
+      display: none !important;
+    }
+
+    .card-action-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000000;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(24, 28, 24, .62);
+      backdrop-filter: blur(3px);
+    }
+
+    .card-action-modal__panel {
+      position: relative;
+      box-sizing: border-box;
+      width: min(100%, 440px);
+      max-height: min(86vh, 720px);
+      overflow: auto;
+      padding: 28px 24px 24px;
+      border: 1px solid rgba(76, 91, 71, .15);
+      border-radius: 20px;
+      background: #fffdf9;
+      color: #343b31;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .24);
+      font-family: Inter, system-ui, sans-serif;
+    }
+
+    .card-action-modal__close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: #f1f1eb;
+      color: #44503f;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .card-action-modal__eyebrow {
+      margin: 0 0 7px;
+      color: #79836f;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .card-action-modal__title {
+      margin: 0 36px 10px 0;
+      color: #364332;
+      font: 600 27px/1.2 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .card-action-modal__copy {
+      margin: 0 0 20px;
+      color: #687064;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .card-action-modal__field {
+      display: grid;
+      gap: 7px;
+      margin: 14px 0;
+      color: #4f5949;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .card-action-modal__field input,
+    .card-action-modal__field textarea,
+    .card-action-modal__field select {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #d9ddd3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: #fff;
+      color: #31382e;
+      font: 400 15px/1.4 Inter, system-ui, sans-serif;
+    }
+
+    .card-action-modal__field textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .card-action-modal__choice-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-action-modal__choice {
+      flex: 1;
+      min-height: 42px;
+      border: 1px solid #d9ddd3;
+      border-radius: 10px;
+      background: #fff;
+      color: #4f5949;
+      cursor: pointer;
+    }
+
+    .card-action-modal__choice.is-selected,
+    .card-action-modal__submit {
+      border-color: #536348;
+      background: #536348;
+      color: #fff;
+    }
+
+    .card-action-modal__submit {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 8px;
+      border: 0;
+      border-radius: 999px;
+      font: 600 14px Inter, system-ui, sans-serif;
+      cursor: pointer;
+    }
+
+    .canvas-qr-box-component__image {
+      cursor: pointer;
+    }
+
+    .card-action-modal__notice {
+      min-height: 20px;
+      margin: 14px 0 0;
+      color: #7b684b;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    body.card-action-modal-open {
+      overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      .card-action-modal__panel {
+        padding: 26px 20px 20px;
+        border-radius: 18px;
+      }
+    }
   </style>
 </head>
 
@@ -297,11 +428,9 @@
                 </path>
               </svg></div>
             <div class="slr-ui-card-shadow">
-              <div class="slr-ui-card"><img
-                  src="images/flower_top.webp"
-                  alt="" aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-top"><img
-                  src="images/flower_paralax.webp"
-                  alt="" aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-bottom">
+              <div class="slr-ui-card"><img src="images/flower_top.webp" alt="" aria-hidden="true"
+                  class="slr-ui-art slr-ui-vxg-flower-top"><img src="images/flower_paralax.webp" alt=""
+                  aria-hidden="true" class="slr-ui-art slr-ui-vxg-flower-bottom">
                 <div class="slr-ui-text-wrap">
                   <h1 class="slr-ui-couple-name"><span>Mai Lan </span><span
                       class="slr-ui-couple-and">&amp;</span><span>Tuấn Minh</span></h1>
@@ -1110,7 +1239,8 @@
                     style="position: relative; width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: 1; background-color: transparent; padding: 0px; border-radius: 0px; border-bottom: 1.16279px solid rgb(255, 255, 255);">
                     <div disabled="" contenteditable="false"
                       style="width: 100%; min-width: 20px; font-size: 16px; text-align: center; font-weight: normal; font-style: normal; color: rgb(255, 255, 255); font-family: &quot;BrikeyMoura Regular&quot;; line-height: 1.57; letter-spacing: 0px; text-transform: none; text-decoration: none; outline: none; word-break: break-word; pointer-events: none;">
-                      <br></div>
+                      <br>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1609,7 +1739,8 @@
                     style="position: relative; width: 100%; box-sizing: border-box; display: flex; align-items: center; justify-content: center; opacity: 1; background-color: transparent; padding: 0px; border-radius: 0px; border-top: 1.16279px solid rgb(255, 255, 255);">
                     <div disabled="" contenteditable="false"
                       style="width: 100%; min-width: 20px; font-size: 19px; text-align: center; font-weight: normal; font-style: italic; color: rgb(255, 255, 255); font-family: &quot;BrikeyMoura Regular&quot;; line-height: 0.5; letter-spacing: 0px; text-transform: none; text-decoration: none; outline: none; word-break: break-word; pointer-events: none;">
-                      <br></div>
+                      <br>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1653,10 +1784,12 @@
                 </svg></button><button type="button"
                 class="card-live-message-toolbar__tool-btn card-live-message-toolbar__tool-btn--rsvp"
                 aria-label="Xác nhận tham dự"><img alt="" width="20" height="20"
-                  class="card-live-message-toolbar__rsvp-icon" aria-hidden="true"
-                  src="images/i-rsvp.svg"></button></div>
+                  class="card-live-message-toolbar__rsvp-icon" aria-hidden="true" src="images/i-rsvp.svg"></button>
+            </div>
           </div>
-          <div id="canvas-phone-popup-layer"><div class="popup-stack"></div></div>
+          <div id="canvas-phone-popup-layer">
+            <div class="popup-stack"></div>
+          </div>
           <!-- <div class="canvas-public-view-chrome">
             <div class="canvas-toolbar-toggle-button canvas-toolbar-toggle-has-thumbnail" role="button" tabindex="0"
               aria-label="Đóng thanh công cụ">
@@ -1850,24 +1983,24 @@
       }
 
       // 5. URL Guest name
-function applyGuestName() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const guest = params.get('guest') || params.get('to') || params.get('u') || params.get('name');
-    if (guest) {
-      // Badge ở màn hình phong bì và các field khác: gán bình thường
-      document.querySelectorAll('.slr-ui-guest-badge h2, .canvas-guest-name, [data-dynamic-field="guestName"]').forEach(el => {
-        el.textContent = guest;
-      });
+      function applyGuestName() {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const guest = params.get('guest') || params.get('to') || params.get('u') || params.get('name');
+          if (guest) {
+            // Badge ở màn hình phong bì và các field khác: gán bình thường
+            document.querySelectorAll('.slr-ui-guest-badge h2, .canvas-guest-name, [data-dynamic-field="guestName"]').forEach(el => {
+              el.textContent = guest;
+            });
 
-      // Khối "Quý Khách" dùng white-space: pre-line nên cần giữ dòng trống ở đầu
-      const guestBox = document.querySelector('.text-box-component[data-node-id="87RNR5GKM4"] > div > div > div');
-      if (guestBox) {
-        guestBox.textContent = '\n' + guest;
+            // Khối "Quý Khách" dùng white-space: pre-line nên cần giữ dòng trống ở đầu
+            const guestBox = document.querySelector('.text-box-component[data-node-id="87RNR5GKM4"] > div > div > div');
+            if (guestBox) {
+              guestBox.textContent = '\n' + guest;
+            }
+          }
+        } catch (err) { }
       }
-    }
-  } catch (err) { }
-}
 
       // 6. Layout resize
       function updateLayout() {
@@ -2029,6 +2162,8 @@ function applyGuestName() {
       });
     })();
   </script>
+
+  <script src="../script.js"></script>
 
 </body>
 
